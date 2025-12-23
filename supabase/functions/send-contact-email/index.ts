@@ -1,5 +1,9 @@
+// EDGE FUNCTION VERSION: 2.0.0 - Force Redeploy
+// Last updated: 2024-12-23
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
+
+console.log("=== send-contact-email edge function loaded ===");
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -26,10 +30,10 @@ function escapeHtml(text: string): string {
     .replace(/'/g, "&#039;");
 }
 
-// Simple in-memory rate limiting (per IP, 3 requests per 15 minutes)
+// Simple in-memory rate limiting (per IP, 5 requests per 15 minutes)
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000;
-const RATE_LIMIT_MAX_REQUESTS = 3;
+const RATE_LIMIT_MAX_REQUESTS = 5;
 
 function isRateLimited(ip: string): boolean {
   const now = Date.now();
@@ -193,7 +197,7 @@ function getCustomerEmailHtml(name: string): string {
           <!-- Main Content -->
           <tr>
             <td style="padding: 40px 30px;">
-              <h2 style="color: #2D5A3D; font-size: 26px; margin: 0 0 10px 0; font-weight: 700;">Thank You, ${name}! 💚</h2>
+              <h2 style="color: #2D5A3D; font-size: 26px; margin: 0 0 10px 0; font-weight: 700;">Thank You, ${name}!</h2>
               <div style="height: 3px; width: 80px; background: linear-gradient(90deg, #1B7F4D, #2D5A3D); border-radius: 2px; margin-bottom: 25px;"></div>
               
               <p style="color: #444; font-size: 16px; line-height: 1.8; margin: 0 0 20px 0;">
@@ -219,7 +223,7 @@ function getCustomerEmailHtml(name: string): string {
           <tr>
             <td style="background-color: #2D5A3D; padding: 30px; text-align: center;">
               <p style="color: rgba(255,255,255,0.9); font-size: 13px; margin: 0 0 10px 0;">
-                📧 support@veritescalp.com
+                support@veritescalp.com
               </p>
               <p style="color: rgba(255,255,255,0.5); font-size: 11px; margin: 0;">© 2024 VERITÉ SCALP. All rights reserved.</p>
             </td>
@@ -234,13 +238,19 @@ function getCustomerEmailHtml(name: string): string {
 `;
 }
 
-const handler = async (req: Request): Promise<Response> => {
-  console.log("Received request:", req.method, req.url);
+serve(async (req: Request): Promise<Response> => {
+  console.log("=== REQUEST RECEIVED ===");
+  console.log("Method:", req.method);
+  console.log("URL:", req.url);
+  console.log("Headers:", JSON.stringify(Object.fromEntries(req.headers.entries())));
   
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
-    console.log("Handling OPTIONS preflight request");
-    return new Response(null, { headers: corsHeaders });
+    console.log("Returning OPTIONS preflight response");
+    return new Response(null, { 
+      status: 204,
+      headers: corsHeaders 
+    });
   }
 
   try {
@@ -249,6 +259,8 @@ const handler = async (req: Request): Promise<Response> => {
       req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || 
       req.headers.get("cf-connecting-ip") || 
       "unknown";
+
+    console.log("Client IP:", clientIP);
 
     if (isRateLimited(clientIP)) {
       console.log(`Rate limit exceeded for IP: ${clientIP}`);
@@ -262,13 +274,25 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // Validate and parse input
-    const rawData = await req.json();
-    console.log("Received form data:", { name: rawData.name, email: rawData.email });
+    let rawData;
+    try {
+      rawData = await req.json();
+      console.log("Parsed request body:", JSON.stringify(rawData));
+    } catch (parseError) {
+      console.error("Failed to parse request body:", parseError);
+      return new Response(
+        JSON.stringify({ error: "Invalid JSON in request body" }), 
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
     
     const validationResult = ContactSchema.safeParse(rawData);
 
     if (!validationResult.success) {
-      console.log("Validation failed:", validationResult.error.errors);
+      console.log("Validation failed:", JSON.stringify(validationResult.error.errors));
       return new Response(
         JSON.stringify({ error: "Invalid input", details: validationResult.error.errors }), 
         {
@@ -279,6 +303,7 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     const { name, email, subject, phone, message } = validationResult.data;
+    console.log("Validated data - Name:", name, "Email:", email);
 
     // Escape all user inputs for safe HTML rendering
     const safeName = escapeHtml(name);
@@ -287,78 +312,102 @@ const handler = async (req: Request): Promise<Response> => {
     const safePhone = phone ? escapeHtml(phone) : null;
     const safeMessage = escapeHtml(message);
 
-    console.log("Validated contact form submission:", { name: safeName, email: safeEmail });
-
     const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+    console.log("RESEND_API_KEY exists:", !!RESEND_API_KEY);
+    console.log("RESEND_API_KEY length:", RESEND_API_KEY?.length || 0);
+    
     if (!RESEND_API_KEY) {
-      console.error("RESEND_API_KEY is not configured");
-      throw new Error("RESEND_API_KEY is not configured");
+      console.error("RESEND_API_KEY is not configured!");
+      return new Response(
+        JSON.stringify({ error: "Email service not configured" }), 
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
     }
 
     // Send email to support team using fetch
-    console.log("Sending email to support team...");
+    console.log("=== SENDING SUPPORT EMAIL ===");
+    const supportEmailPayload = {
+      from: "VERITÉ SCALP <onboarding@resend.dev>",
+      to: ["veritescalp@gmail.com"],
+      subject: safeSubject ? `New Message from ${safeName}: ${safeSubject}` : `New Message from ${safeName}`,
+      html: getSupportEmailHtml({
+        name: safeName,
+        email: safeEmail,
+        phone: safePhone,
+        subject: safeSubject,
+        message: safeMessage,
+      }),
+    };
+    console.log("Support email payload:", JSON.stringify({ ...supportEmailPayload, html: "[HTML CONTENT]" }));
+
     const supportRes = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${RESEND_API_KEY}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        from: "VERITÉ SCALP <onboarding@resend.dev>",
-        to: ["veritescalp@gmail.com"],
-        subject: safeSubject ? `New Message from ${safeName}: ${safeSubject}` : `New Message from ${safeName}`,
-        html: getSupportEmailHtml({
-          name: safeName,
-          email: safeEmail,
-          phone: safePhone,
-          subject: safeSubject,
-          message: safeMessage,
-        }),
-      }),
+      body: JSON.stringify(supportEmailPayload),
     });
 
     const supportResult = await supportRes.json();
-    console.log("Support email result:", supportResult);
+    console.log("Support email response status:", supportRes.status);
+    console.log("Support email result:", JSON.stringify(supportResult));
 
     if (!supportRes.ok) {
-      console.error("Failed to send support email:", supportResult);
-      throw new Error("Failed to send email to support");
+      console.error("Failed to send support email:", JSON.stringify(supportResult));
+      return new Response(
+        JSON.stringify({ error: "Failed to send email", details: supportResult }), 
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
     }
 
     // Send confirmation email to customer
-    console.log("Sending confirmation email to customer...");
+    console.log("=== SENDING CUSTOMER CONFIRMATION EMAIL ===");
+    const confirmEmailPayload = {
+      from: "VERITÉ SCALP <onboarding@resend.dev>",
+      to: [email],
+      subject: "Thank You for Reaching Out! - VERITÉ SCALP",
+      html: getCustomerEmailHtml(safeName),
+    };
+    console.log("Confirmation email payload:", JSON.stringify({ ...confirmEmailPayload, html: "[HTML CONTENT]" }));
+
     const confirmRes = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${RESEND_API_KEY}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        from: "VERITÉ SCALP <onboarding@resend.dev>",
-        to: [email],
-        subject: "Thank You for Reaching Out! 💚 - VERITÉ SCALP",
-        html: getCustomerEmailHtml(safeName),
-      }),
+      body: JSON.stringify(confirmEmailPayload),
     });
 
     const confirmResult = await confirmRes.json();
-    console.log("Confirmation email result:", confirmResult);
+    console.log("Confirmation email response status:", confirmRes.status);
+    console.log("Confirmation email result:", JSON.stringify(confirmResult));
 
     if (!confirmRes.ok) {
-      console.warn("Failed to send confirmation email:", confirmResult);
+      console.warn("Failed to send confirmation email:", JSON.stringify(confirmResult));
       // Don't fail the request if confirmation email fails
     }
 
-    console.log("Emails sent successfully");
+    console.log("=== ALL EMAILS SENT SUCCESSFULLY ===");
     return new Response(
-      JSON.stringify({ success: true }), 
+      JSON.stringify({ success: true, supportEmailId: supportResult.id }), 
       {
         status: 200,
         headers: { "Content-Type": "application/json", ...corsHeaders },
       }
     );
   } catch (error: any) {
-    console.error("Error in send-contact-email function:", error);
+    console.error("=== UNEXPECTED ERROR ===");
+    console.error("Error name:", error.name);
+    console.error("Error message:", error.message);
+    console.error("Error stack:", error.stack);
     return new Response(
       JSON.stringify({ error: "An error occurred while processing your request." }), 
       {
@@ -367,6 +416,4 @@ const handler = async (req: Request): Promise<Response> => {
       }
     );
   }
-};
-
-serve(handler);
+});
