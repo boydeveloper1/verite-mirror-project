@@ -6,7 +6,8 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+// Hardcoded Supabase URL to fix undefined issue
+const SUPABASE_URL = "https://corsaegkqazlvrhigopw.supabase.co";
 
 export const ContactSection = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -28,8 +29,12 @@ export const ContactSection = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
+    const endpoint = `${SUPABASE_URL}/functions/v1/send-contact-email`;
+    console.log("[ContactSection] Starting submission...");
+    console.log("[ContactSection] Endpoint:", endpoint);
+
     try {
-      const response = await fetch(`${SUPABASE_URL}/functions/v1/send-contact-email`, {
+      const response = await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,10 +47,22 @@ export const ContactSection = () => {
         }),
       });
 
-      const data = await response.json();
+      console.log("[ContactSection] Response status:", response.status);
+
+      const responseText = await response.text();
+      console.log("[ContactSection] Response text:", responseText);
+
+      let data = {};
+      if (responseText) {
+        try {
+          data = JSON.parse(responseText);
+        } catch (parseError) {
+          console.error("[ContactSection] JSON parse error:", parseError);
+        }
+      }
 
       if (!response.ok) {
-        throw new Error(data.error || "Failed to send message");
+        throw new Error((data as any).error || `HTTP error ${response.status}`);
       }
 
       toast.success("Message sent successfully!", {
@@ -55,7 +72,7 @@ export const ContactSection = () => {
 
       setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (error: any) {
-      console.error("Error sending message:", error);
+      console.error("[ContactSection] Error:", error);
       toast.error("Failed to send message", {
         description: error.message || "Please try again or email us directly at support@veritescalp.com",
         position: "top-center",
