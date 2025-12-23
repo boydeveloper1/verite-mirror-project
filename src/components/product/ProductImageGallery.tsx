@@ -34,7 +34,7 @@ export const ProductImageGallery = ({ images, productTitle, productHandle }: Pro
   const showBestsellerBadge = !isShowerHead;
 
   return (
-    <div className="space-y-3 md:space-y-4">
+    <div className="space-y-3 md:space-y-4 max-w-[80%] mx-auto lg:max-w-full lg:mx-0 lg:scale-[0.8] lg:origin-top-left">
       {/* Main Image Container */}
       <div className="relative w-full aspect-square bg-secondary rounded-lg overflow-hidden border border-border shadow-soft group">
         {/* Best Seller Badge - Only for Mist */}
