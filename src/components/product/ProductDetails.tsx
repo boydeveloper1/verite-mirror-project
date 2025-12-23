@@ -167,30 +167,56 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
         {product.title}
       </h1>
 
-      {/* Specs - Dynamic based on product */}
-      <p className="text-xs md:text-sm text-muted-foreground mb-3 md:mb-4 flex items-center gap-1.5 md:gap-2 flex-wrap">
+      {/* Short Description */}
+      <p className="text-sm md:text-base text-muted-foreground mb-4 leading-relaxed">
+        {isShowerHead 
+          ? "Transform your shower into a scalp treatment. Our 15-stage filtration removes harsh chemicals that damage hair follicles and irritate your scalp."
+          : "Clinically-formulated mist that calms inflammation, balances scalp pH, and creates the ideal environment for stronger, healthier hair growth."
+        }
+      </p>
+
+      {/* Key Benefits */}
+      <ul className="space-y-2 mb-4 md:mb-6">
         {isShowerHead ? (
           <>
-            <span>15-Stage Filter</span>
-            <span className="text-border">|</span>
-            <span>Universal Fit</span>
-            <span className="text-border">|</span>
-            <span className="flex items-center gap-1">
-              <span className="text-accent">💧</span> 99% Chlorine Removal
-            </span>
+            <li className="flex items-center gap-2 text-sm text-foreground">
+              <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" />
+              <span>Removes 99% chlorine & heavy metals</span>
+            </li>
+            <li className="flex items-center gap-2 text-sm text-foreground">
+              <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" />
+              <span>Universal fit – installs in minutes</span>
+            </li>
+            <li className="flex items-center gap-2 text-sm text-foreground">
+              <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" />
+              <span>Reduces scalp dryness & irritation</span>
+            </li>
+            <li className="flex items-center gap-2 text-sm text-foreground">
+              <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" />
+              <span>6-month filter life (included)</span>
+            </li>
           </>
         ) : (
           <>
-            <span>180ml</span>
-            <span className="text-border">|</span>
-            <span>Spray Bottle</span>
-            <span className="text-border">|</span>
-            <span className="flex items-center gap-1">
-              <span className="text-accent">🌿</span> Natural Ingredients
-            </span>
+            <li className="flex items-center gap-2 text-sm text-foreground">
+              <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" />
+              <span>Soothes itchy, inflamed scalp instantly</span>
+            </li>
+            <li className="flex items-center gap-2 text-sm text-foreground">
+              <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" />
+              <span>Reduces hair shedding by up to 40%</span>
+            </li>
+            <li className="flex items-center gap-2 text-sm text-foreground">
+              <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" />
+              <span>Lightweight, non-greasy formula</span>
+            </li>
+            <li className="flex items-center gap-2 text-sm text-foreground">
+              <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" />
+              <span>Safe for color-treated hair</span>
+            </li>
           </>
         )}
-      </p>
+      </ul>
 
       {/* Rating - Dynamic based on product */}
       {(() => {

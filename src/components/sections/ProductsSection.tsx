@@ -98,6 +98,12 @@ export const ProductsSection = () => {
                 >
                   {/* Image */}
                   <div className="aspect-square bg-secondary overflow-hidden relative">
+                    {/* Best Seller Badge */}
+                    {node.handle?.includes("mist") && (
+                      <div className="absolute top-3 left-3 z-10 bg-accent text-accent-foreground text-xs font-bold px-2.5 py-1 rounded-full shadow-md">
+                        Best Seller
+                      </div>
+                    )}
                     {firstImage ? (
                       <img
                         src={firstImage.url}
