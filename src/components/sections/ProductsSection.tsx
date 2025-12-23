@@ -113,10 +113,12 @@ export const ProductsSection = () => {
                     {/* Overlay gradient */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     
-                    {/* Badge */}
-                    <span className="absolute top-4 left-4 text-[10px] md:text-xs font-bold text-white bg-accent px-3 py-1.5 rounded-full uppercase tracking-wider shadow-medium">
-                      Bestseller
-                    </span>
+                    {/* Bestseller Badge - Only for Scalp Mist */}
+                    {node.handle?.includes("mist") && (
+                      <span className="absolute top-4 left-4 text-[10px] md:text-xs font-bold text-white bg-accent px-3 py-1.5 rounded-full uppercase tracking-wider shadow-medium">
+                        Bestseller
+                      </span>
+                    )}
                   </div>
 
                   {/* Content */}
