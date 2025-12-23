@@ -5,7 +5,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Send, Mail, MessageSquare } from "lucide-react";
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+// Hardcoded Supabase URL to fix undefined issue
+const SUPABASE_URL = "https://corsaegkqazlvrhigopw.supabase.co";
 
 export const HomeContactForm = () => {
   const [formData, setFormData] = useState({
@@ -19,8 +20,14 @@ export const HomeContactForm = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
+    const endpoint = `${SUPABASE_URL}/functions/v1/send-contact-email`;
+    console.log("[HomeContactForm] Starting submission...");
+    console.log("[HomeContactForm] Endpoint:", endpoint);
+    console.log("[HomeContactForm] Form data:", formData);
+
     try {
-      const response = await fetch(`${SUPABASE_URL}/functions/v1/send-contact-email`, {
+      console.log("[HomeContactForm] Sending fetch request...");
+      const response = await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -32,10 +39,26 @@ export const HomeContactForm = () => {
         }),
       });
 
-      const data = await response.json();
+      console.log("[HomeContactForm] Response status:", response.status);
+      console.log("[HomeContactForm] Response ok:", response.ok);
+
+      // Get response text first to handle empty responses
+      const responseText = await response.text();
+      console.log("[HomeContactForm] Response text:", responseText);
+
+      // Only parse as JSON if we have content
+      let data = {};
+      if (responseText) {
+        try {
+          data = JSON.parse(responseText);
+          console.log("[HomeContactForm] Parsed data:", data);
+        } catch (parseError) {
+          console.error("[HomeContactForm] JSON parse error:", parseError);
+        }
+      }
 
       if (!response.ok) {
-        throw new Error(data.error || "Failed to send message");
+        throw new Error((data as any).error || `HTTP error ${response.status}`);
       }
 
       toast.success("Message sent successfully!", {
@@ -45,13 +68,16 @@ export const HomeContactForm = () => {
 
       setFormData({ name: "", email: "", message: "" });
     } catch (error: any) {
-      console.error("Error sending message:", error);
+      console.error("[HomeContactForm] Error:", error);
+      console.error("[HomeContactForm] Error name:", error.name);
+      console.error("[HomeContactForm] Error message:", error.message);
       toast.error("Failed to send message", {
         description: error.message || "Please try again or email us directly at support@veritescalp.com",
         position: "top-center",
       });
     } finally {
       setIsSubmitting(false);
+      console.log("[HomeContactForm] Submission complete");
     }
   };
 
