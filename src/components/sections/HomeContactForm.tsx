@@ -4,7 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Send, Mail, MessageSquare } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
 export const HomeContactForm = () => {
   const [formData, setFormData] = useState({
@@ -19,15 +20,23 @@ export const HomeContactForm = () => {
     setIsSubmitting(true);
 
     try {
-      const { error } = await supabase.functions.invoke('send-contact-email', {
-        body: {
+      const response = await fetch(`${SUPABASE_URL}/functions/v1/send-contact-email`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
           name: formData.name,
           email: formData.email,
           message: formData.message,
-        },
+        }),
       });
 
-      if (error) throw error;
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to send message");
+      }
 
       toast.success("Message sent successfully!", {
         description: "We'll get back to you within 24-48 hours.",
@@ -35,10 +44,10 @@ export const HomeContactForm = () => {
       });
 
       setFormData({ name: "", email: "", message: "" });
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error sending message:", error);
       toast.error("Failed to send message", {
-        description: "Please try again or email us directly at support@veritescalp.com",
+        description: error.message || "Please try again or email us directly at support@veritescalp.com",
         position: "top-center",
       });
     } finally {

@@ -1,11 +1,11 @@
-// EDGE FUNCTION VERSION: 4.0.0 - With XHR polyfill
+// EDGE FUNCTION VERSION: 5.0.0 - Direct fetch implementation
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
 };
 
 // HTML escape function
@@ -121,13 +121,28 @@ function getCustomerEmailHtml(name: string): string {
 }
 
 serve(async (req: Request): Promise<Response> => {
-  console.log("=== send-contact-email invoked ===");
+  console.log("=== send-contact-email v5.0.0 invoked ===");
   console.log("Method:", req.method);
+  console.log("URL:", req.url);
 
   // Handle CORS preflight
   if (req.method === "OPTIONS") {
     console.log("Handling OPTIONS preflight");
     return new Response(null, { status: 204, headers: corsHeaders });
+  }
+
+  // Health check endpoint for testing deployment
+  if (req.method === "GET") {
+    console.log("Health check GET request");
+    return new Response(
+      JSON.stringify({ 
+        status: "ok", 
+        version: "5.0.0",
+        timestamp: new Date().toISOString(),
+        message: "send-contact-email function is running"
+      }),
+      { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }
+    );
   }
 
   try {
