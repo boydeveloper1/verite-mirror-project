@@ -6,8 +6,8 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 
-// Hardcoded Supabase URL to fix undefined issue
-const SUPABASE_URL = "https://corsaegkqazlvrhigopw.supabase.co";
+// Use environment variable for Supabase URL
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || "https://rowoikhsitctahecnrdp.supabase.co";
 
 export const ContactSection = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);

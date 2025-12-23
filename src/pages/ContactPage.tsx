@@ -10,8 +10,8 @@ import { toast } from "sonner";
 import { Mail, Phone, MapPin, Send, Clock, MessageSquare } from "lucide-react";
 import productBanner from "@/assets/product-banner.jpg";
 
-// Hardcoded Supabase URL to fix undefined issue
-const SUPABASE_URL = "https://corsaegkqazlvrhigopw.supabase.co";
+// Use environment variable for Supabase URL
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || "https://rowoikhsitctahecnrdp.supabase.co";
 
 const ContactPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
