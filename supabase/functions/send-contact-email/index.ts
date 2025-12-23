@@ -1,4 +1,4 @@
-// EDGE FUNCTION VERSION: 7.0.0 - Lovable Cloud reconnected
+// EDGE FUNCTION VERSION: 8.0.0 - Using verified veritescalp.com domain
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
@@ -121,7 +121,7 @@ function getCustomerEmailHtml(name: string): string {
 }
 
 serve(async (req: Request): Promise<Response> => {
-  console.log("=== send-contact-email v7.0.0 invoked ===");
+  console.log("=== send-contact-email v8.0.0 invoked ===");
   console.log("Method:", req.method);
   console.log("URL:", req.url);
 
@@ -137,9 +137,9 @@ serve(async (req: Request): Promise<Response> => {
     return new Response(
       JSON.stringify({ 
         status: "ok", 
-        version: "7.0.0",
+        version: "8.0.0",
         timestamp: new Date().toISOString(),
-        message: "send-contact-email function is running - Lovable Cloud connected"
+        message: "send-contact-email function is running with verified veritescalp.com domain"
       }),
       { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }
     );
@@ -147,7 +147,7 @@ serve(async (req: Request): Promise<Response> => {
 
   try {
     const body = await req.json();
-    console.log("[v7.0.0] Request body received:", JSON.stringify(body));
+    console.log("[v8.0.0] Request body received:", JSON.stringify(body));
 
     const { name, email, subject, phone, message } = body;
 
@@ -185,7 +185,7 @@ serve(async (req: Request): Promise<Response> => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "VERITÉ SCALP <onboarding@resend.dev>",
+        from: "VERITÉ SCALP <noreply@veritescalp.com>",
         to: ["veritescalp@gmail.com"],
         subject: safeSubject ? `New Message: ${safeSubject}` : `New Message from ${safeName}`,
         html: getSupportEmailHtml({ name: safeName, email: safeEmail, phone: safePhone, subject: safeSubject, message: safeMessage }),
@@ -212,7 +212,7 @@ serve(async (req: Request): Promise<Response> => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "VERITÉ SCALP <onboarding@resend.dev>",
+        from: "VERITÉ SCALP <noreply@veritescalp.com>",
         to: [email],
         subject: "Thank You for Reaching Out! - VERITÉ SCALP",
         html: getCustomerEmailHtml(safeName),
