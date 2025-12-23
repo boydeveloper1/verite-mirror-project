@@ -1,4 +1,4 @@
-// EDGE FUNCTION VERSION: 5.0.0 - Direct fetch implementation
+// EDGE FUNCTION VERSION: 6.0.0 - Fixed config.toml with project_id
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
@@ -121,7 +121,7 @@ function getCustomerEmailHtml(name: string): string {
 }
 
 serve(async (req: Request): Promise<Response> => {
-  console.log("=== send-contact-email v5.0.0 invoked ===");
+  console.log("=== send-contact-email v6.0.0 invoked ===");
   console.log("Method:", req.method);
   console.log("URL:", req.url);
 
@@ -137,9 +137,9 @@ serve(async (req: Request): Promise<Response> => {
     return new Response(
       JSON.stringify({ 
         status: "ok", 
-        version: "5.0.0",
+        version: "6.0.0",
         timestamp: new Date().toISOString(),
-        message: "send-contact-email function is running"
+        message: "send-contact-email function is running with project_id configured"
       }),
       { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }
     );
