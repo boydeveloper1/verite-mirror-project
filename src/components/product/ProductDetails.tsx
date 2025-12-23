@@ -65,31 +65,75 @@ interface ProductDetailsProps {
 export const ProductDetails = ({ product, selectedVariant, onVariantChange }: ProductDetailsProps) => {
   const [quantity, setQuantity] = useState(1);
   const addItem = useCartStore((state) => state.addItem);
-  
+
   const isShowerHead = product.handle?.includes("shower-filter") || product.handle?.includes("shower-head");
   const basePrice = parseFloat(selectedVariant?.price?.amount || product.priceRange.minVariantPrice.amount);
   const currency = selectedVariant?.price?.currencyCode || product.priceRange.minVariantPrice.currencyCode;
-  
+
   // Create dynamic bundles based on product price and type
   const createDynamicBundles = (price: number): BundleOption[] => {
     if (isShowerHead) {
       return [
         { quantity: 1, pricePerUnit: price, totalPrice: price, savings: 0, savingsPercent: 0, label: "Single Unit" },
-        { quantity: 2, pricePerUnit: price * 0.95, totalPrice: price * 1.9, savings: price * 0.1, savingsPercent: 5, isPopular: true, label: "His & Hers", badge: `Save $${(price * 0.1).toFixed(0)}` },
-        { quantity: 3, pricePerUnit: price * 0.9, totalPrice: price * 2.7, savings: price * 0.3, savingsPercent: 10, isBestValue: true, label: "Family Pack", badge: `Save $${(price * 0.3).toFixed(0)}` },
+        {
+          quantity: 2,
+          pricePerUnit: price * 0.95,
+          totalPrice: price * 1.9,
+          savings: price * 0.1,
+          savingsPercent: 5,
+          isPopular: true,
+          label: "His & Hers",
+          badge: `Save $${(price * 0.1).toFixed(0)}`,
+        },
+        {
+          quantity: 3,
+          pricePerUnit: price * 0.9,
+          totalPrice: price * 2.7,
+          savings: price * 0.3,
+          savingsPercent: 10,
+          isBestValue: true,
+          label: "Family Pack",
+          badge: `Save $${(price * 0.3).toFixed(0)}`,
+        },
       ];
     }
     return [
       { quantity: 1, pricePerUnit: price, totalPrice: price, savings: 0, savingsPercent: 0, label: "Starter" },
-      { quantity: 2, pricePerUnit: price * 0.95, totalPrice: price * 1.9, savings: price * 0.1, savingsPercent: 5, isPopular: true, label: "Growth Duo", badge: `Save $${(price * 0.1).toFixed(0)}` },
-      { quantity: 3, pricePerUnit: price * 0.9, totalPrice: price * 2.7, savings: price * 0.3, savingsPercent: 10, isBestValue: true, label: "Full Treatment", badge: `Save $${(price * 0.3).toFixed(0)}` },
-      { quantity: 4, pricePerUnit: price * 0.85, totalPrice: price * 3.4, savings: price * 0.6, savingsPercent: 15, label: "Best for Routine", badge: `Save $${(price * 0.6).toFixed(0)}` },
+      {
+        quantity: 2,
+        pricePerUnit: price * 0.95,
+        totalPrice: price * 1.9,
+        savings: price * 0.1,
+        savingsPercent: 5,
+        isPopular: true,
+        label: "Growth Duo",
+        badge: `Save $${(price * 0.1).toFixed(0)}`,
+      },
+      {
+        quantity: 3,
+        pricePerUnit: price * 0.9,
+        totalPrice: price * 2.7,
+        savings: price * 0.3,
+        savingsPercent: 10,
+        isBestValue: true,
+        label: "Full Treatment",
+        badge: `Save $${(price * 0.3).toFixed(0)}`,
+      },
+      {
+        quantity: 4,
+        pricePerUnit: price * 0.85,
+        totalPrice: price * 3.4,
+        savings: price * 0.6,
+        savingsPercent: 15,
+        label: "Best for Routine",
+        badge: `Save $${(price * 0.6).toFixed(0)}`,
+      },
     ];
   };
-  
+
   const bundles = createDynamicBundles(basePrice);
   const [selectedBundle, setSelectedBundle] = useState<BundleOption>(bundles[0]);
-  
+
   // Update bundle when price changes
   useEffect(() => {
     const newBundles = createDynamicBundles(basePrice);
@@ -97,24 +141,25 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
   }, [basePrice]);
 
   // Get color options for shower head
-  const colorOptions = isShowerHead ? product.options?.find(opt => 
-    opt.name.toLowerCase() === 'color' || opt.name.toLowerCase() === 'colour'
-  ) : null;
+  const colorOptions = isShowerHead
+    ? product.options?.find((opt) => opt.name.toLowerCase() === "color" || opt.name.toLowerCase() === "colour")
+    : null;
 
   const [selectedColor, setSelectedColor] = useState<string>(
-    selectedVariant?.selectedOptions?.find(opt => 
-      opt.name.toLowerCase() === 'color' || opt.name.toLowerCase() === 'colour'
-    )?.value || colorOptions?.values?.[0] || ''
+    selectedVariant?.selectedOptions?.find(
+      (opt) => opt.name.toLowerCase() === "color" || opt.name.toLowerCase() === "colour",
+    )?.value ||
+      colorOptions?.values?.[0] ||
+      "",
   );
 
   // Handle color change
   const handleColorChange = (color: string) => {
     setSelectedColor(color);
-    const matchingVariant = product.variants.edges.find(edge => 
-      edge.node.selectedOptions?.some(opt => 
-        (opt.name.toLowerCase() === 'color' || opt.name.toLowerCase() === 'colour') && 
-        opt.value === color
-      )
+    const matchingVariant = product.variants.edges.find((edge) =>
+      edge.node.selectedOptions?.some(
+        (opt) => (opt.name.toLowerCase() === "color" || opt.name.toLowerCase() === "colour") && opt.value === color,
+      ),
     );
     if (matchingVariant && onVariantChange) {
       onVariantChange(matchingVariant.node);
@@ -163,16 +208,13 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
       </p>
 
       {/* Product Name */}
-      <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary mb-2 md:mb-3">
-        {product.title}
-      </h1>
+      <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary mb-2 md:mb-3">{product.title}</h1>
 
       {/* Short Description */}
       <p className="text-sm md:text-base text-muted-foreground mb-4 leading-relaxed">
-        {isShowerHead 
+        {isShowerHead
           ? "Transform your shower into a scalp treatment. Our 15-stage filtration removes harsh chemicals that damage hair follicles and irritate your scalp."
-          : "Clinically-formulated mist that calms inflammation, balances scalp pH, and creates the ideal environment for stronger, healthier hair growth."
-        }
+          : "Clinically-formulated mist that calms inflammation, balances scalp pH, and creates the ideal environment for stronger, healthier hair growth."}
       </p>
 
       {/* Key Benefits */}
@@ -204,7 +246,7 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
             </li>
             <li className="flex items-center gap-2 text-sm text-foreground">
               <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" />
-              <span>Reduces hair shedding by up to 40%</span>
+              <span>Reduces hair shedding by up to 70%</span>
             </li>
             <li className="flex items-center gap-2 text-sm text-foreground">
               <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" />
@@ -224,13 +266,13 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
         const reviewCount = isShowerHead ? 54 : 127;
         return (
           <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-4 md:mb-6">
-            <button 
+            <button
               onClick={() => {
-                const reviewsTab = document.querySelector('[data-reviews-tab]');
+                const reviewsTab = document.querySelector("[data-reviews-tab]");
                 if (reviewsTab) {
                   (reviewsTab as HTMLButtonElement).click();
                   setTimeout(() => {
-                    reviewsTab.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    reviewsTab.scrollIntoView({ behavior: "smooth", block: "start" });
                   }, 100);
                 }
               }}
@@ -262,25 +304,20 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
           </label>
           <div className="flex gap-3">
             {colorOptions.values.map((color) => {
-              const variantImage = color.toLowerCase() === 'silver' || color.toLowerCase() === 'chrome' 
-                ? showerHeadSilver 
-                : showerHeadBlack;
+              const variantImage =
+                color.toLowerCase() === "silver" || color.toLowerCase() === "chrome"
+                  ? showerHeadSilver
+                  : showerHeadBlack;
               return (
                 <button
                   key={color}
                   onClick={() => handleColorChange(color)}
                   className={cn(
                     "flex flex-col items-center gap-2 p-2 rounded-lg border-2 transition-all",
-                    selectedColor === color
-                      ? "border-accent bg-accent/10"
-                      : "border-border hover:border-accent/50"
+                    selectedColor === color ? "border-accent bg-accent/10" : "border-border hover:border-accent/50",
                   )}
                 >
-                  <img 
-                    src={variantImage} 
-                    alt={`${color} variant`}
-                    className="w-16 h-16 object-cover rounded"
-                  />
+                  <img src={variantImage} alt={`${color} variant`} className="w-16 h-16 object-cover rounded" />
                   <span className="text-sm font-medium">{color}</span>
                 </button>
               );
@@ -292,20 +329,12 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
       {/* Price Box */}
       <div className="p-4 md:p-5 rounded-lg bg-secondary mb-4 md:mb-6">
         <div className="flex items-center gap-2 mb-1.5 md:mb-2">
-          <p className="text-[10px] md:text-xs uppercase tracking-wide text-muted-foreground font-semibold">
-            Price
-          </p>
-          <span className="text-[10px] md:text-xs font-bold text-white bg-red-500 px-2 py-0.5 rounded">
-            30% OFF
-          </span>
+          <p className="text-[10px] md:text-xs uppercase tracking-wide text-muted-foreground font-semibold">Price</p>
+          <span className="text-[10px] md:text-xs font-bold text-white bg-red-500 px-2 py-0.5 rounded">30% OFF</span>
         </div>
         <div className="flex items-baseline gap-3 mb-2 md:mb-3">
-          <p className="text-3xl md:text-4xl font-bold text-accent">
-            ${totalPrice.toFixed(2)}
-          </p>
-          <p className="text-lg md:text-xl text-muted-foreground line-through">
-            ${(totalPrice / 0.7).toFixed(2)}
-          </p>
+          <p className="text-3xl md:text-4xl font-bold text-accent">${totalPrice.toFixed(2)}</p>
+          <p className="text-lg md:text-xl text-muted-foreground line-through">${(totalPrice / 0.7).toFixed(2)}</p>
           <span className="text-sm md:text-lg font-normal text-muted-foreground">{currency}</span>
         </div>
         <div className="space-y-1.5 md:space-y-2">
@@ -325,12 +354,7 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
         <label className="block text-[10px] md:text-xs font-semibold uppercase tracking-wide text-foreground mb-2 md:mb-3">
           Quantity
         </label>
-        <QuantitySelector
-          quantity={quantity}
-          onQuantityChange={setQuantity}
-          min={1}
-          max={10}
-        />
+        <QuantitySelector quantity={quantity} onQuantityChange={setQuantity} min={1} max={10} />
       </div>
 
       {/* Bundle Selector */}
@@ -370,9 +394,7 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
         <div className="flex items-start gap-2 md:gap-3">
           <Truck className="w-4 h-4 md:w-5 md:h-5 text-accent flex-shrink-0 mt-0.5" />
           <div>
-            <p className="text-xs md:text-sm font-semibold text-accent">
-              FREE International Shipping (5-7 days)
-            </p>
+            <p className="text-xs md:text-sm font-semibold text-accent">FREE International Shipping (5-7 days)</p>
             <p className="text-[10px] md:text-xs text-accent/80 mt-0.5 md:mt-1">
               🌍 Ships to 195+ countries | Trackable
             </p>
