@@ -189,6 +189,66 @@ const CART_CREATE_MUTATION = `
   }
 `;
 
+const CART_DISCOUNT_CODES_UPDATE = `
+  mutation cartDiscountCodesUpdate($cartId: ID!, $discountCodes: [String!]!) {
+    cartDiscountCodesUpdate(cartId: $cartId, discountCodes: $discountCodes) {
+      cart {
+        id
+        checkoutUrl
+        discountCodes {
+          code
+          applicable
+        }
+      }
+      userErrors {
+        field
+        message
+      }
+    }
+  }
+`;
+
+// Determine the best discount code based on cart contents
+function getBestDiscountCode(items: CartItem[]): string | null {
+  // Group items by product type
+  let mistCount = 0;
+  let showerheadCount = 0;
+
+  for (const item of items) {
+    const handle = item.product.node.handle.toLowerCase();
+    if (handle.includes('shower') || handle.includes('filter')) {
+      showerheadCount += item.quantity;
+    } else if (handle.includes('mist') || handle.includes('scalp')) {
+      mistCount += item.quantity;
+    }
+  }
+
+  // Determine best discount - prioritize higher discounts
+  // Mist discounts: 4+ = 15%, 3 = 10%, 2 = 5%
+  // Showerhead discounts: 3+ = 10%, 2 = 5%
+  
+  const discounts: { code: string; percentage: number }[] = [];
+
+  if (mistCount >= 4) {
+    discounts.push({ code: 'MIST-BEST-15', percentage: 15 });
+  } else if (mistCount === 3) {
+    discounts.push({ code: 'MIST-TRIO-10', percentage: 10 });
+  } else if (mistCount === 2) {
+    discounts.push({ code: 'MIST-DUO-5', percentage: 5 });
+  }
+
+  if (showerheadCount >= 3) {
+    discounts.push({ code: 'SHOWER-FAMILY-10', percentage: 10 });
+  } else if (showerheadCount === 2) {
+    discounts.push({ code: 'SHOWER-DUO-5', percentage: 5 });
+  }
+
+  // Return the highest percentage discount
+  if (discounts.length === 0) return null;
+  discounts.sort((a, b) => b.percentage - a.percentage);
+  return discounts[0].code;
+}
+
 export async function storefrontApiRequest(query: string, variables: Record<string, unknown> = {}) {
   const response = await fetch(SHOPIFY_STOREFRONT_URL, {
     method: "POST",
@@ -272,10 +332,23 @@ export async function createStorefrontCheckout(items: CartItem[]): Promise<strin
       );
     }
 
-    const cart = cartData.data.cartCreate.cart;
+    let cart = cartData.data.cartCreate.cart;
 
     if (!cart.checkoutUrl) {
       throw new Error("No checkout URL returned from Shopify");
+    }
+
+    // Apply discount code if applicable
+    const discountCode = getBestDiscountCode(items);
+    if (discountCode) {
+      const discountData = await storefrontApiRequest(CART_DISCOUNT_CODES_UPDATE, {
+        cartId: cart.id,
+        discountCodes: [discountCode],
+      });
+
+      if (discountData?.data?.cartDiscountCodesUpdate?.cart?.checkoutUrl) {
+        cart = discountData.data.cartDiscountCodesUpdate.cart;
+      }
     }
 
     const url = new URL(cart.checkoutUrl);
