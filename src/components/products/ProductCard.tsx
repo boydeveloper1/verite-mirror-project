@@ -7,9 +7,10 @@ import { toast } from "sonner";
 
 interface ProductCardProps {
   product: ShopifyProduct;
+  isBestSeller?: boolean;
 }
 
-export const ProductCard = ({ product }: ProductCardProps) => {
+export const ProductCard = ({ product, isBestSeller = false }: ProductCardProps) => {
   const addItem = useCartStore((state) => state.addItem);
   const { node } = product;
   
@@ -44,7 +45,12 @@ export const ProductCard = ({ product }: ProductCardProps) => {
       className="group block bg-card rounded-xl overflow-hidden shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-1"
     >
       {/* Image */}
-      <div className="aspect-square bg-muted overflow-hidden">
+      <div className="aspect-square bg-muted overflow-hidden relative">
+        {isBestSeller && (
+          <div className="absolute top-3 left-3 z-10 bg-accent text-accent-foreground text-xs font-bold px-2.5 py-1 rounded-full shadow-md">
+            Best Seller
+          </div>
+        )}
         {firstImage ? (
           <img
             src={firstImage.url}
