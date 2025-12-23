@@ -9,11 +9,19 @@ const allowedOrigins = [
   "http://localhost:8080",
 ];
 
+// Check if origin matches Lovable preview domains
+function isLovablePreview(origin: string | null): boolean {
+  if (!origin) return false;
+  return origin.includes(".lovableproject.com") || origin.includes(".lovable.app");
+}
+
 function getCorsHeaders(origin: string | null): Record<string, string> {
-  const allowedOrigin =
-    origin && allowedOrigins.some((allowed) => origin.startsWith(allowed.replace(/\/$/, "")))
-      ? origin
-      : allowedOrigins[0];
+  const isAllowed =
+    origin &&
+    (allowedOrigins.some((allowed) => origin.startsWith(allowed.replace(/\/$/, ""))) ||
+      isLovablePreview(origin));
+
+  const allowedOrigin = isAllowed ? origin : allowedOrigins[0];
 
   return {
     "Access-Control-Allow-Origin": allowedOrigin,
