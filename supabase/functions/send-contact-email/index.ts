@@ -1,34 +1,11 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
-// Restrict CORS to the project domain
-const allowedOrigins = [
-  "https://veritescalp.com",
-  "https://www.veritescalp.com",
-  "http://localhost:5173",
-  "http://localhost:8080",
-];
-
-// Check if origin matches Lovable preview domains
-function isLovablePreview(origin: string | null): boolean {
-  if (!origin) return false;
-  return origin.includes(".lovableproject.com") || origin.includes(".lovable.app");
-}
-
-function getCorsHeaders(origin: string | null): Record<string, string> {
-  const isAllowed =
-    origin &&
-    (allowedOrigins.some((allowed) => origin.startsWith(allowed.replace(/\/$/, ""))) ||
-      isLovablePreview(origin));
-
-  const allowedOrigin = isAllowed ? origin : allowedOrigins[0];
-
-  return {
-    "Access-Control-Allow-Origin": allowedOrigin,
-    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
-  };
-}
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+};
 
 // Input validation schema with length limits and format checks
 const ContactSchema = z.object({
@@ -51,7 +28,7 @@ function escapeHtml(text: string): string {
 
 // Simple in-memory rate limiting (per IP, 3 requests per 15 minutes)
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
-const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000; // 15 minutes
+const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000;
 const RATE_LIMIT_MAX_REQUESTS = 3;
 
 function isRateLimited(ip: string): boolean {
@@ -131,9 +108,7 @@ function getSupportEmailHtml(data: {
                       </tr>
                     </table>
                     
-                    ${
-                      data.phone
-                        ? `
+                    ${data.phone ? `
                     <!-- Phone -->
                     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 15px;">
                       <tr>
@@ -141,13 +116,9 @@ function getSupportEmailHtml(data: {
                         <td style="color: #333; font-size: 15px;"><a href="tel:${data.phone}" style="color: #1B7F4D; text-decoration: none;">${data.phone}</a></td>
                       </tr>
                     </table>
-                    `
-                        : ""
-                    }
+                    ` : ""}
                     
-                    ${
-                      data.subject
-                        ? `
+                    ${data.subject ? `
                     <!-- Subject -->
                     <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
                       <tr>
@@ -155,9 +126,7 @@ function getSupportEmailHtml(data: {
                         <td style="color: #333; font-size: 15px; font-weight: 500;">${data.subject}</td>
                       </tr>
                     </table>
-                    `
-                        : ""
-                    }
+                    ` : ""}
                   </td>
                 </tr>
               </table>
@@ -183,27 +152,8 @@ function getSupportEmailHtml(data: {
           
           <!-- Footer -->
           <tr>
-            <td style="background-color: #2D5A3D; padding: 30px;">
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
-                <tr>
-                  <td style="text-align: center; padding-bottom: 20px;">
-                    <a href="https://veritescalp.com/store" style="color: #ffffff; text-decoration: none; font-size: 13px; margin: 0 12px; font-weight: 500;">Shop</a>
-                    <a href="https://veritescalp.com/about" style="color: #ffffff; text-decoration: none; font-size: 13px; margin: 0 12px; font-weight: 500;">About</a>
-                    <a href="https://veritescalp.com/blog" style="color: #ffffff; text-decoration: none; font-size: 13px; margin: 0 12px; font-weight: 500;">Blog</a>
-                    <a href="https://veritescalp.com/contact" style="color: #ffffff; text-decoration: none; font-size: 13px; margin: 0 12px; font-weight: 500;">Contact</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px; text-align: center;">
-                    <p style="color: rgba(255,255,255,0.7); font-size: 11px; margin: 0 0 10px 0;">
-                      <a href="https://veritescalp.com/privacy-policy" style="color: rgba(255,255,255,0.7); text-decoration: none;">Privacy Policy</a> &nbsp;|&nbsp; 
-                      <a href="https://veritescalp.com/terms-of-service" style="color: rgba(255,255,255,0.7); text-decoration: none;">Terms of Service</a> &nbsp;|&nbsp;
-                      <a href="https://veritescalp.com/refund-policy" style="color: rgba(255,255,255,0.7); text-decoration: none;">Refund Policy</a>
-                    </p>
-                    <p style="color: rgba(255,255,255,0.5); font-size: 11px; margin: 0;">© 2024 VERITÉ SCALP. All rights reserved.</p>
-                  </td>
-                </tr>
-              </table>
+            <td style="background-color: #2D5A3D; padding: 30px; text-align: center;">
+              <p style="color: rgba(255,255,255,0.5); font-size: 11px; margin: 0;">© 2024 VERITÉ SCALP. All rights reserved.</p>
             </td>
           </tr>
           
@@ -251,54 +201,14 @@ function getCustomerEmailHtml(name: string): string {
               </p>
               
               <p style="color: #444; font-size: 16px; line-height: 1.8; margin: 0 0 25px 0;">
-                Our dedicated team will review your message and get back to you within <strong style="color: #1B7F4D;">24-48 hours</strong>. In the meantime, feel free to explore our products or learn more about scalp health on our blog.
+                Our dedicated team will review your message and get back to you within <strong style="color: #1B7F4D;">24-48 hours</strong>.
               </p>
               
-              <!-- Info Box -->
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background: linear-gradient(135deg, #F5F1E8 0%, #EDE9E0 100%); border-radius: 12px; border-left: 4px solid #1B7F4D;">
-                <tr>
-                  <td style="padding: 20px 25px;">
-                    <p style="color: #2D5A3D; font-size: 14px; margin: 0; font-weight: 600;">💡 Did you know?</p>
-                    <p style="color: #555; font-size: 14px; line-height: 1.6; margin: 10px 0 0 0;">
-                      Scalp inflammation is the hidden cause of most hair loss issues. When you calm the scalp, hair grows naturally. That's the VERITÉ difference.
-                    </p>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          
-          <!-- CTA Buttons -->
-          <tr>
-            <td style="padding: 0 30px 40px 30px;">
+              <!-- CTA Button -->
               <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
                 <tr>
-                  <td style="text-align: center; padding-bottom: 15px;">
+                  <td style="text-align: center; padding: 15px 0;">
                     <a href="https://veritescalp.com/store" style="display: inline-block; background: linear-gradient(135deg, #1B7F4D 0%, #2D5A3D 100%); color: #ffffff; text-decoration: none; padding: 16px 40px; border-radius: 8px; font-weight: 700; font-size: 15px; letter-spacing: 0.5px;">Shop Our Products</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="text-align: center;">
-                    <a href="https://veritescalp.com/blog" style="display: inline-block; background-color: transparent; color: #1B7F4D; text-decoration: none; padding: 14px 35px; border-radius: 8px; font-weight: 600; font-size: 14px; border: 2px solid #1B7F4D;">Read Our Blog</a>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          
-          <!-- Signature -->
-          <tr>
-            <td style="padding: 0 30px 30px 30px; border-top: 1px solid #E8E4DC;">
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
-                <tr>
-                  <td style="padding-top: 25px;">
-                    <p style="color: #444; font-size: 15px; line-height: 1.6; margin: 0;">
-                      With love,<br>
-                      <strong style="color: #2D5A3D;">The VERITÉ SCALP Team</strong>
-                    </p>
-                    <p style="color: #888; font-size: 13px; margin: 15px 0 0 0; font-style: italic;">
-                      "Fix your scalp environment. Watch your edges grow back naturally."
-                    </p>
                   </td>
                 </tr>
               </table>
@@ -307,35 +217,11 @@ function getCustomerEmailHtml(name: string): string {
           
           <!-- Footer -->
           <tr>
-            <td style="background-color: #2D5A3D; padding: 30px;">
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
-                <tr>
-                  <td style="text-align: center; padding-bottom: 20px;">
-                    <a href="https://veritescalp.com/store" style="color: #ffffff; text-decoration: none; font-size: 13px; margin: 0 12px; font-weight: 500;">Shop</a>
-                    <a href="https://veritescalp.com/about" style="color: #ffffff; text-decoration: none; font-size: 13px; margin: 0 12px; font-weight: 500;">About</a>
-                    <a href="https://veritescalp.com/blog" style="color: #ffffff; text-decoration: none; font-size: 13px; margin: 0 12px; font-weight: 500;">Blog</a>
-                    <a href="https://veritescalp.com/contact" style="color: #ffffff; text-decoration: none; font-size: 13px; margin: 0 12px; font-weight: 500;">Contact</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="text-align: center; padding-bottom: 15px;">
-                    <p style="color: rgba(255,255,255,0.9); font-size: 13px; margin: 0;">
-                      📧 support@veritescalp.com
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px; text-align: center;">
-                    <p style="color: rgba(255,255,255,0.7); font-size: 11px; margin: 0 0 10px 0;">
-                      <a href="https://veritescalp.com/privacy-policy" style="color: rgba(255,255,255,0.7); text-decoration: none;">Privacy Policy</a> &nbsp;|&nbsp; 
-                      <a href="https://veritescalp.com/terms-of-service" style="color: rgba(255,255,255,0.7); text-decoration: none;">Terms of Service</a> &nbsp;|&nbsp;
-                      <a href="https://veritescalp.com/refund-policy" style="color: rgba(255,255,255,0.7); text-decoration: none;">Refund Policy</a> &nbsp;|&nbsp;
-                      <a href="https://veritescalp.com/shipping-policy" style="color: rgba(255,255,255,0.7); text-decoration: none;">Shipping Policy</a>
-                    </p>
-                    <p style="color: rgba(255,255,255,0.5); font-size: 11px; margin: 0;">© 2024 VERITÉ SCALP. All rights reserved.</p>
-                  </td>
-                </tr>
-              </table>
+            <td style="background-color: #2D5A3D; padding: 30px; text-align: center;">
+              <p style="color: rgba(255,255,255,0.9); font-size: 13px; margin: 0 0 10px 0;">
+                📧 support@veritescalp.com
+              </p>
+              <p style="color: rgba(255,255,255,0.5); font-size: 11px; margin: 0;">© 2024 VERITÉ SCALP. All rights reserved.</p>
             </td>
           </tr>
           
@@ -349,36 +235,47 @@ function getCustomerEmailHtml(name: string): string {
 }
 
 const handler = async (req: Request): Promise<Response> => {
-  const origin = req.headers.get("origin");
-  const corsHeaders = getCorsHeaders(origin);
-
+  console.log("Received request:", req.method, req.url);
+  
+  // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
+    console.log("Handling OPTIONS preflight request");
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
     // Rate limiting check
     const clientIP =
-      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("cf-connecting-ip") || "unknown";
+      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || 
+      req.headers.get("cf-connecting-ip") || 
+      "unknown";
 
     if (isRateLimited(clientIP)) {
       console.log(`Rate limit exceeded for IP: ${clientIP}`);
-      return new Response(JSON.stringify({ error: "Too many requests. Please try again later." }), {
-        status: 429,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      });
+      return new Response(
+        JSON.stringify({ error: "Too many requests. Please try again later." }), 
+        {
+          status: 429,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
     }
 
     // Validate and parse input
     const rawData = await req.json();
+    console.log("Received form data:", { name: rawData.name, email: rawData.email });
+    
     const validationResult = ContactSchema.safeParse(rawData);
 
     if (!validationResult.success) {
       console.log("Validation failed:", validationResult.error.errors);
-      return new Response(JSON.stringify({ error: "Invalid input", details: validationResult.error.errors }), {
-        status: 400,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      });
+      return new Response(
+        JSON.stringify({ error: "Invalid input", details: validationResult.error.errors }), 
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
     }
 
     const { name, email, subject, phone, message } = validationResult.data;
@@ -390,27 +287,26 @@ const handler = async (req: Request): Promise<Response> => {
     const safePhone = phone ? escapeHtml(phone) : null;
     const safeMessage = escapeHtml(message);
 
-    console.log("Received validated contact form submission:", {
-      name: safeName,
-      email: safeEmail,
-      subject: safeSubject,
-    });
+    console.log("Validated contact form submission:", { name: safeName, email: safeEmail });
 
     const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
     if (!RESEND_API_KEY) {
+      console.error("RESEND_API_KEY is not configured");
       throw new Error("RESEND_API_KEY is not configured");
     }
 
-    // Send beautiful branded email to support with all form details
+    // Send email to support team using fetch
+    console.log("Sending email to support team...");
     const supportRes = await fetch("https://api.resend.com/emails", {
       method: "POST",
-      headers: { Authorization: `Bearer ${RESEND_API_KEY}`, "Content-Type": "application/json" },
+      headers: {
+        "Authorization": `Bearer ${RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
-        cc: ["veritescalp@gmail.com"],
-        bcc: ["veritescalp@gmail.com"],
-        from: "VERITÉ SCALP <no-reply@veritescalp.com>",
+        from: "VERITÉ SCALP <onboarding@resend.dev>",
         to: ["veritescalp@gmail.com"],
-        subject: safeSubject ? `New Message from ${safeName}` : `New Message from ${safeName}`,
+        subject: safeSubject ? `New Message from ${safeName}: ${safeSubject}` : `New Message from ${safeName}`,
         html: getSupportEmailHtml({
           name: safeName,
           email: safeEmail,
@@ -421,41 +317,55 @@ const handler = async (req: Request): Promise<Response> => {
       }),
     });
 
+    const supportResult = await supportRes.json();
+    console.log("Support email result:", supportResult);
+
     if (!supportRes.ok) {
-      const errorData = await supportRes.text();
-      console.error("Failed to send support email:", errorData);
+      console.error("Failed to send support email:", supportResult);
       throw new Error("Failed to send email to support");
     }
 
-    // Send beautiful branded confirmation email to customer
+    // Send confirmation email to customer
+    console.log("Sending confirmation email to customer...");
     const confirmRes = await fetch("https://api.resend.com/emails", {
       method: "POST",
-      headers: { Authorization: `Bearer ${RESEND_API_KEY}`, "Content-Type": "application/json" },
+      headers: {
+        "Authorization": `Bearer ${RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
-        from: "VERITÉ SCALP <support@veritescalp.com>",
+        from: "VERITÉ SCALP <onboarding@resend.dev>",
         to: [email],
         subject: "Thank You for Reaching Out! 💚 - VERITÉ SCALP",
         html: getCustomerEmailHtml(safeName),
       }),
     });
 
+    const confirmResult = await confirmRes.json();
+    console.log("Confirmation email result:", confirmResult);
+
     if (!confirmRes.ok) {
-      console.warn("Failed to send confirmation email to customer");
+      console.warn("Failed to send confirmation email:", confirmResult);
       // Don't fail the request if confirmation email fails
     }
 
     console.log("Emails sent successfully");
-    return new Response(JSON.stringify({ success: true }), {
-      status: 200,
-      headers: { "Content-Type": "application/json", ...corsHeaders },
-    });
+    return new Response(
+      JSON.stringify({ success: true }), 
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      }
+    );
   } catch (error: any) {
-    console.error("Error:", error);
-    // Return generic error message to prevent information leakage
-    return new Response(JSON.stringify({ error: "An error occurred while processing your request." }), {
-      status: 500,
-      headers: { "Content-Type": "application/json", ...corsHeaders },
-    });
+    console.error("Error in send-contact-email function:", error);
+    return new Response(
+      JSON.stringify({ error: "An error occurred while processing your request." }), 
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      }
+    );
   }
 };
 
