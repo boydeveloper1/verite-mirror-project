@@ -21,12 +21,8 @@ export const HomeContactForm = () => {
     setIsSubmitting(true);
 
     const endpoint = `${SUPABASE_URL}/functions/v1/send-contact-email`;
-    console.log("[HomeContactForm] Starting submission...");
-    console.log("[HomeContactForm] Endpoint:", endpoint);
-    console.log("[HomeContactForm] Form data:", formData);
 
     try {
-      console.log("[HomeContactForm] Sending fetch request...");
       const response = await fetch(endpoint, {
         method: "POST",
         headers: {
@@ -39,21 +35,13 @@ export const HomeContactForm = () => {
         }),
       });
 
-      console.log("[HomeContactForm] Response status:", response.status);
-      console.log("[HomeContactForm] Response ok:", response.ok);
-
-      // Get response text first to handle empty responses
       const responseText = await response.text();
-      console.log("[HomeContactForm] Response text:", responseText);
-
-      // Only parse as JSON if we have content
       let data = {};
       if (responseText) {
         try {
           data = JSON.parse(responseText);
-          console.log("[HomeContactForm] Parsed data:", data);
-        } catch (parseError) {
-          console.error("[HomeContactForm] JSON parse error:", parseError);
+        } catch {
+          // Silent parse error
         }
       }
 
@@ -61,23 +49,19 @@ export const HomeContactForm = () => {
         throw new Error((data as any).error || `HTTP error ${response.status}`);
       }
 
-      toast.success("Message sent successfully!", {
-        description: "We'll get back to you within 24-48 hours.",
+      toast.success("Thank you for reaching out!", {
+        description: "We've received your message and will respond within 24-48 hours.",
         position: "top-center",
       });
 
       setFormData({ name: "", email: "", message: "" });
     } catch (error: any) {
-      console.error("[HomeContactForm] Error:", error);
-      console.error("[HomeContactForm] Error name:", error.name);
-      console.error("[HomeContactForm] Error message:", error.message);
-      toast.error("Failed to send message", {
-        description: error.message || "Please try again or email us directly at support@veritescalp.com",
+      toast.error("Unable to send message", {
+        description: "Please try again or email us at support@veritescalp.com",
         position: "top-center",
       });
     } finally {
       setIsSubmitting(false);
-      console.log("[HomeContactForm] Submission complete");
     }
   };
 

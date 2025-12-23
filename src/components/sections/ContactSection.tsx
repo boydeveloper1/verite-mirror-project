@@ -30,8 +30,6 @@ export const ContactSection = () => {
     setIsSubmitting(true);
 
     const endpoint = `${SUPABASE_URL}/functions/v1/send-contact-email`;
-    console.log("[ContactSection] Starting submission...");
-    console.log("[ContactSection] Endpoint:", endpoint);
 
     try {
       const response = await fetch(endpoint, {
@@ -47,17 +45,13 @@ export const ContactSection = () => {
         }),
       });
 
-      console.log("[ContactSection] Response status:", response.status);
-
       const responseText = await response.text();
-      console.log("[ContactSection] Response text:", responseText);
-
       let data = {};
       if (responseText) {
         try {
           data = JSON.parse(responseText);
-        } catch (parseError) {
-          console.error("[ContactSection] JSON parse error:", parseError);
+        } catch {
+          // Silent parse error
         }
       }
 
@@ -65,16 +59,15 @@ export const ContactSection = () => {
         throw new Error((data as any).error || `HTTP error ${response.status}`);
       }
 
-      toast.success("Message sent successfully!", {
-        description: "We'll get back to you within 24-48 hours.",
+      toast.success("Thank you for reaching out!", {
+        description: "We've received your message and will respond within 24-48 hours.",
         position: "top-center",
       });
 
       setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (error: any) {
-      console.error("[ContactSection] Error:", error);
-      toast.error("Failed to send message", {
-        description: error.message || "Please try again or email us directly at support@veritescalp.com",
+      toast.error("Unable to send message", {
+        description: "Please try again or email us at support@veritescalp.com",
         position: "top-center",
       });
     } finally {
