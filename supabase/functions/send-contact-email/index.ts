@@ -1,5 +1,6 @@
-// EDGE FUNCTION VERSION: 3.0.0 - Fresh Rebuild
-import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+// EDGE FUNCTION VERSION: 4.0.0 - With XHR polyfill
+import "https://deno.land/x/xhr@0.1.0/mod.ts";
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -7,7 +8,7 @@ const corsHeaders = {
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
-// HTML escape function to prevent XSS
+// HTML escape function
 function escapeHtml(text: string): string {
   return text
     .replace(/&/g, "&amp;")
@@ -31,13 +32,12 @@ function getSupportEmailHtml(data: {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>New Contact Form Submission</title>
 </head>
-<body style="margin: 0; padding: 0; font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #F5F1E8;">
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #F5F1E8;">
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #F5F1E8;">
     <tr>
       <td style="padding: 40px 20px;">
-        <table role="presentation" width="100%" max-width="600" cellspacing="0" cellpadding="0" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
           <tr>
             <td style="background: linear-gradient(135deg, #2D5A3D 0%, #1B7F4D 100%); padding: 40px 30px; text-align: center;">
               <h1 style="color: #ffffff; font-size: 24px; margin: 0; font-weight: 700; letter-spacing: 2px;">VERITÉ SCALP</h1>
@@ -45,65 +45,23 @@ function getSupportEmailHtml(data: {
             </td>
           </tr>
           <tr>
-            <td style="padding: 30px 30px 0 30px;">
-              <h2 style="color: #2D5A3D; font-size: 22px; margin: 0 0 20px 0; font-weight: 700;">📩 New Contact Form Submission</h2>
-              <div style="height: 3px; width: 60px; background: linear-gradient(90deg, #1B7F4D, #2D5A3D); border-radius: 2px;"></div>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding: 25px 30px;">
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #F5F1E8; border-radius: 12px; overflow: hidden;">
-                <tr>
-                  <td style="padding: 25px;">
-                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 15px;">
-                      <tr>
-                        <td style="width: 100px; color: #666; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; vertical-align: top; padding-top: 3px;">Name</td>
-                        <td style="color: #2D5A3D; font-size: 15px; font-weight: 600;">${data.name}</td>
-                      </tr>
-                    </table>
-                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 15px;">
-                      <tr>
-                        <td style="width: 100px; color: #666; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; vertical-align: top; padding-top: 3px;">Email</td>
-                        <td style="color: #1B7F4D; font-size: 15px;"><a href="mailto:${data.email}" style="color: #1B7F4D; text-decoration: none;">${data.email}</a></td>
-                      </tr>
-                    </table>
-                    ${data.phone ? `
-                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 15px;">
-                      <tr>
-                        <td style="width: 100px; color: #666; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; vertical-align: top; padding-top: 3px;">Phone</td>
-                        <td style="color: #333; font-size: 15px;"><a href="tel:${data.phone}" style="color: #1B7F4D; text-decoration: none;">${data.phone}</a></td>
-                      </tr>
-                    </table>
-                    ` : ""}
-                    ${data.subject ? `
-                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
-                      <tr>
-                        <td style="width: 100px; color: #666; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; vertical-align: top; padding-top: 3px;">Subject</td>
-                        <td style="color: #333; font-size: 15px; font-weight: 500;">${data.subject}</td>
-                      </tr>
-                    </table>
-                    ` : ""}
-                  </td>
-                </tr>
+            <td style="padding: 30px;">
+              <h2 style="color: #2D5A3D; font-size: 22px; margin: 0 0 20px 0;">New Contact Form Submission</h2>
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #F5F1E8; border-radius: 12px;">
+                <tr><td style="padding: 20px;">
+                  <p style="margin: 0 0 10px 0;"><strong>Name:</strong> ${data.name}</p>
+                  <p style="margin: 0 0 10px 0;"><strong>Email:</strong> <a href="mailto:${data.email}">${data.email}</a></p>
+                  ${data.phone ? `<p style="margin: 0 0 10px 0;"><strong>Phone:</strong> ${data.phone}</p>` : ""}
+                  ${data.subject ? `<p style="margin: 0 0 10px 0;"><strong>Subject:</strong> ${data.subject}</p>` : ""}
+                </td></tr>
               </table>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding: 0 30px 25px 30px;">
-              <h3 style="color: #2D5A3D; font-size: 16px; margin: 0 0 15px 0; font-weight: 700;">💬 Message</h3>
-              <div style="background-color: #ffffff; border: 2px solid #E8E4DC; border-radius: 12px; padding: 20px;">
-                <p style="color: #444; font-size: 15px; line-height: 1.7; margin: 0; white-space: pre-wrap;">${data.message}</p>
+              <h3 style="color: #2D5A3D; margin: 20px 0 10px 0;">Message:</h3>
+              <div style="background-color: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 15px;">
+                <p style="margin: 0; white-space: pre-wrap;">${data.message}</p>
               </div>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding: 0 30px 30px 30px; text-align: center;">
-              <a href="mailto:${data.email}?subject=Re: ${data.subject || "Your VERITÉ SCALP Inquiry"}" style="display: inline-block; background: linear-gradient(135deg, #1B7F4D 0%, #2D5A3D 100%); color: #ffffff; text-decoration: none; padding: 14px 35px; border-radius: 8px; font-weight: 600; font-size: 14px; letter-spacing: 0.5px;">Reply to ${data.name}</a>
-            </td>
-          </tr>
-          <tr>
-            <td style="background-color: #2D5A3D; padding: 30px; text-align: center;">
-              <p style="color: rgba(255,255,255,0.5); font-size: 11px; margin: 0;">© 2024 VERITÉ SCALP. All rights reserved.</p>
+              <p style="margin-top: 20px; text-align: center;">
+                <a href="mailto:${data.email}" style="display: inline-block; background: #2D5A3D; color: #fff; padding: 12px 30px; border-radius: 6px; text-decoration: none;">Reply to ${data.name}</a>
+              </p>
             </td>
           </tr>
         </table>
@@ -111,11 +69,10 @@ function getSupportEmailHtml(data: {
     </tr>
   </table>
 </body>
-</html>
-`;
+</html>`;
 }
 
-// Customer confirmation email template
+// Customer confirmation email
 function getCustomerEmailHtml(name: string): string {
   return `
 <!DOCTYPE html>
@@ -123,13 +80,12 @@ function getCustomerEmailHtml(name: string): string {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thank You for Contacting Us</title>
 </head>
-<body style="margin: 0; padding: 0; font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #F5F1E8;">
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #F5F1E8;">
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #F5F1E8;">
     <tr>
       <td style="padding: 40px 20px;">
-        <table role="presentation" width="100%" max-width="600" cellspacing="0" cellpadding="0" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
           <tr>
             <td style="background: linear-gradient(135deg, #2D5A3D 0%, #1B7F4D 100%); padding: 50px 30px; text-align: center;">
               <h1 style="color: #ffffff; font-size: 28px; margin: 0; font-weight: 700; letter-spacing: 2px;">VERITÉ SCALP</h1>
@@ -138,21 +94,16 @@ function getCustomerEmailHtml(name: string): string {
           </tr>
           <tr>
             <td style="padding: 40px 30px;">
-              <h2 style="color: #2D5A3D; font-size: 26px; margin: 0 0 10px 0; font-weight: 700;">Thank You, ${name}!</h2>
-              <div style="height: 3px; width: 80px; background: linear-gradient(90deg, #1B7F4D, #2D5A3D); border-radius: 2px; margin-bottom: 25px;"></div>
+              <h2 style="color: #2D5A3D; font-size: 26px; margin: 0 0 20px 0;">Thank You, ${name}!</h2>
               <p style="color: #444; font-size: 16px; line-height: 1.8; margin: 0 0 20px 0;">
-                We've received your message and are so grateful you reached out to us. Your hair health journey matters to us, and we're here to help every step of the way.
+                We've received your message and are grateful you reached out. Your hair health journey matters to us.
               </p>
               <p style="color: #444; font-size: 16px; line-height: 1.8; margin: 0 0 25px 0;">
-                Our dedicated team will review your message and get back to you within <strong style="color: #1B7F4D;">24-48 hours</strong>.
+                Our team will get back to you within <strong style="color: #1B7F4D;">24-48 hours</strong>.
               </p>
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
-                <tr>
-                  <td style="text-align: center; padding: 15px 0;">
-                    <a href="https://veritescalp.com/store" style="display: inline-block; background: linear-gradient(135deg, #1B7F4D 0%, #2D5A3D 100%); color: #ffffff; text-decoration: none; padding: 16px 40px; border-radius: 8px; font-weight: 700; font-size: 15px; letter-spacing: 0.5px;">Shop Our Products</a>
-                  </td>
-                </tr>
-              </table>
+              <p style="text-align: center;">
+                <a href="https://veritescalp.com/store" style="display: inline-block; background: #2D5A3D; color: #fff; padding: 16px 40px; border-radius: 8px; text-decoration: none; font-weight: 700;">Shop Our Products</a>
+              </p>
             </td>
           </tr>
           <tr>
@@ -166,25 +117,27 @@ function getCustomerEmailHtml(name: string): string {
     </tr>
   </table>
 </body>
-</html>
-`;
+</html>`;
 }
 
 serve(async (req: Request): Promise<Response> => {
-  console.log("Function invoked - Method:", req.method);
+  console.log("=== send-contact-email invoked ===");
+  console.log("Method:", req.method);
 
   // Handle CORS preflight
   if (req.method === "OPTIONS") {
+    console.log("Handling OPTIONS preflight");
     return new Response(null, { status: 204, headers: corsHeaders });
   }
 
   try {
     const body = await req.json();
-    console.log("Request body:", JSON.stringify(body));
+    console.log("Request body received:", JSON.stringify(body));
 
     const { name, email, subject, phone, message } = body;
 
     if (!name || !email || !message) {
+      console.log("Missing required fields");
       return new Response(
         JSON.stringify({ error: "Name, email, and message are required" }),
         { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
@@ -198,10 +151,10 @@ serve(async (req: Request): Promise<Response> => {
     const safeMessage = escapeHtml(message);
 
     const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
-    console.log("RESEND_API_KEY present:", !!RESEND_API_KEY);
+    console.log("RESEND_API_KEY exists:", !!RESEND_API_KEY);
 
     if (!RESEND_API_KEY) {
-      console.error("RESEND_API_KEY not found");
+      console.error("RESEND_API_KEY not configured");
       return new Response(
         JSON.stringify({ error: "Email service not configured" }),
         { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
@@ -209,7 +162,7 @@ serve(async (req: Request): Promise<Response> => {
     }
 
     // Send to support
-    console.log("Sending support email...");
+    console.log("Sending support email to veritescalp@gmail.com...");
     const supportRes = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -225,9 +178,10 @@ serve(async (req: Request): Promise<Response> => {
     });
 
     const supportData = await supportRes.json();
-    console.log("Support email response:", supportRes.status, JSON.stringify(supportData));
+    console.log("Resend API response:", supportRes.status, JSON.stringify(supportData));
 
     if (!supportRes.ok) {
+      console.error("Resend API error:", JSON.stringify(supportData));
       return new Response(
         JSON.stringify({ error: "Failed to send email", details: supportData }),
         { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
@@ -235,8 +189,8 @@ serve(async (req: Request): Promise<Response> => {
     }
 
     // Send confirmation to customer
-    console.log("Sending confirmation email...");
-    const confirmRes = await fetch("https://api.resend.com/emails", {
+    console.log("Sending confirmation email to:", email);
+    await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${RESEND_API_KEY}`,
@@ -250,18 +204,16 @@ serve(async (req: Request): Promise<Response> => {
       }),
     });
 
-    const confirmData = await confirmRes.json();
-    console.log("Confirmation email response:", confirmRes.status, JSON.stringify(confirmData));
-
+    console.log("=== Emails sent successfully ===");
     return new Response(
       JSON.stringify({ success: true, id: supportData.id }),
       { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }
     );
 
   } catch (error: any) {
-    console.error("Error:", error.message);
+    console.error("Function error:", error.message, error.stack);
     return new Response(
-      JSON.stringify({ error: "An error occurred" }),
+      JSON.stringify({ error: "An error occurred processing your request" }),
       { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
     );
   }
