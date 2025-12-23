@@ -155,34 +155,6 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
   const totalPrice = selectedBundle.totalPrice * quantity;
   const unitLabel = isShowerHead ? "Unit" : "Bottle";
 
-  // Product-specific content
-  const getProductContent = () => {
-    if (isShowerHead) {
-      return {
-        tagline: "Transform Your Shower Into a Scalp Healing Sanctuary",
-        description: "Our 15-stage filtration system removes 99% of harmful chlorine, heavy metals, and sediments that damage your scalp and hair daily.",
-        benefits: [
-          "Eliminates chlorine that causes scalp dryness and irritation",
-          "Filters heavy metals linked to hair thinning and breakage",
-          "Restores your hair's natural softness and shine in weeks",
-          "Universal fit—installs in under 5 minutes, no tools needed"
-        ]
-      };
-    }
-    return {
-      tagline: "Calm. Nourish. Restore.",
-      description: "A powerful blend of botanical extracts that penetrates deep into the scalp to stop inflammation at the source and create the optimal environment for hair regrowth.",
-      benefits: [
-        "Reduces scalp inflammation and redness within 2-3 weeks",
-        "Strengthens hair follicles to minimize shedding",
-        "Balances scalp oil production for lasting freshness",
-        "100% natural ingredients—no sulfates, parabens, or silicones"
-      ]
-    };
-  };
-
-  const productContent = getProductContent();
-
   return (
     <div className="lg:sticky lg:top-8 mt-4 md:mt-0">
       {/* Brand Name */}
@@ -195,25 +167,30 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
         {product.title}
       </h1>
 
-      {/* Tagline */}
-      <p className="text-base md:text-lg font-medium text-accent italic mb-3 md:mb-4">
-        {productContent.tagline}
+      {/* Specs - Dynamic based on product */}
+      <p className="text-xs md:text-sm text-muted-foreground mb-3 md:mb-4 flex items-center gap-1.5 md:gap-2 flex-wrap">
+        {isShowerHead ? (
+          <>
+            <span>15-Stage Filter</span>
+            <span className="text-border">|</span>
+            <span>Universal Fit</span>
+            <span className="text-border">|</span>
+            <span className="flex items-center gap-1">
+              <span className="text-accent">💧</span> 99% Chlorine Removal
+            </span>
+          </>
+        ) : (
+          <>
+            <span>180ml</span>
+            <span className="text-border">|</span>
+            <span>Spray Bottle</span>
+            <span className="text-border">|</span>
+            <span className="flex items-center gap-1">
+              <span className="text-accent">🌿</span> Natural Ingredients
+            </span>
+          </>
+        )}
       </p>
-
-      {/* Short Description */}
-      <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-4 md:mb-5">
-        {productContent.description}
-      </p>
-
-      {/* Key Benefits Bullet Points */}
-      <ul className="space-y-2 md:space-y-3 mb-5 md:mb-6">
-        {productContent.benefits.map((benefit, index) => (
-          <li key={index} className="flex items-start gap-2.5 md:gap-3">
-            <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-accent flex-shrink-0 mt-0.5" />
-            <span className="text-sm md:text-base text-foreground leading-snug">{benefit}</span>
-          </li>
-        ))}
-      </ul>
 
       {/* Rating - Dynamic based on product */}
       {(() => {

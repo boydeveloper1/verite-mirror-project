@@ -52,36 +52,35 @@ export const ProductsSection = () => {
   };
 
   return (
-    <section id="shop" className="py-20 md:py-32 bg-cream-gradient">
-      <div className="container mx-auto px-4 md:px-8 lg:px-12">
+    <section id="shop" className="py-20 md:py-28 bg-background">
+      <div className="container mx-auto px-4 md:px-10">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 md:mb-20 animate-fade-in-up">
-          <span className="inline-block text-accent font-bold uppercase tracking-[0.2em] text-xs md:text-sm mb-4 md:mb-6">
-            Shop Collection
-          </span>
-          <h2 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold text-primary mb-4 md:mb-6 leading-tight">
+        <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in-up">
+          <span className="inline-block text-accent font-semibold uppercase tracking-wider mb-4">Our Products</span>
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-5">
             Complete Scalp Care System
           </h2>
-          <p className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Clinically formulated products that work together to heal your scalp and restore healthy hair growth.
+          <p className="text-base md:text-lg text-muted-foreground">
+            Each product stops inflammation at a different source. Together, they heal your scalp and restore hair
+            growth.
           </p>
         </div>
 
         {/* Products Grid */}
         {isLoading ? (
           <div className="flex items-center justify-center py-20">
-            <Loader2 className="w-10 h-10 text-accent animate-spin" />
+            <Loader2 className="w-8 h-8 text-accent animate-spin" />
           </div>
         ) : products.length === 0 ? (
-          <div className="text-center py-20 bg-card rounded-3xl shadow-medium max-w-xl mx-auto">
+          <div className="text-center py-20 bg-card rounded-2xl shadow-soft">
             <p className="text-muted-foreground text-lg mb-4">No products found</p>
             <p className="text-muted-foreground">
               Create your first product by telling the chat what you want to sell!
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 md:gap-10 lg:gap-12 max-w-5xl mx-auto">
-            {products.map((product, index) => {
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {products.map((product) => {
               const { node } = product;
               const firstVariant = node.variants.edges[0]?.node;
               const firstImage = node.images.edges[0]?.node;
@@ -92,101 +91,87 @@ export const ProductsSection = () => {
                 <Link
                   key={node.id}
                   to={`/product/${node.handle}`}
-                  className="group block bg-card rounded-2xl md:rounded-3xl overflow-hidden shadow-soft hover:shadow-glow transition-all duration-500 hover:-translate-y-3 animate-fade-in-up border border-border/50"
-                  style={{ animationDelay: `${index * 150}ms` }}
+                  className="group block bg-card rounded-xl overflow-hidden shadow-soft hover:shadow-medium transition-all duration-500 hover:-translate-y-2 animate-fade-in-up"
+                  style={{ animationDelay: `${products.indexOf(product) * 100}ms` }}
                   onMouseEnter={() => setHoveredProduct(node.id)}
                   onMouseLeave={() => setHoveredProduct(null)}
                 >
-                  {/* Image Container */}
-                  <div className="aspect-[4/3] bg-secondary overflow-hidden relative">
+                  {/* Image */}
+                  <div className="aspect-square bg-secondary overflow-hidden relative">
                     {firstImage ? (
                       <img
                         src={firstImage.url}
                         alt={firstImage.altText || node.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-muted-foreground">
                         No image
                       </div>
                     )}
-                    {/* Overlay gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    
-                    {/* Bestseller Badge - Only for Scalp Mist */}
-                    {node.handle?.includes("mist") && (
-                      <span className="absolute top-4 left-4 text-[10px] md:text-xs font-bold text-white bg-accent px-3 py-1.5 rounded-full uppercase tracking-wider shadow-medium">
-                        Bestseller
-                      </span>
-                    )}
                   </div>
 
                   {/* Content */}
-                  <div className="p-6 md:p-8">
+                  <div className="p-6">
                     {/* Category */}
-                    <span className="text-[10px] md:text-xs uppercase tracking-[0.15em] font-bold text-accent mb-3 block">
-                      Scalp Care
+                    <span className="text-xs uppercase tracking-wider font-semibold text-accent mb-2 block">
+                      SCALP CARE
                     </span>
 
                     {/* Product Name */}
-                    <h3 className="font-display text-lg md:text-xl lg:text-2xl font-bold text-primary mb-3 group-hover:text-accent transition-colors duration-300 leading-tight">
+                    <h3 className="font-display text-sm md:text-base font-bold text-primary mb-2 group-hover:text-accent transition-colors">
                       {node.title}
                     </h3>
 
-                    {/* Description */}
-                    <p className="text-sm md:text-base text-muted-foreground mb-5 line-clamp-2 leading-relaxed">
+                    {/* Benefit Copy */}
+                    <p className="text-sm text-muted-foreground mb-4 line-clamp-1">
                       {node.description || "Instant inflammation relief in 2-3 weeks"}
                     </p>
 
-                    {/* Star Rating */}
+                    {/* Star Rating - Dynamic based on product */}
                     {(() => {
                       const isShowerHead = node.handle?.includes("shower-filter") || node.handle?.includes("shower-head");
                       const rating = isShowerHead ? "5.0" : "4.9";
                       const reviewCount = isShowerHead ? 54 : 127;
                       return (
-                        <div className="flex items-center gap-2 mb-5">
-                          <div className="flex gap-0.5">
+                        <div className="flex items-center gap-2 mb-3">
+                          <div className="flex">
                             {[...Array(5)].map((_, i) => (
-                              <Star key={i} className="w-4 h-4 md:w-5 md:h-5 fill-brand-gold text-brand-gold" />
+                              <Star key={i} className="w-4 h-4 fill-brand-gold text-brand-gold" />
                             ))}
                           </div>
-                          <span className="text-sm font-semibold text-foreground">{rating}</span>
-                          <span className="text-xs md:text-sm text-muted-foreground">({reviewCount} reviews)</span>
+                          <span className="text-xs text-muted-foreground">({reviewCount} reviews)</span>
                         </div>
                       );
                     })()}
 
-                    {/* Price */}
-                    <div className="flex items-center gap-3 mb-6">
-                      <span className="text-sm md:text-base text-muted-foreground line-through">
+                    {/* Price with Discount */}
+                    <div className="flex items-center gap-3 mb-4">
+                      <span className="text-sm text-muted-foreground line-through">
                         ${(parseFloat(price.amount) / 0.7).toFixed(2)}
                       </span>
-                      <span className="text-2xl md:text-3xl font-bold text-accent">
-                        ${parseFloat(price.amount).toFixed(2)}
-                      </span>
-                      <span className="text-[10px] md:text-xs font-bold text-white bg-accent px-2.5 py-1 rounded-full uppercase">
-                        Save 30%
-                      </span>
+                      <span className="text-2xl font-semibold text-accent">${parseFloat(price.amount).toFixed(2)}</span>
+                      <span className="text-xs font-bold text-green-600 bg-green-100 px-2 py-1 rounded">SAVE 30%</span>
                     </div>
 
                     {/* View Details Button */}
                     <Button
                       variant="outline"
-                      className="w-full h-12 md:h-14 border-2 border-accent text-accent bg-transparent hover:bg-accent hover:text-accent-foreground font-semibold transition-all duration-300 text-sm md:text-base rounded-xl"
+                      className="w-full h-11 border-2 border-accent text-accent bg-secondary hover:bg-accent hover:text-accent-foreground font-semibold transition-all duration-300"
                     >
                       View Details
                     </Button>
 
                     {/* Quick Add to Cart (Hover State) */}
-                    <div className={`overflow-hidden transition-all duration-300 ${isHovered ? 'max-h-20 opacity-100 mt-3' : 'max-h-0 opacity-0'}`}>
+                    {isHovered && (
                       <Button
                         onClick={(e) => handleAddToCart(e, product)}
-                        className="w-full h-12 md:h-14 bg-accent text-accent-foreground font-semibold text-sm md:text-base rounded-xl"
+                        className="w-full h-11 mt-3 bg-accent text-accent-foreground font-semibold transition-all animate-fade-in"
                       >
-                        <ShoppingCart className="w-4 h-4 md:w-5 md:h-5 mr-2" />
+                        <ShoppingCart className="w-4 h-4 mr-2" />
                         Add to Cart
                       </Button>
-                    </div>
+                    )}
                   </div>
                 </Link>
               );
