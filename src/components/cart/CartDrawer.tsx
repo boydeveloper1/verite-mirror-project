@@ -99,16 +99,9 @@ export const CartDrawer = () => {
                             {item.variantTitle}
                           </p>
                         )}
-                        <div className="flex items-center gap-2 mt-2">
-                          <p className="font-semibold text-accent">
-                            ${(parseFloat(item.price.amount) * item.quantity).toFixed(2)}
-                          </p>
-                          {item.quantity > 1 && (
-                            <p className="text-xs text-muted-foreground">
-                              (${parseFloat(item.price.amount).toFixed(2)} each)
-                            </p>
-                          )}
-                        </div>
+                        <p className="font-semibold text-accent mt-2">
+                          ${parseFloat(item.price.amount).toFixed(2)}
+                        </p>
                       </div>
                       
                       <div className="flex flex-col items-end gap-2 flex-shrink-0">

@@ -70,20 +70,20 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
   const basePrice = parseFloat(selectedVariant?.price?.amount || product.priceRange.minVariantPrice.amount);
   const currency = selectedVariant?.price?.currencyCode || product.priceRange.minVariantPrice.currencyCode;
   
-  // Create bundles that show actual Shopify pricing (no frontend discounts)
+  // Create dynamic bundles based on product price and type
   const createDynamicBundles = (price: number): BundleOption[] => {
     if (isShowerHead) {
       return [
         { quantity: 1, pricePerUnit: price, totalPrice: price, savings: 0, savingsPercent: 0, label: "Single Unit" },
-        { quantity: 2, pricePerUnit: price, totalPrice: price * 2, savings: 0, savingsPercent: 0, isPopular: true, label: "His & Hers" },
-        { quantity: 3, pricePerUnit: price, totalPrice: price * 3, savings: 0, savingsPercent: 0, isBestValue: true, label: "Family Pack" },
+        { quantity: 2, pricePerUnit: price * 0.95, totalPrice: price * 1.9, savings: price * 0.1, savingsPercent: 5, isPopular: true, label: "His & Hers", badge: `Save $${(price * 0.1).toFixed(0)}` },
+        { quantity: 3, pricePerUnit: price * 0.9, totalPrice: price * 2.7, savings: price * 0.3, savingsPercent: 10, isBestValue: true, label: "Family Pack", badge: `Save $${(price * 0.3).toFixed(0)}` },
       ];
     }
     return [
       { quantity: 1, pricePerUnit: price, totalPrice: price, savings: 0, savingsPercent: 0, label: "Starter" },
-      { quantity: 2, pricePerUnit: price, totalPrice: price * 2, savings: 0, savingsPercent: 0, isPopular: true, label: "Growth Duo" },
-      { quantity: 3, pricePerUnit: price, totalPrice: price * 3, savings: 0, savingsPercent: 0, isBestValue: true, label: "Full Treatment" },
-      { quantity: 4, pricePerUnit: price, totalPrice: price * 4, savings: 0, savingsPercent: 0, label: "Best for Routine" },
+      { quantity: 2, pricePerUnit: price * 0.95, totalPrice: price * 1.9, savings: price * 0.1, savingsPercent: 5, isPopular: true, label: "Growth Duo", badge: `Save $${(price * 0.1).toFixed(0)}` },
+      { quantity: 3, pricePerUnit: price * 0.9, totalPrice: price * 2.7, savings: price * 0.3, savingsPercent: 10, isBestValue: true, label: "Full Treatment", badge: `Save $${(price * 0.3).toFixed(0)}` },
+      { quantity: 4, pricePerUnit: price * 0.85, totalPrice: price * 3.4, savings: price * 0.6, savingsPercent: 15, label: "Best for Routine", badge: `Save $${(price * 0.6).toFixed(0)}` },
     ];
   };
   
@@ -124,28 +124,30 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
   const handleAddToCart = () => {
     if (!product || !selectedVariant) return;
 
-    // Use the actual Shopify variant price - this ensures checkout price matches cart
-    const actualPrice = parseFloat(selectedVariant.price.amount);
-    const totalQty = selectedBundle.quantity * quantity;
+    // Calculate discounted price per unit based on bundle
+    const discountedPrice = selectedBundle.pricePerUnit;
 
-    addItem({
-      product: {
-        node: {
-          ...product,
-          options: product.options || [],
+    // Add items based on bundle quantity
+    for (let i = 0; i < selectedBundle.quantity; i++) {
+      addItem({
+        product: {
+          node: {
+            ...product,
+            options: product.options || [],
+          },
         },
-      },
-      variantId: selectedVariant.id,
-      variantTitle: selectedVariant.title,
-      price: {
-        amount: actualPrice.toFixed(2),
-        currencyCode: currency,
-      },
-      quantity: totalQty,
-      selectedOptions: selectedVariant.selectedOptions || [],
-    });
+        variantId: selectedVariant.id,
+        variantTitle: selectedVariant.title,
+        price: {
+          amount: discountedPrice.toFixed(2),
+          currencyCode: currency,
+        },
+        quantity: quantity,
+        selectedOptions: selectedVariant.selectedOptions || [],
+      });
+    }
 
-    toast.success(`Added ${totalQty}x ${product.title} to cart`, {
+    toast.success(`Added ${selectedBundle.quantity}x ${product.title} to cart`, {
       position: "top-center",
     });
   };
@@ -293,10 +295,16 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
           <p className="text-[10px] md:text-xs uppercase tracking-wide text-muted-foreground font-semibold">
             Price
           </p>
+          <span className="text-[10px] md:text-xs font-bold text-white bg-red-500 px-2 py-0.5 rounded">
+            30% OFF
+          </span>
         </div>
         <div className="flex items-baseline gap-3 mb-2 md:mb-3">
           <p className="text-3xl md:text-4xl font-bold text-accent">
             ${totalPrice.toFixed(2)}
+          </p>
+          <p className="text-lg md:text-xl text-muted-foreground line-through">
+            ${(totalPrice / 0.7).toFixed(2)}
           </p>
           <span className="text-sm md:text-lg font-normal text-muted-foreground">{currency}</span>
         </div>
