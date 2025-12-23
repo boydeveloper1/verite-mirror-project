@@ -397,11 +397,10 @@ const handler = async (req: Request): Promise<Response> => {
       method: "POST",
       headers: { Authorization: `Bearer ${RESEND_API_KEY}`, "Content-Type": "application/json" },
       body: JSON.stringify({
-        cc: ["veritescalp@gmail.com"],
-        bcc: ["veritescalp@gmail.com"],
-        from: "VERITÉ SCALP <no-reply@veritescalp.com>",
+        from: "VERITÉ SCALP <noreply@veritescalp.com>",
         to: ["veritescalp@gmail.com"],
-        subject: safeSubject ? `New Message from ${safeName}` : `New Message from ${safeName}`,
+        reply_to: email,
+        subject: safeSubject ? `New Message: ${safeSubject}` : `New Contact from ${safeName}`,
         html: getSupportEmailHtml({
           name: safeName,
           email: safeEmail,
@@ -423,7 +422,7 @@ const handler = async (req: Request): Promise<Response> => {
       method: "POST",
       headers: { Authorization: `Bearer ${RESEND_API_KEY}`, "Content-Type": "application/json" },
       body: JSON.stringify({
-        from: "VERITÉ SCALP <support@veritescalp.com>",
+        from: "VERITÉ SCALP <noreply@veritescalp.com>",
         to: [email],
         subject: "Thank You for Reaching Out! 💚 - VERITÉ SCALP",
         html: getCustomerEmailHtml(safeName),
