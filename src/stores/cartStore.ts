@@ -3,51 +3,8 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 import { CartItem, createStorefrontCheckout } from '@/lib/shopify';
 import { toast } from 'sonner';
 
-// Bundle pricing tiers for different product types
-const getBundlePricing = (productType: 'mist' | 'showerhead', basePrice: number) => {
-  if (productType === 'showerhead') {
-    return [
-      { minQty: 1, maxQty: 1, pricePerUnit: basePrice }, // Single: $105
-      { minQty: 2, maxQty: 2, pricePerUnit: basePrice * 0.95 }, // His & Hers: $99.75
-      { minQty: 3, maxQty: Infinity, pricePerUnit: basePrice * 0.9 }, // Family Pack: $94.50
-    ];
-  }
-  // Mist pricing
-  return [
-    { minQty: 1, maxQty: 1, pricePerUnit: basePrice }, // Starter: $40
-    { minQty: 2, maxQty: 2, pricePerUnit: basePrice * 0.95 }, // Growth Duo: $38
-    { minQty: 3, maxQty: 3, pricePerUnit: basePrice * 0.9 }, // Full Treatment: $36
-    { minQty: 4, maxQty: Infinity, pricePerUnit: basePrice * 0.85 }, // Best for Routine: $34
-  ];
-};
-
-// Calculate price per unit based on quantity and product type
-const calculatePricePerUnit = (quantity: number, productType: 'mist' | 'showerhead', basePrice: number): number => {
-  const tiers = getBundlePricing(productType, basePrice);
-  const tier = tiers.find(t => quantity >= t.minQty && quantity <= t.maxQty);
-  return tier ? tier.pricePerUnit : basePrice;
-};
-
-// Determine product type from product handle
-const getProductType = (handle: string): 'mist' | 'showerhead' => {
-  if (handle.includes('shower') || handle.includes('filter')) {
-    return 'showerhead';
-  }
-  return 'mist';
-};
-
-// Get base price for product type
-const getBasePrice = (productType: 'mist' | 'showerhead'): number => {
-  return productType === 'showerhead' ? 105 : 40;
-};
-
-export interface ExtendedCartItem extends CartItem {
-  productType: 'mist' | 'showerhead';
-  basePrice: number;
-}
-
 interface CartStore {
-  items: ExtendedCartItem[];
+  items: CartItem[];
   cartId: string | null;
   checkoutUrl: string | null;
   isLoading: boolean;
@@ -80,36 +37,16 @@ export const useCartStore = create<CartStore>()(
         const { items } = get();
         const existingItem = items.find(i => i.variantId === item.variantId);
         
-        // Determine product type and base price
-        const productHandle = item.product.node.handle;
-        const productType = getProductType(productHandle);
-        const basePrice = getBasePrice(productType);
-        
         if (existingItem) {
-          const newQuantity = existingItem.quantity + item.quantity;
-          const newPricePerUnit = calculatePricePerUnit(newQuantity, productType, basePrice);
-          
           set({
             items: items.map(i =>
               i.variantId === item.variantId
-                ? { 
-                    ...i, 
-                    quantity: newQuantity,
-                    price: {
-                      amount: newPricePerUnit.toFixed(2),
-                      currencyCode: i.price.currencyCode,
-                    }
-                  }
+                ? { ...i, quantity: i.quantity + item.quantity }
                 : i
             )
           });
         } else {
-          const extendedItem: ExtendedCartItem = {
-            ...item,
-            productType,
-            basePrice,
-          };
-          set({ items: [...items, extendedItem] });
+          set({ items: [...items, item] });
         }
       },
 
@@ -119,28 +56,11 @@ export const useCartStore = create<CartStore>()(
           return;
         }
         
-        const { items } = get();
-        const item = items.find(i => i.variantId === variantId);
-        
-        if (item) {
-          // Recalculate price based on new quantity
-          const newPricePerUnit = calculatePricePerUnit(quantity, item.productType, item.basePrice);
-          
-          set({
-            items: items.map(i =>
-              i.variantId === variantId 
-                ? { 
-                    ...i, 
-                    quantity,
-                    price: {
-                      amount: newPricePerUnit.toFixed(2),
-                      currencyCode: i.price.currencyCode,
-                    }
-                  } 
-                : i
-            )
-          });
-        }
+        set({
+          items: get().items.map(item =>
+            item.variantId === variantId ? { ...item, quantity } : item
+          )
+        });
       },
 
       removeItem: (variantId) => {
