@@ -18,8 +18,8 @@ const questions: Question[] = [
       { label: "Rarely or never", score: 0 },
       { label: "Occasionally (1-2 times a week)", score: 1 },
       { label: "Frequently (almost daily)", score: 2 },
-      { label: "Constantly (all day)", score: 3 }
-    ]
+      { label: "Constantly (all day)", score: 3 },
+    ],
   },
   {
     id: 2,
@@ -28,8 +28,8 @@ const questions: Question[] = [
       { label: "Never", score: 0 },
       { label: "Occasionally", score: 1 },
       { label: "Most of the time", score: 2 },
-      { label: "Always", score: 3 }
-    ]
+      { label: "Always", score: 3 },
+    ],
   },
   {
     id: 3,
@@ -38,8 +38,8 @@ const questions: Question[] = [
       { label: "Full and healthy", score: 0 },
       { label: "Slightly thinning", score: 1 },
       { label: "Noticeably receding", score: 2 },
-      { label: "Severely damaged/missing", score: 3 }
-    ]
+      { label: "Severely damaged/missing", score: 3 },
+    ],
   },
   {
     id: 4,
@@ -48,8 +48,8 @@ const questions: Question[] = [
       { label: "Very little (normal shedding)", score: 0 },
       { label: "A moderate amount", score: 1 },
       { label: "A lot (clumps)", score: 2 },
-      { label: "Excessive (scary amounts)", score: 3 }
-    ]
+      { label: "Excessive (scary amounts)", score: 3 },
+    ],
   },
   {
     id: 5,
@@ -58,9 +58,9 @@ const questions: Question[] = [
       { label: "Never", score: 0 },
       { label: "Rarely", score: 1 },
       { label: "Sometimes", score: 2 },
-      { label: "Often", score: 3 }
-    ]
-  }
+      { label: "Often", score: 3 },
+    ],
+  },
 ];
 
 interface ResultData {
@@ -76,38 +76,43 @@ const getResult = (score: number): ResultData => {
   if (score <= 3) {
     return {
       title: "Healthy Scalp",
-      description: "Great news! Your scalp appears to be in good condition. However, prevention is key to maintaining hair health.",
+      description:
+        "Great news! Your scalp appears to be in good condition. However, prevention is key to maintaining hair health.",
       recommendation: "Consider our products for maintenance and prevention of future issues.",
       icon: ThumbsUp,
       color: "text-green-600",
-      urgency: "Low Priority"
+      urgency: "Low Priority",
     };
   } else if (score <= 7) {
     return {
       title: "Early Warning Signs",
-      description: "Your scalp is showing early signs of stress. Now is the perfect time to take action before problems worsen.",
-      recommendation: "Our Scalp Soothing Mist can help calm inflammation and prevent further damage.",
+      description:
+        "Your scalp is showing early signs of stress. Now is the perfect time to take action before problems worsen.",
+      recommendation:
+        "Our Scalp Soothing Mist can help calm inflammation and prevent further damage. While our Shower head can filter dangerous chemicals that slowly cause inflammation and other skin related issues.",
       icon: AlertTriangle,
       color: "text-yellow-600",
-      urgency: "Moderate Priority"
+      urgency: "Moderate Priority",
     };
   } else if (score <= 11) {
     return {
       title: "Scalp Needs Attention",
-      description: "Your scalp is experiencing significant inflammation. This is likely affecting your hair growth and causing shedding.",
+      description:
+        "Your scalp is experiencing significant inflammation. This is likely affecting your hair growth and causing shedding.",
       recommendation: "We strongly recommend starting with our Scalp Soothing Mist immediately.",
       icon: AlertTriangle,
       color: "text-orange-600",
-      urgency: "High Priority"
+      urgency: "High Priority",
     };
   } else {
     return {
       title: "Urgent Scalp Care Needed",
-      description: "Your scalp is severely inflamed and needs immediate attention. Don't wait—untreated inflammation can cause permanent follicle damage.",
+      description:
+        "Your scalp is severely inflamed and needs immediate attention. Don't wait—untreated inflammation can cause permanent follicle damage.",
       recommendation: "Start with our complete scalp care system for maximum results.",
       icon: AlertTriangle,
       color: "text-red-600",
-      urgency: "Critical"
+      urgency: "Critical",
     };
   }
 };
@@ -148,9 +153,7 @@ export const ScalpHealthQuiz = () => {
               <Sparkles className="w-4 h-4" />
               Free Assessment
             </span>
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-4">
-              Scalp Health Quiz
-            </h2>
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-4">Scalp Health Quiz</h2>
             <p className="text-muted-foreground text-lg">
               Take our quick 5-question quiz to discover your scalp's health status
             </p>
@@ -163,7 +166,7 @@ export const ScalpHealthQuiz = () => {
               <span>{Math.round(progress)}%</span>
             </div>
             <div className="h-2 bg-secondary rounded-full overflow-hidden">
-              <motion.div 
+              <motion.div
                 className="h-full bg-accent rounded-full"
                 initial={{ width: 0 }}
                 animate={{ width: `${progress}%` }}
@@ -222,7 +225,9 @@ export const ScalpHealthQuiz = () => {
                   transition={{ duration: 0.4 }}
                   className="flex-1 flex flex-col items-center text-center"
                 >
-                  <div className={`w-20 h-20 rounded-full bg-${result.color.replace('text-', '')}/10 flex items-center justify-center mb-6`}>
+                  <div
+                    className={`w-20 h-20 rounded-full bg-${result.color.replace("text-", "")}/10 flex items-center justify-center mb-6`}
+                  >
                     <result.icon className={`w-10 h-10 ${result.color}`} />
                   </div>
 
@@ -230,13 +235,9 @@ export const ScalpHealthQuiz = () => {
                     {result.urgency}
                   </span>
 
-                  <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-                    {result.title}
-                  </h3>
+                  <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">{result.title}</h3>
 
-                  <p className="text-muted-foreground mb-4 leading-relaxed">
-                    {result.description}
-                  </p>
+                  <p className="text-muted-foreground mb-4 leading-relaxed">{result.description}</p>
 
                   <p className="text-foreground font-medium mb-8 p-4 rounded-xl bg-accent/10 border border-accent/20">
                     <CheckCircle className="w-5 h-5 text-accent inline mr-2 -mt-0.5" />
