@@ -9,7 +9,6 @@ import { ProductImageGallery } from "@/components/product/ProductImageGallery";
 import { ProductDetails } from "@/components/product/ProductDetails";
 import { ProductTabs } from "@/components/product/ProductTabs";
 import { ProductHeroBanner } from "@/components/product/ProductHeroBanner";
-import { ReplicasWarning } from "@/components/product/ReplicasWarning";
 import { MoneyBackGuarantee } from "@/components/product/MoneyBackGuarantee";
 import { WhyChooseUs } from "@/components/product/WhyChooseUs";
 import { PreFooterSubscribe } from "@/components/shared/PreFooterSubscribe";
@@ -92,7 +91,6 @@ const ProductPage = () => {
       <ProductHeroBanner productTitle={product.title} />
       <main className="container mx-auto px-4 md:px-6 lg:px-8 py-4 md:py-6 lg:py-8">
         <div className="animate-fade-in"><ProductBreadcrumb productName={product.title} productHandle={product.handle} /></div>
-        <ReplicasWarning />
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8 lg:gap-10">
           <div className="animate-fade-in-up"><ProductImageGallery images={images} productTitle={product.title} productHandle={product.handle} /></div>
           <div className="animate-fade-in-up [animation-delay:150ms] opacity-0"><ProductDetails product={product} selectedVariant={selectedVariant} onVariantChange={handleVariantChange} /></div>

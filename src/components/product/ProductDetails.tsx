@@ -8,6 +8,7 @@ import { QuantitySelector } from "./QuantitySelector";
 import { BundleSelector, BundleOption, defaultBundles, showerFilterBundles } from "./BundleSelector";
 import { TrustBadges } from "./TrustBadges";
 import { PaymentMethods } from "./PaymentMethods";
+import { ReplicasWarning } from "./ReplicasWarning";
 import { cn } from "@/lib/utils";
 import showerHeadSilver from "@/assets/shower-head-silver.jpg";
 import showerHeadBlack from "@/assets/shower-head-black.jpg";
@@ -348,6 +349,9 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
           </div>
         </div>
       </div>
+
+      {/* Replicas Warning */}
+      <ReplicasWarning />
 
       {/* Quantity Selector */}
       <div className="mb-4 md:mb-6">
