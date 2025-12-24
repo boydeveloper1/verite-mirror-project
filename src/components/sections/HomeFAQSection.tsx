@@ -43,7 +43,7 @@ const faqs = [
 
 export const HomeFAQSection = () => {
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-muted/30 via-secondary to-card">
+    <section className="py-16 md:py-24 bg-secondary/30">
       <div className="container mx-auto px-4 md:px-10">
         <div className="max-w-3xl mx-auto">
           {/* Header */}

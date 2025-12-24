@@ -39,7 +39,7 @@ export const PreFooterSubscribe = () => {
   };
 
   return (
-    <section className="py-16 md:py-20 bg-gradient-to-t from-primary/10 via-accent/5 to-secondary">
+    <section className="py-16 md:py-20 bg-gradient-to-b from-accent/5 to-accent/10">
       <div className="container mx-auto px-4 md:px-10">
         <div className="max-w-2xl mx-auto text-center">
           {/* Icon */}

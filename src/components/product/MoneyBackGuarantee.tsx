@@ -37,7 +37,7 @@ export const MoneyBackGuarantee = ({ variant = "full", showClaimButton = true }:
   }
 
   return (
-    <section className="py-16 md:py-20 bg-gradient-to-b from-card via-accent/5 to-secondary">
+    <section className="py-16 md:py-20 bg-gradient-to-b from-accent/5 to-background">
       <div className="container mx-auto px-4 md:px-10">
         <div className="max-w-4xl mx-auto">
           <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-accent/10 via-accent/5 to-background border border-accent/20 p-8 md:p-12">

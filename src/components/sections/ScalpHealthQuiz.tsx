@@ -139,7 +139,7 @@ export const ScalpHealthQuiz = () => {
   const progress = ((currentQuestion + (showResult ? 1 : 0)) / questions.length) * 100;
 
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-br from-accent/5 via-background to-primary/5">
+    <section className="py-16 md:py-24 bg-gradient-to-b from-background to-secondary/30">
       <div className="container mx-auto px-4 md:px-10">
         <div className="max-w-2xl mx-auto">
           {/* Header */}
