@@ -51,16 +51,7 @@ export const CartDrawer = () => {
       
       <SheetContent className="w-full sm:max-w-lg flex flex-col h-full pt-6 z-[9999]">
         <SheetHeader className="flex-shrink-0 pb-4 border-b">
-          <div className="flex items-center justify-between">
-            <SheetTitle className="font-display text-2xl">Shopping Cart</SheetTitle>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors"
-              aria-label="Close cart"
-            >
-              <X className="h-5 w-5" />
-            </button>
-          </div>
+          <SheetTitle className="font-display text-2xl">Shopping Cart</SheetTitle>
           <SheetDescription>
             {totalItems === 0 ? "Your cart is empty" : `${totalItems} item${totalItems !== 1 ? 's' : ''} in your cart`}
           </SheetDescription>
