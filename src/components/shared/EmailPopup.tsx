@@ -113,12 +113,12 @@ export const EmailPopup = () => {
 
               {/* Heading */}
               <h2 className="font-display text-2xl md:text-3xl font-bold text-primary mb-3">
-                Get 15% Off Your First Order
+                Join the VERITÉ SCALP Family
               </h2>
 
               {/* Description */}
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                Join our newsletter for exclusive discounts, scalp care tips, and be the first to know about new products!
+                Subscribe for exclusive updates, scalp care tips, and be the first to know about new products and special offers!
               </p>
 
               {/* Form */}
@@ -146,7 +146,7 @@ export const EmailPopup = () => {
                       Subscribing...
                     </>
                   ) : (
-                    "Unlock My Discount"
+                    "Subscribe Now"
                   )}
                 </Button>
               </form>

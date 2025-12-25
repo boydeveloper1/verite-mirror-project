@@ -2,6 +2,8 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { PageHeroBanner } from "@/components/shared/PageHeroBanner";
 import { EducationalPopup } from "@/components/shared/EducationalPopup";
+import { PreFooterSubscribe } from "@/components/shared/PreFooterSubscribe";
+import { EmailPopup } from "@/components/shared/EmailPopup";
 import { Button } from "@/components/ui/button";
 import { Check, X, Droplets, ShowerHead, Sparkles, Shield, Clock, Star } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -465,8 +467,10 @@ export default function ProductComparisonPage() {
         </div>
       </section>
 
+      <PreFooterSubscribe />
       <Footer />
       <EducationalPopup />
+      <EmailPopup />
     </div>
   );
 }

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { PageHeroBanner } from "@/components/shared/PageHeroBanner";
+import { PreFooterSubscribe } from "@/components/shared/PreFooterSubscribe";
+import { EmailPopup } from "@/components/shared/EmailPopup";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -237,8 +239,10 @@ const ContactPage = () => {
           </div>
         </div>
       </section>
-      
+
+      <PreFooterSubscribe />
       <Footer />
+      <EmailPopup />
     </div>
   );
 };

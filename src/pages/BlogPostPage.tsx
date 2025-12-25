@@ -2,6 +2,8 @@ import { useParams, Link } from "react-router-dom";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { PageHeroBanner } from "@/components/shared/PageHeroBanner";
+import { PreFooterSubscribe } from "@/components/shared/PreFooterSubscribe";
+import { EmailPopup } from "@/components/shared/EmailPopup";
 import { Button } from "@/components/ui/button";
 import { blogPosts } from "@/data/blogPosts";
 import { ArrowLeft, Clock, Calendar, Share2 } from "lucide-react";
@@ -116,8 +118,10 @@ const BlogPostPage = () => {
           )}
         </div>
       </article>
-      
+
+      <PreFooterSubscribe />
       <Footer />
+      <EmailPopup />
     </div>
   );
 };
