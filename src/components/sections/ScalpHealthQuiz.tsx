@@ -98,7 +98,8 @@ const getResult = (score: number): ResultData => {
       title: "Scalp Needs Attention",
       description:
         "Your scalp is experiencing significant inflammation. This is likely affecting your hair growth and causing shedding.",
-      recommendation: "We strongly recommend starting with our Scalp Soothing Mist immediately.",
+      recommendation:
+        "We strongly recommend starting with our Scalp Soothing Mist immediately. You can pair with our shower head that filter chemicals that cause inflammation",
       icon: AlertTriangle,
       color: "text-orange-600",
       urgency: "High Priority",
@@ -109,7 +110,7 @@ const getResult = (score: number): ResultData => {
       description:
         "Your scalp is severely inflamed and needs immediate attention. Don't wait—untreated inflammation can cause permanent follicle damage.",
       recommendation:
-        "Start with our complete scalp care system for maximum results. Also get our shower head to help filter dangerous chemicals that cause inflammation.",
+        "Begin a targeted scalp recovery routine using our complete scalp care system to calm inflammation and restore balance. For best results, pair it with our filtered shower head to reduce mineral and chemical exposure that can aggravate the scalp",
       icon: AlertTriangle,
       color: "text-red-600",
       urgency: "Critical",
