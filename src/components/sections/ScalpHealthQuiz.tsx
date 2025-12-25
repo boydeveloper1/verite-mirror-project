@@ -88,8 +88,7 @@ const getResult = (score: number): ResultData => {
       title: "Early Warning Signs",
       description:
         "Your scalp is showing early signs of stress. Now is the perfect time to take action before problems worsen.",
-      recommendation:
-        "Our Scalp Soothing Mist can help calm inflammation and prevent further damage. While our Shower head can filter dangerous chemicals that slowly cause inflammation and other skin related issues.",
+      recommendation: "Our Scalp Soothing Mist can help calm inflammation and prevent further damage.",
       icon: AlertTriangle,
       color: "text-yellow-600",
       urgency: "Moderate Priority",
@@ -109,7 +108,8 @@ const getResult = (score: number): ResultData => {
       title: "Urgent Scalp Care Needed",
       description:
         "Your scalp is severely inflamed and needs immediate attention. Don't wait—untreated inflammation can cause permanent follicle damage.",
-      recommendation: "Start with our complete scalp care system for maximum results.",
+      recommendation:
+        "Start with our complete scalp care system for maximum results. Also get our shower head to help filter dangerous chemicals that cause inflammation.",
       icon: AlertTriangle,
       color: "text-red-600",
       urgency: "Critical",
