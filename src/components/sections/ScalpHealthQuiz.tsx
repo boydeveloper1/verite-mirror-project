@@ -88,7 +88,7 @@ const getResult = (score: number): ResultData => {
       title: "Early Warning Signs",
       description:
         "Your scalp is showing early signs of stress. Now is the perfect time to take action before problems worsen.",
-      recommendation: "Our Scalp Soothing Mist can help calm inflammation and prevent further damage.",
+      recommendation: "Our Scalp Soothing Mist and Shower Head can help calm inflammation and prevent further damage.",
       icon: AlertTriangle,
       color: "text-yellow-600",
       urgency: "Moderate Priority",
