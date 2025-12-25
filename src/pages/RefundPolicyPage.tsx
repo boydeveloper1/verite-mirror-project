@@ -1,6 +1,8 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { PageHeroBanner } from "@/components/shared/PageHeroBanner";
+import { PreFooterSubscribe } from "@/components/shared/PreFooterSubscribe";
+import { EmailPopup } from "@/components/shared/EmailPopup";
 
 const RefundPolicyPage = () => {
   return (
@@ -109,8 +111,10 @@ const RefundPolicyPage = () => {
             </div>
           </div>
         </section>
+        <PreFooterSubscribe />
       </main>
       <Footer />
+      <EmailPopup />
     </div>
   );
 };

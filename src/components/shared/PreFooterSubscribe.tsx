@@ -61,7 +61,7 @@ export const PreFooterSubscribe = () => {
           {/* Description */}
           <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
             Be the first to know about new products, special discounts, and expert scalp care tips. 
-            Plus, get <strong className="text-foreground">15% off</strong> your first order!
+            Join our community of women committed to scalp health!
           </p>
 
           {/* Form */}

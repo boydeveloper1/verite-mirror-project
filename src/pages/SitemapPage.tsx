@@ -1,6 +1,8 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { PageHeroBanner } from "@/components/shared/PageHeroBanner";
+import { PreFooterSubscribe } from "@/components/shared/PreFooterSubscribe";
+import { EmailPopup } from "@/components/shared/EmailPopup";
 import { Link } from "react-router-dom";
 
 const SitemapPage = () => {
@@ -83,8 +85,10 @@ const SitemapPage = () => {
           </div>
         </div>
       </main>
-      
+
+      <PreFooterSubscribe />
       <Footer />
+      <EmailPopup />
     </div>
   );
 };

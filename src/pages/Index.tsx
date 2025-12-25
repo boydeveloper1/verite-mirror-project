@@ -11,6 +11,7 @@ import { HomeFAQSection } from "@/components/sections/HomeFAQSection";
 import { ScalpHealthQuiz } from "@/components/sections/ScalpHealthQuiz";
 import { PreFooterSubscribe } from "@/components/shared/PreFooterSubscribe";
 import { EmailPopup } from "@/components/shared/EmailPopup";
+import { SectionDivider } from "@/components/shared/SectionDivider";
 
 const Index = () => {
   return (
@@ -18,10 +19,13 @@ const Index = () => {
       <Header />
       <main>
         <HeroSection />
+        <SectionDivider variant="gradient" />
         <ProductsSection />
         <TrustSection />
+        <SectionDivider variant="gradient" />
         <MoneyBackGuarantee />
         <ScalpHealthQuiz />
+        <SectionDivider variant="gradient" />
         <HomeFAQSection />
         <HomeContactForm />
         <CTASection />

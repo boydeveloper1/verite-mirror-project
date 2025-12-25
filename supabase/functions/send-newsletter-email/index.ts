@@ -68,14 +68,8 @@ const getSubscriberEmailHtml = () => `
                 </tr>
               </table>
               
-              <div style="background: linear-gradient(135deg, #E8F5EE 0%, #D4EDE0 100%); border-radius: 12px; padding: 25px; text-align: center; margin: 30px 0;">
-                <p style="color: #1B7F4D; font-size: 14px; font-weight: 600; margin: 0 0 8px 0;">YOUR EXCLUSIVE DISCOUNT CODE</p>
-                <p style="color: #1B7F4D; font-size: 32px; font-weight: 700; margin: 0; letter-spacing: 2px;">WELCOME15</p>
-                <p style="color: #666; font-size: 14px; margin: 8px 0 0 0;">Use at checkout for 15% off your first order!</p>
-              </div>
-              
               <div style="text-align: center; margin-top: 30px;">
-                <a href="https://veritescalp.com/store" style="display: inline-block; background: linear-gradient(135deg, #1B7F4D 0%, #156B3F 100%); color: #ffffff; font-size: 16px; font-weight: 600; text-decoration: none; padding: 14px 32px; border-radius: 8px;">Shop Now & Save 15%</a>
+                <a href="https://veritescalp.com/store" style="display: inline-block; background: linear-gradient(135deg, #1B7F4D 0%, #156B3F 100%); color: #ffffff; font-size: 16px; font-weight: 600; text-decoration: none; padding: 14px 32px; border-radius: 8px;">Shop Now</a>
               </div>
             </td>
           </tr>
@@ -157,10 +151,11 @@ const handler = async (req: Request): Promise<Response> => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "VERITÉ SCALP <noreply@veritescalp.com>",
+        from: "VERITÉ SCALP <hello@veritescalp.com>",
         to: [email],
-        subject: "Welcome to VERITÉ SCALP! 🎉 Here's Your 15% Discount",
+        subject: "Welcome to the VERITÉ SCALP Family! 🎉",
         html: getSubscriberEmailHtml(),
+        reply_to: "support@veritescalp.com",
       }),
     });
 
@@ -180,10 +175,11 @@ const handler = async (req: Request): Promise<Response> => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "VERITÉ SCALP <noreply@veritescalp.com>",
+        from: "VERITÉ SCALP <hello@veritescalp.com>",
         to: ["veritescalp@gmail.com"],
         subject: `New Newsletter Subscriber: ${email}`,
         html: getAdminEmailHtml(email),
+        reply_to: email,
       }),
     });
 
