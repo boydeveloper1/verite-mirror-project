@@ -9,7 +9,7 @@ const corsHeaders = {
 
 const getSubscriberEmailHtml = () => `
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,57 +31,61 @@ const getSubscriberEmailHtml = () => `
           <!-- Content -->
           <tr>
             <td style="padding: 40px 30px;">
-              <div style="text-align: center; margin-bottom: 30px;">
-                <span style="display: inline-block; background-color: #E8F5EE; color: #1B7F4D; font-size: 12px; font-weight: 600; padding: 6px 16px; border-radius: 20px; letter-spacing: 1px;">🎉 WELCOME TO THE FAMILY</span>
-              </div>
-              
-              <h2 style="color: #1a1a1a; font-size: 24px; text-align: center; margin: 0 0 20px 0;">Thank You for Subscribing!</h2>
+              <h2 style="color: #1a1a1a; font-size: 24px; text-align: center; margin: 0 0 20px 0;">Welcome to Our Community!</h2>
               
               <p style="color: #666666; font-size: 16px; line-height: 1.6; text-align: center; margin: 0 0 25px 0;">
-                You're now part of an exclusive community of women committed to scalp health and natural hair growth. Get ready for:
+                Thank you for joining VERITÉ SCALP. You're now part of a community of women committed to scalp health and natural hair growth.
               </p>
               
-              <table width="100%" cellpadding="0" cellspacing="0" style="margin: 25px 0;">
+              <p style="color: #666666; font-size: 16px; line-height: 1.6; text-align: left; margin: 0 0 15px 0;">
+                As a subscriber, you'll receive:
+              </p>
+              
+              <table width="100%" cellpadding="0" cellspacing="0" style="margin: 20px 0;">
                 <tr>
-                  <td style="padding: 12px 0; border-bottom: 1px solid #f0f0f0;">
-                    <span style="color: #1B7F4D; font-weight: 600;">✨</span>
-                    <span style="color: #333; margin-left: 10px;">Exclusive discounts & early access to sales</span>
+                  <td style="padding: 10px 0;">
+                    <span style="color: #333; font-size: 15px;">• Exclusive offers and early access to sales</span>
                   </td>
                 </tr>
                 <tr>
-                  <td style="padding: 12px 0; border-bottom: 1px solid #f0f0f0;">
-                    <span style="color: #1B7F4D; font-weight: 600;">💡</span>
-                    <span style="color: #333; margin-left: 10px;">Expert scalp care tips & tutorials</span>
+                  <td style="padding: 10px 0;">
+                    <span style="color: #333; font-size: 15px;">• Expert scalp care tips and tutorials</span>
                   </td>
                 </tr>
                 <tr>
-                  <td style="padding: 12px 0; border-bottom: 1px solid #f0f0f0;">
-                    <span style="color: #1B7F4D; font-weight: 600;">🆕</span>
-                    <span style="color: #333; margin-left: 10px;">First look at new product launches</span>
+                  <td style="padding: 10px 0;">
+                    <span style="color: #333; font-size: 15px;">• First look at new product launches</span>
                   </td>
                 </tr>
                 <tr>
-                  <td style="padding: 12px 0;">
-                    <span style="color: #1B7F4D; font-weight: 600;">🎁</span>
-                    <span style="color: #333; margin-left: 10px;">Special subscriber-only offers</span>
+                  <td style="padding: 10px 0;">
+                    <span style="color: #333; font-size: 15px;">• Special subscriber-only content</span>
                   </td>
                 </tr>
               </table>
               
-              <div style="text-align: center; margin-top: 30px;">
-                <a href="https://veritescalp.com/store" style="display: inline-block; background: linear-gradient(135deg, #1B7F4D 0%, #156B3F 100%); color: #ffffff; font-size: 16px; font-weight: 600; text-decoration: none; padding: 14px 32px; border-radius: 8px;">Shop Now</a>
+              <p style="color: #666666; font-size: 16px; line-height: 1.6; text-align: center; margin: 25px 0;">
+                Ready to start your scalp health journey?
+              </p>
+              
+              <div style="text-align: center; margin-top: 25px;">
+                <a href="https://veritescalp.com/store" style="display: inline-block; background: linear-gradient(135deg, #1B7F4D 0%, #156B3F 100%); color: #ffffff; font-size: 16px; font-weight: 600; text-decoration: none; padding: 14px 32px; border-radius: 8px;">Visit Our Store</a>
               </div>
             </td>
           </tr>
           
           <!-- Footer -->
           <tr>
-            <td style="background-color: #1a1a1a; padding: 30px; text-align: center;">
+            <td style="background-color: #f5f5f5; padding: 25px; text-align: center;">
+              <p style="color: #666666; font-size: 14px; margin: 0 0 10px 0;">
+                VERITÉ SCALP - Scalp Care Before Hair Care
+              </p>
               <p style="color: #888888; font-size: 12px; margin: 0 0 10px 0;">
                 © ${new Date().getFullYear()} VERITÉ SCALP. All rights reserved.
               </p>
-              <p style="color: #666666; font-size: 11px; margin: 0;">
-                You received this email because you subscribed to our newsletter.
+              <p style="color: #999999; font-size: 11px; margin: 0;">
+                You received this email because you subscribed at veritescalp.com.<br>
+                <a href="https://veritescalp.com" style="color: #1B7F4D; text-decoration: underline;">Visit our website</a>
               </p>
             </td>
           </tr>
@@ -95,7 +99,7 @@ const getSubscriberEmailHtml = () => `
 
 const getAdminEmailHtml = (email: string) => `
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <title>New Newsletter Subscriber</title>
@@ -107,14 +111,14 @@ const getAdminEmailHtml = (email: string) => `
         <table width="500" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
           <tr>
             <td style="background-color: #1B7F4D; padding: 20px; text-align: center;">
-              <h1 style="color: #ffffff; font-size: 20px; margin: 0;">New Newsletter Subscriber 📧</h1>
+              <h1 style="color: #ffffff; font-size: 20px; margin: 0;">New Newsletter Subscriber</h1>
             </td>
           </tr>
           <tr>
             <td style="padding: 30px;">
               <p style="color: #333; font-size: 16px; margin: 0 0 15px 0;"><strong>Email:</strong> ${email}</p>
               <p style="color: #333; font-size: 16px; margin: 0 0 15px 0;"><strong>Subscribed at:</strong> ${new Date().toLocaleString()}</p>
-              <p style="color: #333; font-size: 16px; margin: 0;"><strong>Source:</strong> Website Newsletter Popup/Footer</p>
+              <p style="color: #333; font-size: 16px; margin: 0;"><strong>Source:</strong> Website Newsletter</p>
             </td>
           </tr>
         </table>
@@ -143,7 +147,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("Processing newsletter subscription for:", email);
 
-    // Send welcome email to subscriber
+    // Send welcome email to subscriber - improved for deliverability
     const subscriberRes = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -153,9 +157,13 @@ const handler = async (req: Request): Promise<Response> => {
       body: JSON.stringify({
         from: "VERITÉ SCALP <hello@veritescalp.com>",
         to: [email],
-        subject: "Welcome to the VERITÉ SCALP Family! 🎉",
+        subject: "Welcome to VERITÉ SCALP",
         html: getSubscriberEmailHtml(),
-        reply_to: "support@veritescalp.com",
+        reply_to: "hello@veritescalp.com",
+        headers: {
+          "X-Entity-Ref-ID": `welcome-${Date.now()}`,
+          "List-Unsubscribe": "<mailto:unsubscribe@veritescalp.com>",
+        },
       }),
     });
 
@@ -175,9 +183,9 @@ const handler = async (req: Request): Promise<Response> => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "VERITÉ SCALP <hello@veritescalp.com>",
+        from: "VERITÉ SCALP Notifications <hello@veritescalp.com>",
         to: ["veritescalp@gmail.com"],
-        subject: `New Newsletter Subscriber: ${email}`,
+        subject: `New Subscriber: ${email}`,
         html: getAdminEmailHtml(email),
         reply_to: email,
       }),
@@ -185,7 +193,6 @@ const handler = async (req: Request): Promise<Response> => {
 
     if (!adminRes.ok) {
       console.error("Failed to send admin notification:", await adminRes.text());
-      // Don't throw here - subscriber email was sent successfully
     } else {
       console.log("Admin notification email sent successfully");
     }
