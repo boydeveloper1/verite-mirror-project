@@ -77,43 +77,43 @@ const getResult = (score: number): ResultData => {
     return {
       title: "Healthy Scalp",
       description:
-        "Great news! Your scalp appears to be in good condition. However, prevention is key to maintaining hair health.",
-      recommendation: "Consider our products for maintenance and prevention of future issues.",
+        "Great news! Your scalp appears to be in good condition. Maintaining a healthy scalp now helps prevent future issues.",
+      recommendation: "Our products can help you maintain this healthy foundation and protect against environmental stressors.",
       icon: ThumbsUp,
       color: "text-green-600",
-      urgency: "Low Priority",
+      urgency: "Prevention",
     };
   } else if (score <= 7) {
     return {
       title: "Early Warning Signs",
       description:
-        "Your scalp is showing early signs of stress. Now is the perfect time to take action before problems worsen.",
-      recommendation: "Our Scalp Soothing Mist and Shower Head can help calm inflammation and prevent further damage.",
+        "Your scalp is showing early signs of stress. Taking action now can prevent these issues from progressing.",
+      recommendation: "Our Scalp Soothing Mist helps calm early-stage inflammation. Pair it with our filtered shower head to reduce irritants from your water.",
       icon: AlertTriangle,
       color: "text-yellow-600",
-      urgency: "Moderate Priority",
+      urgency: "Early Intervention",
     };
   } else if (score <= 11) {
     return {
       title: "Scalp Needs Attention",
       description:
-        "Your scalp is experiencing significant inflammation. This is likely affecting your hair growth and causing shedding.",
+        "Your scalp is experiencing noticeable inflammation, which can affect hair growth and cause increased shedding.",
       recommendation:
-        "We strongly recommend starting with our Scalp Soothing Mist immediately. You can pair with our shower head that filter chemicals that cause inflammation",
+        "We recommend our Scalp Soothing Mist for daily use. For enhanced results, our filtered shower head removes chlorine and minerals that can aggravate sensitive scalps.",
       icon: AlertTriangle,
       color: "text-orange-600",
-      urgency: "High Priority",
+      urgency: "Recommended Action",
     };
   } else {
     return {
-      title: "Urgent Scalp Care Needed",
+      title: "Scalp Care Priority",
       description:
-        "Your scalp is severely inflamed and needs immediate attention. Don't wait—untreated inflammation can cause permanent follicle damage.",
+        "Your responses indicate significant scalp inflammation. Addressing this now is important to support your hair health.",
       recommendation:
-        "Begin a targeted scalp recovery routine using our complete scalp care system to calm inflammation and restore balance. For best results, pair it with our filtered shower head to reduce mineral and chemical exposure that can aggravate the scalp",
+        "Our complete scalp care system targets inflammation at multiple points. The Scalp Soothing Mist calms irritation while our filtered shower head protects against water-based irritants.",
       icon: AlertTriangle,
       color: "text-red-600",
-      urgency: "Critical",
+      urgency: "Priority Care",
     };
   }
 };

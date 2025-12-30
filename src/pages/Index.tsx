@@ -21,13 +21,17 @@ const Index = () => {
         <HeroSection />
         <SectionDivider variant="gradient" />
         <ProductsSection />
+        <SectionDivider variant="line" />
         <TrustSection />
         <SectionDivider variant="gradient" />
         <MoneyBackGuarantee />
+        <SectionDivider variant="line" />
         <ScalpHealthQuiz />
         <SectionDivider variant="gradient" />
         <HomeFAQSection />
+        <SectionDivider variant="line" />
         <HomeContactForm />
+        <SectionDivider variant="gradient" />
         <CTASection />
         <PreFooterSubscribe />
       </main>

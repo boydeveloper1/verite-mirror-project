@@ -206,7 +206,11 @@ export const useCartStore = create<CartStore>()(
       },
 
       getTotalPrice: () => {
-        return get().items.reduce((sum, item) => sum + (parseFloat(item.price.amount) * item.quantity), 0);
+        // Calculate total using the bundle price per unit * quantity
+        return get().items.reduce((sum, item) => {
+          const pricePerUnit = parseFloat(item.price.amount);
+          return sum + (pricePerUnit * item.quantity);
+        }, 0);
       },
     }),
     {

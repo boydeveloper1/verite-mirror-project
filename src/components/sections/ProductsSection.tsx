@@ -52,7 +52,7 @@ export const ProductsSection = () => {
   };
 
   return (
-    <section id="shop" className="py-20 md:py-28 bg-background">
+    <section id="shop" className="py-20 md:py-28 bg-gradient-to-b from-secondary/30 to-background">
       <div className="container mx-auto px-4 md:px-10">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in-up">

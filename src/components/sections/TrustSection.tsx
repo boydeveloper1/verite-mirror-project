@@ -25,7 +25,7 @@ const trustCards = [
 
 export const TrustSection = () => {
   return (
-    <section id="about" className="py-20 md:py-28 bg-secondary">
+    <section id="about" className="py-20 md:py-28 bg-gradient-to-b from-accent/5 to-secondary">
       <div className="container mx-auto px-4 md:px-10">
         <div className="text-center mb-16 animate-fade-in-up">
           <span className="inline-block text-accent font-semibold uppercase tracking-wider mb-4">Why Choose Us</span>
