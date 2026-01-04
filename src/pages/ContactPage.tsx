@@ -112,7 +112,7 @@ const ContactPage = () => {
                   <Phone className="w-6 h-6 text-primary" />
                 </div>
                 <h3 className="text-lg font-semibold text-foreground mb-2">Call Us</h3>
-                <p className="text-primary font-medium">+1 (800) 555-SCALP</p>
+                <p className="text-primary font-medium">+1 213-562-3953</p>
                 <p className="text-sm text-muted-foreground mt-2">Mon-Fri, 9am-5pm EST</p>
               </div>
 
