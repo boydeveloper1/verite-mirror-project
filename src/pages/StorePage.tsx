@@ -11,14 +11,12 @@ import { Button } from "@/components/ui/button";
 import { ShoppingCart, Loader2, Star } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
-import { useCurrency } from "@/contexts/CurrencyContext";
 
 const StorePage = () => {
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [hoveredProduct, setHoveredProduct] = useState<string | null>(null);
   const addItem = useCartStore((state) => state.addItem);
-  const { formatPrice } = useCurrency();
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -110,8 +108,8 @@ const StorePage = () => {
                         <span className="text-xs text-muted-foreground">({isShowerHead ? 54 : 127} reviews)</span>
                       </div>
                       <div className="flex items-center gap-3 mb-4">
-                        <span className="text-sm text-muted-foreground line-through">{formatPrice(parseFloat(price.amount) / 0.7)}</span>
-                        <span className="text-2xl font-semibold text-accent">{formatPrice(price.amount)}</span>
+                        <span className="text-sm text-muted-foreground line-through">${(parseFloat(price.amount) / 0.7).toFixed(2)}</span>
+                        <span className="text-2xl font-semibold text-accent">${parseFloat(price.amount).toFixed(2)}</span>
                         <span className="text-xs font-bold text-green-600 bg-green-100 px-2 py-1 rounded">SAVE 30%</span>
                       </div>
                       <Button variant="outline" className="w-full h-11 border-2 border-accent text-accent bg-secondary hover:bg-accent hover:text-accent-foreground font-semibold">View Details</Button>
