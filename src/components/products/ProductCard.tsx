@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 interface ProductCardProps {
   product: ShopifyProduct;
@@ -12,6 +13,7 @@ interface ProductCardProps {
 
 export const ProductCard = ({ product, isBestSeller = false }: ProductCardProps) => {
   const addItem = useCartStore((state) => state.addItem);
+  const { formatPrice } = useCurrency();
   const { node } = product;
   
   const firstVariant = node.variants.edges[0]?.node;
@@ -77,10 +79,10 @@ export const ProductCard = ({ product, isBestSeller = false }: ProductCardProps)
         <div className="flex items-center justify-between mt-4">
           <div className="flex items-center gap-2">
             <span className="text-sm text-muted-foreground line-through">
-              ${(parseFloat(price.amount) / 0.7).toFixed(2)}
+              {formatPrice(parseFloat(price.amount) / 0.7)}
             </span>
             <span className="font-display text-xl font-bold text-accent">
-              ${parseFloat(price.amount).toFixed(2)}
+              {formatPrice(price.amount)}
             </span>
           </div>
 

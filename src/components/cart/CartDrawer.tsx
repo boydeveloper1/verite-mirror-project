@@ -12,9 +12,11 @@ import {
 } from "@/components/ui/sheet";
 import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2, X } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
+import { useCurrency } from "@/contexts/CurrencyContext";
 
 export const CartDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { formatPrice } = useCurrency();
   const { 
     items, 
     isLoading,
@@ -92,11 +94,11 @@ export const CartDrawer = () => {
                         )}
                         <div className="mt-2">
                           <p className="font-semibold text-accent">
-                            ${parseFloat(item.price.amount).toFixed(2)} each
+                            {formatPrice(item.price.amount)} each
                           </p>
                           {item.quantity > 1 && (
                             <p className="text-xs text-muted-foreground">
-                              ${(parseFloat(item.price.amount) * item.quantity).toFixed(2)} total
+                              {formatPrice(parseFloat(item.price.amount) * item.quantity)} total
                             </p>
                           )}
                         </div>
@@ -142,7 +144,7 @@ export const CartDrawer = () => {
                 <div className="flex justify-between items-center">
                   <span className="text-lg font-medium">Subtotal</span>
                   <span className="text-2xl font-bold font-display">
-                    ${totalPrice.toFixed(2)}
+                    {formatPrice(totalPrice)}
                   </span>
                 </div>
                 <p className="text-sm text-muted-foreground">

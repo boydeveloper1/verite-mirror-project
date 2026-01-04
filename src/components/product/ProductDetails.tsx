@@ -10,6 +10,7 @@ import { TrustBadges } from "./TrustBadges";
 import { PaymentMethods } from "./PaymentMethods";
 import { ReplicasWarning } from "./ReplicasWarning";
 import { cn } from "@/lib/utils";
+import { useCurrency } from "@/contexts/CurrencyContext";
 import showerHeadSilver from "@/assets/shower-head-silver.jpg";
 import showerHeadBlack from "@/assets/shower-head-black.jpg";
 
@@ -66,10 +67,11 @@ interface ProductDetailsProps {
 export const ProductDetails = ({ product, selectedVariant, onVariantChange }: ProductDetailsProps) => {
   const [quantity, setQuantity] = useState(1);
   const addItem = useCartStore((state) => state.addItem);
+  const { formatPrice, currency: currencyInfo } = useCurrency();
 
   const isShowerHead = product.handle?.includes("shower-filter") || product.handle?.includes("shower-head");
   const basePrice = parseFloat(selectedVariant?.price?.amount || product.priceRange.minVariantPrice.amount);
-  const currency = selectedVariant?.price?.currencyCode || product.priceRange.minVariantPrice.currencyCode;
+  const originalCurrency = selectedVariant?.price?.currencyCode || product.priceRange.minVariantPrice.currencyCode;
 
   // Create dynamic bundles based on product price and type
   const createDynamicBundles = (price: number): BundleOption[] => {
@@ -186,7 +188,7 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
         variantTitle: selectedVariant.title,
         price: {
           amount: discountedPrice.toFixed(2),
-          currencyCode: currency,
+          currencyCode: originalCurrency,
         },
         quantity: quantity,
         selectedOptions: selectedVariant.selectedOptions || [],
@@ -334,9 +336,9 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
           <span className="text-[10px] md:text-xs font-bold text-white bg-red-500 px-2 py-0.5 rounded">30% OFF</span>
         </div>
         <div className="flex items-baseline gap-3 mb-2 md:mb-3">
-          <p className="text-3xl md:text-4xl font-bold text-accent">${totalPrice.toFixed(2)}</p>
-          <p className="text-lg md:text-xl text-muted-foreground line-through">${(totalPrice / 0.7).toFixed(2)}</p>
-          <span className="text-sm md:text-lg font-normal text-muted-foreground">{currency}</span>
+          <p className="text-3xl md:text-4xl font-bold text-accent">{formatPrice(totalPrice)}</p>
+          <p className="text-lg md:text-xl text-muted-foreground line-through">{formatPrice(totalPrice / 0.7)}</p>
+          <span className="text-sm md:text-lg font-normal text-muted-foreground">{currencyInfo.code}</span>
         </div>
         <div className="space-y-1.5 md:space-y-2">
           <div className="flex items-center gap-1.5 md:gap-2 text-[10px] md:text-xs font-semibold text-accent">

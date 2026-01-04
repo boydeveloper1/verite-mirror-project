@@ -159,7 +159,7 @@ const handler = async (req: Request): Promise<Response> => {
         to: [email],
         subject: "Welcome to VERITÉ SCALP",
         html: getSubscriberEmailHtml(),
-        reply_to: "hello@veritescalp.com",
+        reply_to: "support@veritescalp.com",
         headers: {
           "X-Entity-Ref-ID": `welcome-${Date.now()}`,
           "List-Unsubscribe": "<mailto:unsubscribe@veritescalp.com>",
@@ -184,7 +184,7 @@ const handler = async (req: Request): Promise<Response> => {
       },
       body: JSON.stringify({
         from: "VERITÉ SCALP Notifications <hello@veritescalp.com>",
-        to: ["veritescalp@gmail.com"],
+        to: ["support@veritescalp.com"],
         subject: `New Subscriber: ${email}`,
         html: getAdminEmailHtml(email),
         reply_to: email,
