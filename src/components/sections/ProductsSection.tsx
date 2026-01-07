@@ -52,15 +52,19 @@ export const ProductsSection = () => {
   };
 
   return (
-    <section id="shop" className="py-20 md:py-28 bg-gradient-to-b from-secondary/30 to-background">
-      <div className="container mx-auto px-4 md:px-10">
+    <section id="shop" className="py-24 md:py-32 bg-gradient-to-b from-secondary/50 via-background to-secondary/30 relative overflow-hidden">
+      {/* Decorative Elements */}
+      <div className="absolute top-0 right-0 w-80 h-80 bg-accent/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+      
+      <div className="container mx-auto px-4 md:px-10 relative z-10">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in-up">
-          <span className="inline-block text-accent font-semibold uppercase tracking-wider mb-4">Our Products</span>
+        <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20 animate-fade-in-up">
+          <span className="inline-block bg-accent/10 text-accent font-semibold uppercase tracking-wider px-4 py-2 rounded-full text-sm mb-6">Our Products</span>
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-5">
             Complete Scalp Care System
           </h2>
-          <p className="text-base md:text-lg text-muted-foreground">
+          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
             Each product stops inflammation at a different source. Together, they heal your scalp and restore hair
             growth.
           </p>

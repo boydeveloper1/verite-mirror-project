@@ -145,16 +145,20 @@ export const ScalpHealthQuiz = () => {
   const progress = ((currentQuestion + (showResult ? 1 : 0)) / questions.length) * 100;
 
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-background to-secondary/30">
-      <div className="container mx-auto px-4 md:px-10">
+    <section className="py-24 md:py-32 bg-gradient-to-b from-secondary/50 via-background to-secondary/30 relative overflow-hidden">
+      {/* Decorative Elements */}
+      <div className="absolute top-1/4 left-0 w-72 h-72 bg-accent/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+      
+      <div className="container mx-auto px-4 md:px-10 relative z-10">
         <div className="max-w-2xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-10">
-            <span className="inline-flex items-center gap-2 text-accent font-bold uppercase tracking-wider text-xs mb-4">
+          <div className="text-center mb-12">
+            <span className="inline-flex items-center gap-2 bg-accent/10 text-accent font-bold uppercase tracking-wider text-sm px-4 py-2 rounded-full mb-6">
               <Sparkles className="w-4 h-4" />
               Free Assessment
             </span>
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-4">Scalp Health Quiz</h2>
+            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-4">Scalp Health Quiz</h2>
             <p className="text-muted-foreground text-lg">
               Take our quick 5-question quiz to discover your scalp's health status
             </p>

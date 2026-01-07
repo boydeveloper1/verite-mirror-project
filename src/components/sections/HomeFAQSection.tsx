@@ -43,32 +43,34 @@ const faqs = [
 
 export const HomeFAQSection = () => {
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-background to-secondary/50">
-      <div className="container mx-auto px-4 md:px-10">
+    <section className="py-24 md:py-32 bg-gradient-to-b from-background via-secondary/30 to-background relative overflow-hidden">
+      {/* Decorative Elements */}
+      <div className="absolute top-1/4 right-0 w-64 h-64 bg-accent/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-1/4 left-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
+      
+      <div className="container mx-auto px-4 md:px-10 relative z-10">
         <div className="max-w-3xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-12">
-            <span className="inline-flex items-center gap-2 text-accent font-bold uppercase tracking-wider text-xs mb-4">
-              <HelpCircle className="w-4 h-4" />
+          <div className="text-center mb-12 md:mb-16 animate-fade-in-up">
+            <span className="inline-block bg-accent/10 text-accent font-semibold uppercase tracking-wider px-4 py-2 rounded-full text-sm mb-6">
               Got Questions?
             </span>
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-4">
+            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-4">
               Frequently Asked Questions
             </h2>
-            <p className="text-muted-foreground text-lg">
-              Everything you need to know about ordering, shipping, and our products.
+            <p className="text-muted-foreground">
+              Quick answers to help you on your hair growth journey
             </p>
           </div>
 
-          {/* FAQ Accordion */}
-          <Accordion type="single" collapsible className="space-y-3">
+          <Accordion type="single" collapsible className="space-y-4">
             {faqs.map((faq, index) => (
-              <AccordionItem 
-                key={index} 
-                value={`faq-${index}`}
-                className="border border-border rounded-xl px-6 bg-background shadow-soft data-[state=open]:shadow-medium transition-shadow"
+              <AccordionItem
+                key={index}
+                value={`item-${index}`}
+                className="bg-card border border-border/50 rounded-2xl px-6 shadow-soft data-[state=open]:shadow-medium transition-all duration-300 animate-fade-in-up"
+                style={{ animationDelay: `${index * 100}ms` }}
               >
-                <AccordionTrigger className="text-left font-semibold text-foreground hover:no-underline py-5">
+                <AccordionTrigger className="text-left font-semibold text-foreground hover:text-primary py-5 [&[data-state=open]]:text-primary">
                   {faq.question}
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
@@ -77,6 +79,16 @@ export const HomeFAQSection = () => {
               </AccordionItem>
             ))}
           </Accordion>
+
+          <div className="text-center mt-12 animate-fade-in-up">
+            <p className="text-muted-foreground mb-4">Still have questions?</p>
+            <a 
+              href="mailto:support@veritescalp.com" 
+              className="inline-flex items-center gap-2 text-accent hover:underline font-semibold"
+            >
+              Contact us at support@veritescalp.com
+            </a>
+          </div>
         </div>
       </div>
     </section>
