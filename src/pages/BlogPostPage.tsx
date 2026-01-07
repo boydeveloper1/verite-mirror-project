@@ -129,8 +129,9 @@ const BlogPostPage = () => {
 // Simple markdown-like formatter
 function formatContent(content: string): string {
   return content
-    .replace(/## (.*?)$/gm, '<h2 class="text-2xl font-bold mt-8 mb-4 animate-fade-in">$1</h2>')
-    .replace(/### (.*?)$/gm, '<h3 class="text-xl font-semibold mt-6 mb-3">$1</h3>')
+    // Handle headers - must process ### before ## to avoid conflicts
+    .replace(/^### (.*?)$/gm, '<h3 class="text-xl font-semibold mt-6 mb-3">$1</h3>')
+    .replace(/^## (.*?)$/gm, '<h2 class="text-2xl font-bold mt-8 mb-4">$1</h2>')
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/\n\n/g, '</p><p class="mb-4">')
     .replace(/^- (.*?)$/gm, '<li class="ml-6 list-disc">$1</li>')
