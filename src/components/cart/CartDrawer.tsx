@@ -13,6 +13,7 @@ import {
 import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2, X, Clock, Sparkles, AlertTriangle } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
 import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "sonner";
 
 const CART_TIMEOUT_SECONDS = 7 * 60; // 7 minutes
 
@@ -60,6 +61,10 @@ export const CartDrawer = () => {
         clearCart();
         setCartStartTime(null);
         setIsOpen(false);
+        toast.error("Cart expired", {
+          description: "Your reserved items have been released due to inactivity. Add items again to continue shopping.",
+          duration: 5000,
+        });
       }
     }, 1000);
 
@@ -182,16 +187,16 @@ export const CartDrawer = () => {
               </div>
               
               {/* Fixed checkout section */}
-              <div className="flex-shrink-0 space-y-4 pt-6 border-t mt-4">
+              <div className="flex-shrink-0 space-y-3 pt-4 border-t mt-4">
                 {/* Quantity Savings Notice */}
-                {totalItems >= 2 && (
+                {items.length > 0 && (
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="flex items-start gap-2 p-3 bg-accent/10 border border-accent/20 rounded-lg"
+                    className="flex items-start gap-2 p-2 bg-accent/10 border border-accent/20 rounded-md"
                   >
-                    <Sparkles className="h-4 w-4 text-accent flex-shrink-0 mt-0.5" />
-                    <p className="text-xs text-foreground/80">
+                    <Sparkles className="h-3 w-3 text-accent flex-shrink-0 mt-0.5" />
+                    <p className="text-[10px] text-foreground/70 leading-tight">
                       <span className="font-medium text-accent">Bundle savings!</span> Additional discounts may apply at checkout based on your order quantity.
                     </p>
                   </motion.div>
@@ -204,7 +209,7 @@ export const CartDrawer = () => {
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95 }}
-                      className={`relative overflow-hidden rounded-lg p-3 ${
+                      className={`relative overflow-hidden rounded-md p-2 ${
                         timeRemaining <= 60 
                           ? 'bg-gradient-to-r from-red-500/10 to-orange-500/10 border border-red-500/30' 
                           : timeRemaining <= 180 
@@ -221,15 +226,15 @@ export const CartDrawer = () => {
                         />
                       )}
                       
-                      <div className="relative flex items-center gap-3">
-                        <div className={`flex items-center justify-center w-10 h-10 rounded-full ${
+                      <div className="relative flex items-center gap-2">
+                        <div className={`flex items-center justify-center w-7 h-7 rounded-full ${
                           timeRemaining <= 60 
                             ? 'bg-red-500/20' 
                             : timeRemaining <= 180 
                             ? 'bg-amber-500/20'
                             : 'bg-primary/10'
                         }`}>
-                          <Clock className={`h-5 w-5 ${
+                          <Clock className={`h-3.5 w-3.5 ${
                             timeRemaining <= 60 
                               ? 'text-red-500' 
                               : timeRemaining <= 180 
@@ -239,8 +244,8 @@ export const CartDrawer = () => {
                         </div>
                         
                         <div className="flex-1">
-                          <div className="flex items-center gap-2">
-                            <span className={`font-mono text-lg font-bold ${
+                          <div className="flex items-center gap-1.5">
+                            <span className={`font-mono text-sm font-bold ${
                               timeRemaining <= 60 
                                 ? 'text-red-500' 
                                 : timeRemaining <= 180 
@@ -250,21 +255,21 @@ export const CartDrawer = () => {
                               {formatTime(timeRemaining)}
                             </span>
                             {timeRemaining <= 120 && (
-                              <AlertTriangle className="h-4 w-4 text-red-500 animate-pulse" />
+                              <AlertTriangle className="h-3 w-3 text-red-500 animate-pulse" />
                             )}
                           </div>
-                          <p className="text-xs text-muted-foreground leading-tight">
+                          <p className="text-[10px] text-muted-foreground leading-tight">
                             {timeRemaining <= 60 
-                              ? "Hurry! Your cart will expire soon" 
+                              ? "Hurry! Cart expires soon" 
                               : timeRemaining <= 180 
-                              ? "Items are in high demand"
+                              ? "Items in high demand"
                               : "Items reserved for limited time"}
                           </p>
                         </div>
                       </div>
                       
                       {/* Progress bar */}
-                      <div className="mt-2 h-1 bg-muted/30 rounded-full overflow-hidden">
+                      <div className="mt-1.5 h-0.5 bg-muted/30 rounded-full overflow-hidden">
                         <motion.div
                           className={`h-full ${
                             timeRemaining <= 60 
@@ -283,12 +288,12 @@ export const CartDrawer = () => {
                 </AnimatePresence>
 
                 <div className="flex justify-between items-center">
-                  <span className="text-lg font-medium">Subtotal</span>
-                  <span className="text-2xl font-bold font-display">
+                  <span className="text-base font-medium">Subtotal</span>
+                  <span className="text-xl font-bold font-display">
                     ${totalPrice.toFixed(2)}
                   </span>
                 </div>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-xs text-muted-foreground">
                   Shipping & taxes calculated at checkout
                 </p>
                 
@@ -310,15 +315,6 @@ export const CartDrawer = () => {
                       Checkout
                     </>
                   )}
-                </Button>
-                
-                <Button 
-                  onClick={() => setIsOpen(false)}
-                  variant="outline"
-                  className="w-full" 
-                  size="lg"
-                >
-                  Continue Shopping
                 </Button>
               </div>
             </>
