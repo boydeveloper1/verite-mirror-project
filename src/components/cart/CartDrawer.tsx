@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -10,11 +10,17 @@ import {
   SheetTrigger,
   SheetClose,
 } from "@/components/ui/sheet";
-import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2, X } from "lucide-react";
+import { ShoppingCart, Minus, Plus, Trash2, ExternalLink, Loader2, X, Clock, Sparkles, AlertTriangle } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
+import { motion, AnimatePresence } from "framer-motion";
+
+const CART_TIMEOUT_SECONDS = 7 * 60; // 7 minutes
 
 export const CartDrawer = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState(CART_TIMEOUT_SECONDS);
+  const [cartStartTime, setCartStartTime] = useState<number | null>(null);
+  
   const { 
     items, 
     isLoading,
@@ -24,15 +30,53 @@ export const CartDrawer = () => {
     createCheckout,
     getTotalItems,
     getTotalPrice,
+    clearCart,
   } = useCartStore();
   
   const totalItems = getTotalItems();
   const totalPrice = getTotalPrice();
 
+  // Start/reset timer when items are added
+  useEffect(() => {
+    if (items.length > 0 && !cartStartTime) {
+      setCartStartTime(Date.now());
+      setTimeRemaining(CART_TIMEOUT_SECONDS);
+    } else if (items.length === 0) {
+      setCartStartTime(null);
+      setTimeRemaining(CART_TIMEOUT_SECONDS);
+    }
+  }, [items.length, cartStartTime]);
+
+  // Countdown timer
+  useEffect(() => {
+    if (!cartStartTime || items.length === 0) return;
+
+    const interval = setInterval(() => {
+      const elapsed = Math.floor((Date.now() - cartStartTime) / 1000);
+      const remaining = Math.max(0, CART_TIMEOUT_SECONDS - elapsed);
+      setTimeRemaining(remaining);
+
+      if (remaining === 0) {
+        clearCart();
+        setCartStartTime(null);
+        setIsOpen(false);
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [cartStartTime, items.length, clearCart]);
+
+  const formatTime = useCallback((seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  }, []);
+
   const handleCheckout = async () => {
     // Open window synchronously to avoid pop-up blocker
     const windowRef = window.open('about:blank', '_blank');
     await createCheckout(windowRef);
+    setCartStartTime(null); // Reset timer on checkout
     setIsOpen(false);
   };
 
@@ -139,6 +183,105 @@ export const CartDrawer = () => {
               
               {/* Fixed checkout section */}
               <div className="flex-shrink-0 space-y-4 pt-6 border-t mt-4">
+                {/* Quantity Savings Notice */}
+                {totalItems >= 2 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex items-start gap-2 p-3 bg-accent/10 border border-accent/20 rounded-lg"
+                  >
+                    <Sparkles className="h-4 w-4 text-accent flex-shrink-0 mt-0.5" />
+                    <p className="text-xs text-foreground/80">
+                      <span className="font-medium text-accent">Bundle savings!</span> Additional discounts may apply at checkout based on your order quantity.
+                    </p>
+                  </motion.div>
+                )}
+
+                {/* Urgency Timer */}
+                <AnimatePresence>
+                  {items.length > 0 && timeRemaining > 0 && (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      className={`relative overflow-hidden rounded-lg p-3 ${
+                        timeRemaining <= 60 
+                          ? 'bg-gradient-to-r from-red-500/10 to-orange-500/10 border border-red-500/30' 
+                          : timeRemaining <= 180 
+                          ? 'bg-gradient-to-r from-amber-500/10 to-yellow-500/10 border border-amber-500/30'
+                          : 'bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/20'
+                      }`}
+                    >
+                      {/* Animated background pulse for urgency */}
+                      {timeRemaining <= 120 && (
+                        <motion.div
+                          className="absolute inset-0 bg-red-500/5"
+                          animate={{ opacity: [0, 0.3, 0] }}
+                          transition={{ duration: 1.5, repeat: Infinity }}
+                        />
+                      )}
+                      
+                      <div className="relative flex items-center gap-3">
+                        <div className={`flex items-center justify-center w-10 h-10 rounded-full ${
+                          timeRemaining <= 60 
+                            ? 'bg-red-500/20' 
+                            : timeRemaining <= 180 
+                            ? 'bg-amber-500/20'
+                            : 'bg-primary/10'
+                        }`}>
+                          <Clock className={`h-5 w-5 ${
+                            timeRemaining <= 60 
+                              ? 'text-red-500' 
+                              : timeRemaining <= 180 
+                              ? 'text-amber-500'
+                              : 'text-primary'
+                          }`} />
+                        </div>
+                        
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2">
+                            <span className={`font-mono text-lg font-bold ${
+                              timeRemaining <= 60 
+                                ? 'text-red-500' 
+                                : timeRemaining <= 180 
+                                ? 'text-amber-600'
+                                : 'text-foreground'
+                            }`}>
+                              {formatTime(timeRemaining)}
+                            </span>
+                            {timeRemaining <= 120 && (
+                              <AlertTriangle className="h-4 w-4 text-red-500 animate-pulse" />
+                            )}
+                          </div>
+                          <p className="text-xs text-muted-foreground leading-tight">
+                            {timeRemaining <= 60 
+                              ? "Hurry! Your cart will expire soon" 
+                              : timeRemaining <= 180 
+                              ? "Items are in high demand"
+                              : "Items reserved for limited time"}
+                          </p>
+                        </div>
+                      </div>
+                      
+                      {/* Progress bar */}
+                      <div className="mt-2 h-1 bg-muted/30 rounded-full overflow-hidden">
+                        <motion.div
+                          className={`h-full ${
+                            timeRemaining <= 60 
+                              ? 'bg-red-500' 
+                              : timeRemaining <= 180 
+                              ? 'bg-amber-500'
+                              : 'bg-primary'
+                          }`}
+                          initial={{ width: '100%' }}
+                          animate={{ width: `${(timeRemaining / CART_TIMEOUT_SECONDS) * 100}%` }}
+                          transition={{ duration: 0.5 }}
+                        />
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
                 <div className="flex justify-between items-center">
                   <span className="text-lg font-medium">Subtotal</span>
                   <span className="text-2xl font-bold font-display">
