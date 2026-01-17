@@ -111,6 +111,17 @@ export const useCartStore = create<CartStore>()(
           };
           set({ items: [...items, extendedItem] });
         }
+
+        // Track Meta Pixel AddToCart event
+        if (typeof window !== 'undefined' && (window as any).fbq) {
+          (window as any).fbq('track', 'AddToCart', {
+            content_name: item.product.node.title,
+            content_ids: [item.variantId],
+            content_type: 'product',
+            value: parseFloat(item.price.amount) * item.quantity,
+            currency: item.price.currencyCode,
+          });
+        }
       },
 
       updateQuantity: (variantId, quantity) => {
