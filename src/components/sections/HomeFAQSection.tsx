@@ -4,7 +4,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { HelpCircle } from "lucide-react";
+import { HelpCircle, MessageCircle } from "lucide-react";
+import { motion } from "framer-motion";
 
 const faqs = [
   {
@@ -43,52 +44,77 @@ const faqs = [
 
 export const HomeFAQSection = () => {
   return (
-    <section className="py-24 md:py-32 bg-gradient-to-b from-background via-secondary/30 to-background relative overflow-hidden">
-      {/* Decorative Elements */}
-      <div className="absolute top-1/4 right-0 w-64 h-64 bg-accent/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-1/4 left-0 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
+    <section className="py-28 md:py-36 bg-gradient-to-b from-secondary/50 via-background to-secondary/30 relative overflow-hidden">
+      {/* Decorative Background */}
+      <div className="absolute inset-0 opacity-[0.02]" style={{
+        backgroundImage: `radial-gradient(circle at 1px 1px, hsl(var(--primary)) 1px, transparent 0)`,
+        backgroundSize: '40px 40px',
+      }} />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[120px]" />
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[150px]" />
       
       <div className="container mx-auto px-4 md:px-10 relative z-10">
         <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-12 md:mb-16 animate-fade-in-up">
-            <span className="inline-block bg-accent/10 text-accent font-semibold uppercase tracking-wider px-4 py-2 rounded-full text-sm mb-6">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <span className="inline-flex items-center gap-2 bg-accent/10 text-accent font-bold uppercase tracking-[0.15em] px-5 py-2.5 rounded-full text-xs mb-8">
+              <HelpCircle className="w-4 h-4" />
               Got Questions?
             </span>
-            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-4">
-              Frequently Asked Questions
+            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-5">
+              Frequently Asked<br />
+              <span className="text-accent">Questions</span>
             </h2>
-            <p className="text-muted-foreground">
+            <p className="text-lg text-muted-foreground">
               Quick answers to help you on your hair growth journey
             </p>
-          </div>
+          </motion.div>
 
-          <Accordion type="single" collapsible className="space-y-4">
-            {faqs.map((faq, index) => (
-              <AccordionItem
-                key={index}
-                value={`item-${index}`}
-                className="bg-card border border-border/50 rounded-2xl px-6 shadow-soft data-[state=open]:shadow-medium transition-all duration-300 animate-fade-in-up"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <AccordionTrigger className="text-left font-semibold text-foreground hover:text-primary py-5 [&[data-state=open]]:text-primary">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <Accordion type="single" collapsible className="space-y-4">
+              {faqs.map((faq, index) => (
+                <AccordionItem
+                  key={index}
+                  value={`item-${index}`}
+                  className="bg-card border border-border/50 rounded-2xl px-6 shadow-soft hover:shadow-medium data-[state=open]:shadow-medium data-[state=open]:border-accent/20 transition-all duration-300"
+                >
+                  <AccordionTrigger className="text-left font-semibold text-foreground hover:text-accent py-6 [&[data-state=open]]:text-accent">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground pb-6 leading-relaxed text-[15px]">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </motion.div>
 
-          <div className="text-center mt-12 animate-fade-in-up">
-            <p className="text-muted-foreground mb-4">Still have questions?</p>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="text-center mt-14 p-8 bg-gradient-to-br from-accent/10 to-accent/5 rounded-3xl border border-accent/20"
+          >
+            <MessageCircle className="w-10 h-10 text-accent mx-auto mb-4" />
+            <p className="text-foreground font-semibold mb-2">Still have questions?</p>
             <a 
               href="mailto:support@veritescalp.com" 
-              className="inline-flex items-center gap-2 text-accent hover:underline font-semibold"
+              className="inline-flex items-center gap-2 text-accent hover:underline font-bold text-lg"
             >
               Contact us at support@veritescalp.com
             </a>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
