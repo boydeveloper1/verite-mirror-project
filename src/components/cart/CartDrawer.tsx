@@ -206,7 +206,7 @@ export const CartDrawer = () => {
                     <Sparkles className="h-3 w-3 text-accent flex-shrink-0 mt-0.5" />
                     <p className="text-[10px] text-foreground/70 leading-tight">
                       <span className="font-medium text-accent">Bundle savings!</span> Additional discounts may apply at
-                      checkout based on your order quantityand bundle selected.
+                      checkout based on your order quantity and bundle selected.
                     </p>
                   </motion.div>
                 )}
