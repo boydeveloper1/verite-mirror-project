@@ -145,37 +145,24 @@ export const ScalpHealthQuiz = () => {
   const progress = ((currentQuestion + (showResult ? 1 : 0)) / questions.length) * 100;
 
   return (
-    <section className="py-28 md:py-36 bg-gradient-to-b from-background via-secondary/40 to-background relative overflow-hidden">
-      {/* Decorative Background */}
-      <div className="absolute inset-0 opacity-[0.02]" style={{
-        backgroundImage: `radial-gradient(circle at 1px 1px, hsl(var(--accent)) 1px, transparent 0)`,
-        backgroundSize: '48px 48px',
-      }} />
-      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[120px]" />
-      <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[150px]" />
+    <section className="py-24 md:py-32 bg-gradient-to-b from-secondary/50 via-background to-secondary/30 relative overflow-hidden">
+      {/* Decorative Elements */}
+      <div className="absolute top-1/4 left-0 w-72 h-72 bg-accent/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
       
       <div className="container mx-auto px-4 md:px-10 relative z-10">
         <div className="max-w-2xl mx-auto">
           {/* Header */}
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-14"
-          >
-            <span className="inline-flex items-center gap-2 bg-accent/10 text-accent font-bold uppercase tracking-[0.15em] text-xs px-5 py-2.5 rounded-full mb-8">
+          <div className="text-center mb-12">
+            <span className="inline-flex items-center gap-2 bg-accent/10 text-accent font-bold uppercase tracking-wider text-sm px-4 py-2 rounded-full mb-6">
               <Sparkles className="w-4 h-4" />
               Free Assessment
             </span>
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-5">
-              Scalp Health<br />
-              <span className="text-accent">Quiz</span>
-            </h2>
-            <p className="text-lg text-muted-foreground">
+            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-4">Scalp Health Quiz</h2>
+            <p className="text-muted-foreground text-lg">
               Take our quick 5-question quiz to discover your scalp's health status
             </p>
-          </motion.div>
+          </div>
 
           {/* Progress Bar */}
           <div className="mb-8">
@@ -194,13 +181,7 @@ export const ScalpHealthQuiz = () => {
           </div>
 
           {/* Quiz Card */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="bg-card rounded-3xl border border-border/50 shadow-xl p-8 md:p-10 min-h-[450px] flex flex-col"
-          >
+          <div className="bg-card rounded-2xl border border-border shadow-medium p-6 md:p-8 min-h-[400px] flex flex-col">
             <AnimatePresence mode="wait">
               {!showResult ? (
                 <motion.div
@@ -227,13 +208,13 @@ export const ScalpHealthQuiz = () => {
                       <button
                         key={index}
                         onClick={() => handleAnswer(option.score)}
-                        className="w-full text-left p-5 rounded-2xl border-2 border-border bg-background hover:border-accent hover:bg-accent/5 transition-all duration-300 group hover:shadow-md"
+                        className="w-full text-left p-4 rounded-xl border border-border bg-background hover:border-accent hover:bg-accent/5 transition-all duration-200 group"
                       >
-                        <span className="flex items-center gap-4">
-                          <span className="w-8 h-8 rounded-full border-2 border-muted-foreground/30 group-hover:border-accent group-hover:bg-accent group-hover:text-white flex items-center justify-center text-sm font-bold text-muted-foreground transition-all duration-300">
+                        <span className="flex items-center gap-3">
+                          <span className="w-6 h-6 rounded-full border-2 border-muted-foreground/30 group-hover:border-accent flex items-center justify-center text-sm font-medium text-muted-foreground group-hover:text-accent transition-colors">
                             {String.fromCharCode(65 + index)}
                           </span>
-                          <span className="text-foreground group-hover:text-accent transition-colors font-medium">
+                          <span className="text-foreground group-hover:text-accent transition-colors">
                             {option.label}
                           </span>
                         </span>
@@ -283,7 +264,7 @@ export const ScalpHealthQuiz = () => {
                 </motion.div>
               )}
             </AnimatePresence>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
