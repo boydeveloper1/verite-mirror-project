@@ -170,8 +170,22 @@ export const useCartStore = create<CartStore>()(
       setOpen: (isOpen) => set({ isOpen }),
 
       createCheckout: async (windowRef?: Window | null) => {
-        const { items, setLoading, setCheckoutUrl } = get();
+        const { items, setLoading, setCheckoutUrl, getTotalPrice } = get();
         if (items.length === 0) return null;
+
+        // Track Meta Pixel InitiateCheckout event
+        if (typeof window !== 'undefined' && (window as any).fbq) {
+          (window as any).fbq('track', 'InitiateCheckout', {
+            content_ids: items.map(item => item.variantId),
+            contents: items.map(item => ({
+              id: item.variantId,
+              quantity: item.quantity,
+            })),
+            num_items: items.reduce((sum, item) => sum + item.quantity, 0),
+            value: getTotalPrice(),
+            currency: items[0]?.price.currencyCode || 'USD',
+          });
+        }
 
         setLoading(true);
         try {
