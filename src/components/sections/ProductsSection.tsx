@@ -13,16 +13,16 @@ const containerVariants = {
     opacity: 1,
     transition: { staggerChildren: 0.1 }
   }
-};
+} as const;
 
 const cardVariants = {
   hidden: { opacity: 0, y: 30 },
   visible: { 
     opacity: 1, 
     y: 0,
-    transition: { duration: 0.5, ease: "easeOut" }
+    transition: { duration: 0.5 }
   }
-};
+} as const;
 
 export const ProductsSection = () => {
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
