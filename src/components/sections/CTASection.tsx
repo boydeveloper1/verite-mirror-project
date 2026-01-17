@@ -1,65 +1,116 @@
 import { Button } from "@/components/ui/button";
-import { Check, Sparkles, ArrowRight } from "lucide-react";
+import { Check, Sparkles, ArrowRight, Star } from "lucide-react";
+import { motion } from "framer-motion";
 
 export const CTASection = () => {
   return (
-    <section className="py-24 md:py-32 bg-gradient-to-br from-primary via-primary to-accent/80 relative overflow-hidden">
-      {/* Decorative Pattern */}
-      <div className="absolute inset-0 opacity-5" style={{
-        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+    <section className="py-28 md:py-40 bg-gradient-to-br from-primary via-primary/95 to-accent/90 relative overflow-hidden">
+      {/* Animated Background Pattern */}
+      <div className="absolute inset-0 opacity-[0.03]" style={{
+        backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
+        backgroundSize: '32px 32px',
       }} />
       
-      {/* Animated Background Elements */}
+      {/* Floating Orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/15 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-brand-gold/15 rounded-full blur-2xl animate-float [animation-delay:3s]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-primary-foreground/5 rounded-full blur-2xl" />
+        <motion.div 
+          className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent/20 rounded-full blur-[150px]"
+          animate={{ 
+            scale: [1, 1.2, 1],
+            opacity: [0.2, 0.3, 0.2],
+          }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div 
+          className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-gold/15 rounded-full blur-[120px]"
+          animate={{ 
+            scale: [1.2, 1, 1.2],
+            opacity: [0.15, 0.25, 0.15],
+          }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+        />
+        <motion.div 
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-white/5 rounded-full blur-[100px]"
+          animate={{ 
+            rotate: [0, 360],
+          }}
+          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+        />
       </div>
 
       <div className="container mx-auto px-4 md:px-10 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-primary-foreground/15 backdrop-blur-md border border-primary-foreground/25 rounded-full px-6 py-2.5 mb-8 animate-fade-in shadow-lg">
-            <Sparkles className="w-4 h-4 text-brand-gold" />
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-2.5 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full px-6 py-3 mb-10 shadow-2xl"
+          >
+            <Sparkles className="w-5 h-5 text-brand-gold" />
             <span className="text-sm font-semibold text-primary-foreground tracking-wide">Limited Time Offer</span>
-          </div>
+          </motion.div>
 
-          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6 animate-fade-in-up leading-tight">
+          <motion.h2 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-primary-foreground mb-8 leading-[1.1]"
+          >
             Ready to Regrow<br />
             <span className="text-brand-gold">Your Edges?</span>
-          </h2>
-          <p className="text-lg md:text-xl text-primary-foreground/90 mb-12 max-w-2xl mx-auto animate-fade-in-up [animation-delay:200ms] opacity-0">
-            Join thousands of women who chose scalp health first and are now seeing real results.
-          </p>
+          </motion.h2>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 animate-fade-in-up [animation-delay:400ms] opacity-0">
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-xl md:text-2xl text-primary-foreground/85 mb-14 max-w-2xl mx-auto leading-relaxed font-light"
+          >
+            Join thousands of women who chose scalp health first and are now seeing real results.
+          </motion.p>
+          
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="mb-16"
+          >
             <Button 
               asChild 
               size="lg" 
-              className="h-16 px-14 bg-primary-foreground text-primary hover:bg-primary-foreground/90 font-bold text-lg transition-all duration-300 hover:scale-105 hover:shadow-xl rounded-full group"
+              className="h-18 px-16 bg-white text-primary hover:bg-white/95 font-bold text-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl rounded-full group"
             >
-              <a href="/store" className="flex items-center gap-2">
+              <a href="/store" className="flex items-center gap-3">
                 Shop Now & Get Free Shipping
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </a>
             </Button>
-          </div>
+          </motion.div>
           
           {/* Trust Badges */}
-          <div className="flex flex-wrap justify-center gap-8 md:gap-12 text-sm text-primary-foreground/90 animate-fade-in-up [animation-delay:600ms] opacity-0">
-            <div className="flex items-center gap-3 bg-primary-foreground/10 backdrop-blur-sm rounded-full px-5 py-2.5">
-              <Check className="w-5 h-5 text-brand-gold" />
-              <span className="font-medium">Free Worldwide Shipping</span>
-            </div>
-            <div className="flex items-center gap-3 bg-primary-foreground/10 backdrop-blur-sm rounded-full px-5 py-2.5">
-              <Check className="w-5 h-5 text-brand-gold" />
-              <span className="font-medium">30-Day Money Back</span>
-            </div>
-            <div className="flex items-center gap-3 bg-primary-foreground/10 backdrop-blur-sm rounded-full px-5 py-2.5">
-              <Check className="w-5 h-5 text-brand-gold" />
-              <span className="font-medium">Secure Checkout</span>
-            </div>
-          </div>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="flex flex-wrap justify-center gap-4 md:gap-6"
+          >
+            {[
+              "Free Worldwide Shipping",
+              "30-Day Money Back",
+              "Secure Checkout",
+            ].map((item, index) => (
+              <div key={index} className="flex items-center gap-2.5 bg-white/10 backdrop-blur-sm rounded-full px-5 py-3 border border-white/10">
+                <Check className="w-5 h-5 text-brand-gold" />
+                <span className="font-medium text-primary-foreground text-sm">{item}</span>
+              </div>
+            ))}
+          </motion.div>
         </div>
       </div>
     </section>
