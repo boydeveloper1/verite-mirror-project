@@ -313,7 +313,7 @@ export const ScalpHealthQuiz = () => {
                     </h4>
                     
                     <p className="text-sm text-muted-foreground mb-4">
-                      Enter your email to receive detailed steps tailored to your results, plus an exclusive discount code!
+                      Enter your email to receive detailed steps tailored to your results.
                     </p>
 
                     <form onSubmit={handleEmailSubmit} className="space-y-3">
