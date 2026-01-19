@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, ArrowRight, RotateCcw, Sparkles, AlertTriangle, ThumbsUp } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { CheckCircle, ArrowRight, RotateCcw, Sparkles, AlertTriangle, ThumbsUp, Mail, Loader2, Gift } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 interface Question {
   id: number;
@@ -72,6 +75,13 @@ interface ResultData {
   urgency: string;
 }
 
+const getResultType = (score: number): string => {
+  if (score <= 3) return "healthy";
+  if (score <= 7) return "early_warning";
+  if (score <= 11) return "needs_attention";
+  return "priority";
+};
+
 const getResult = (score: number): ResultData => {
   if (score <= 3) {
     return {
@@ -122,6 +132,9 @@ export const ScalpHealthQuiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<number[]>([]);
   const [showResult, setShowResult] = useState(false);
+  const [email, setEmail] = useState("");
+  const [emailCaptured, setEmailCaptured] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleAnswer = (score: number) => {
     const newAnswers = [...answers, score];
@@ -138,6 +151,48 @@ export const ScalpHealthQuiz = () => {
     setCurrentQuestion(0);
     setAnswers([]);
     setShowResult(false);
+    setEmail("");
+    setEmailCaptured(false);
+  };
+
+  const handleEmailSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!email || !email.includes("@")) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const resultType = getResultType(totalScore);
+      
+      const { error } = await supabase.functions.invoke("send-quiz-results-email", {
+        body: {
+          email,
+          score: totalScore,
+          resultType,
+          answers,
+        },
+      });
+
+      if (error) throw error;
+
+      toast.success("Check your inbox!", {
+        description: "Your personalized recovery plan is on the way.",
+      });
+      setEmailCaptured(true);
+    } catch (error) {
+      console.error("Quiz email error:", error);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleSkipEmail = () => {
+    setEmailCaptured(true);
   };
 
   const totalScore = answers.reduce((a, b) => a + b, 0);
@@ -220,6 +275,90 @@ export const ScalpHealthQuiz = () => {
                         </span>
                       </button>
                     ))}
+                  </div>
+                </motion.div>
+              ) : !emailCaptured ? (
+                <motion.div
+                  key="email-capture"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4 }}
+                  className="flex-1 flex flex-col items-center text-center"
+                >
+                  <div
+                    className={`w-20 h-20 rounded-full bg-${result.color.replace("text-", "")}/10 flex items-center justify-center mb-6`}
+                  >
+                    <result.icon className={`w-10 h-10 ${result.color}`} />
+                  </div>
+
+                  <span className={`text-xs font-bold uppercase tracking-wider ${result.color} mb-2`}>
+                    {result.urgency}
+                  </span>
+
+                  <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">{result.title}</h3>
+
+                  <p className="text-muted-foreground mb-6 leading-relaxed">{result.description}</p>
+
+                  {/* Email Capture Form */}
+                  <div className="w-full p-6 rounded-xl bg-gradient-to-br from-accent/10 to-primary/5 border border-accent/20 mb-6">
+                    <div className="flex items-center justify-center gap-2 mb-3">
+                      <Gift className="w-5 h-5 text-accent" />
+                      <span className="text-sm font-bold uppercase tracking-wider text-accent">
+                        Exclusive Offer
+                      </span>
+                    </div>
+                    
+                    <h4 className="text-lg font-bold text-foreground mb-2">
+                      Get Your Personalized Recovery Plan
+                    </h4>
+                    
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Enter your email to receive detailed steps tailored to your results, plus an exclusive discount code!
+                    </p>
+
+                    <form onSubmit={handleEmailSubmit} className="space-y-3">
+                      <div className="relative">
+                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                        <Input
+                          type="email"
+                          placeholder="Enter your email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          className="pl-11 h-12"
+                          disabled={isSubmitting}
+                        />
+                      </div>
+                      <Button
+                        type="submit"
+                        variant="cta"
+                        size="lg"
+                        className="w-full"
+                        disabled={isSubmitting}
+                      >
+                        {isSubmitting ? (
+                          <>
+                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                            Sending...
+                          </>
+                        ) : (
+                          <>
+                            Send My Recovery Plan
+                            <ArrowRight className="w-4 h-4 ml-2" />
+                          </>
+                        )}
+                      </Button>
+                    </form>
+
+                    <button
+                      onClick={handleSkipEmail}
+                      className="mt-3 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      Skip for now
+                    </button>
+                    
+                    <p className="text-xs text-muted-foreground mt-3">
+                      No spam, ever. Unsubscribe anytime.
+                    </p>
                   </div>
                 </motion.div>
               ) : (
