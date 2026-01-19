@@ -14,7 +14,81 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      abandoned_carts: {
+        Row: {
+          cart_items: Json
+          checkout_completed: boolean
+          created_at: string
+          currency: string
+          email: string | null
+          id: string
+          recovered: boolean
+          recovery_email_sent_at: string | null
+          session_id: string
+          total_value: number
+          updated_at: string
+        }
+        Insert: {
+          cart_items?: Json
+          checkout_completed?: boolean
+          created_at?: string
+          currency?: string
+          email?: string | null
+          id?: string
+          recovered?: boolean
+          recovery_email_sent_at?: string | null
+          session_id: string
+          total_value?: number
+          updated_at?: string
+        }
+        Update: {
+          cart_items?: Json
+          checkout_completed?: boolean
+          created_at?: string
+          currency?: string
+          email?: string | null
+          id?: string
+          recovered?: boolean
+          recovery_email_sent_at?: string | null
+          session_id?: string
+          total_value?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      subscribers: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          quiz_answers: Json | null
+          quiz_result_type: string | null
+          quiz_score: number | null
+          source: string
+          unsubscribed_at: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          quiz_answers?: Json | null
+          quiz_result_type?: string | null
+          quiz_score?: number | null
+          source?: string
+          unsubscribed_at?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          quiz_answers?: Json | null
+          quiz_result_type?: string | null
+          quiz_score?: number | null
+          source?: string
+          unsubscribed_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
