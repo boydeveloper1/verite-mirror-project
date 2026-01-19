@@ -1,8 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "https://esm.sh/resend@2.0.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -191,15 +190,30 @@ const handler = async (req: Request): Promise<Response> => {
     // Get email content based on result type
     const emailContent = getEmailContent(score, resultType);
 
-    // Send email
-    const emailResponse = await resend.emails.send({
-      from: "VERITÉ SCALP <onboarding@resend.dev>",
-      to: [email],
-      subject: emailContent.subject,
-      html: emailContent.html,
+    // Send email using verified domain
+    const emailResponse = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "VERITÉ SCALP <hello@veritescalp.com>",
+        to: [email],
+        subject: emailContent.subject,
+        html: emailContent.html,
+        reply_to: "hello@veritescalp.com",
+      }),
     });
 
-    console.log("Email sent successfully:", emailResponse);
+    const emailResult = await emailResponse.json();
+
+    if (!emailResponse.ok) {
+      console.error("Failed to send quiz results email:", emailResult);
+      throw new Error(emailResult.message || "Failed to send email");
+    }
+
+    console.log("Quiz results email sent successfully:", emailResult);
 
     return new Response(
       JSON.stringify({ success: true, discount: emailContent.discount }),
