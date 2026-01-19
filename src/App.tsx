@@ -5,7 +5,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { ScrollToTop } from "@/components/shared/ScrollToTop";
-import { CartEmailCapture } from "@/components/cart/CartEmailCapture";
 import { useAbandonedCartTracker } from "@/hooks/useAbandonedCartTracker";
 import Index from "./pages/Index";
 import ProductPage from "./pages/ProductPage";
@@ -49,7 +48,6 @@ const AppContent = () => {
         <Route path="/accessibility" element={<AccessibilityPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <CartEmailCapture />
     </>
   );
 };
