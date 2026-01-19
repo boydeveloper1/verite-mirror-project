@@ -1,25 +1,10 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
-// Restrict CORS to the project domain
-const allowedOrigins = [
-  "https://veritescalp.com",
-  "https://www.veritescalp.com",
-  "http://localhost:5173",
-  "http://localhost:8080",
-];
-
-function getCorsHeaders(origin: string | null): Record<string, string> {
-  const allowedOrigin =
-    origin && allowedOrigins.some((allowed) => origin.startsWith(allowed.replace(/\/$/, "")))
-      ? origin
-      : allowedOrigins[0];
-
-  return {
-    "Access-Control-Allow-Origin": allowedOrigin,
-    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-  };
-}
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+};
 
 // Input validation schema with length limits and format checks
 const ContactSchema = z.object({
@@ -340,9 +325,9 @@ function getCustomerEmailHtml(name: string): string {
 }
 
 const handler = async (req: Request): Promise<Response> => {
-  const origin = req.headers.get("origin");
-  const corsHeaders = getCorsHeaders(origin);
-
+  if (req.method === "OPTIONS") {
+    return new Response(null, { headers: corsHeaders });
+  }
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
