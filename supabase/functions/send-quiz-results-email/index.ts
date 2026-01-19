@@ -125,7 +125,7 @@ const getEmailContent = (score: number, resultType: string) => {
                     <p style="color: #5c4a36; font-size: 11px; margin: 5px 0 0 0;">Happy Customers</p>
                   </td>
                   <td width="33%" style="text-align: center; padding: 20px 10px;">
-                    <p style="color: #1B7F4D; font-size: 22px; font-weight: 700; margin: 0;">60-Day</p>
+                    <p style="color: #1B7F4D; font-size: 22px; font-weight: 700; margin: 0;">30-Day</p>
                     <p style="color: #5c4a36; font-size: 11px; margin: 5px 0 0 0;">Money Back</p>
                   </td>
                 </tr>
