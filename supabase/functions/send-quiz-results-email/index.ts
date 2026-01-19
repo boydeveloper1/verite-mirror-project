@@ -215,6 +215,124 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("Quiz results email sent successfully:", emailResult);
 
+    // Send admin notification email
+    const adminEmailHtml = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>New Quiz Submission</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f8f5f0;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f8f5f0; padding: 40px 20px;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);">
+          <!-- Header -->
+          <tr>
+            <td style="background: linear-gradient(135deg, #3d3424 0%, #5c4a36 100%); padding: 24px; text-align: center;">
+              <h1 style="color: #ffffff; font-size: 24px; margin: 0; font-weight: 600;">New Quiz Submission</h1>
+            </td>
+          </tr>
+          
+          <!-- Content -->
+          <tr>
+            <td style="padding: 32px 40px;">
+              <h2 style="color: #3d3424; font-size: 20px; margin: 0 0 24px;">Customer Information</h2>
+              
+              <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
+                <tr>
+                  <td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5;">
+                    <strong style="color: #5c4a36;">Email:</strong>
+                  </td>
+                  <td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; text-align: right;">
+                    <a href="mailto:${email}" style="color: #b8860b; text-decoration: none;">${email}</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5;">
+                    <strong style="color: #5c4a36;">Quiz Score:</strong>
+                  </td>
+                  <td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; text-align: right;">
+                    <span style="color: ${emailContent.color}; font-weight: 600;">${score}/15</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5;">
+                    <strong style="color: #5c4a36;">Result Type:</strong>
+                  </td>
+                  <td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; text-align: right;">
+                    <span style="background-color: ${emailContent.color}20; color: ${emailContent.color}; padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: 500;">${resultType.replace('_', ' ').toUpperCase()}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5;">
+                    <strong style="color: #5c4a36;">Discount Sent:</strong>
+                  </td>
+                  <td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; text-align: right;">
+                    <span style="color: #3d3424; font-weight: 600;">${emailContent.discount} (${emailContent.discountAmount} off)</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 12px 0;">
+                    <strong style="color: #5c4a36;">Quiz Answers:</strong>
+                  </td>
+                  <td style="padding: 12px 0; text-align: right;">
+                    <span style="color: #5c4a36;">${answers.join(', ')}</span>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Recommendation Sent -->
+              <div style="background-color: #f8f5f0; border-left: 4px solid ${emailContent.color}; padding: 16px; border-radius: 0 8px 8px 0; margin-bottom: 24px;">
+                <p style="color: #5c4a36; font-size: 13px; margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.5px;">Recommendation Sent to Customer:</p>
+                <p style="color: #3d3424; font-size: 14px; line-height: 1.5; margin: 0;">${emailContent.recommendation}</p>
+              </div>
+
+              <!-- Timestamp -->
+              <p style="color: #888; font-size: 12px; margin: 0; text-align: center;">
+                Submitted on ${new Date().toLocaleString('en-US', { dateStyle: 'full', timeStyle: 'short' })}
+              </p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #3d3424; padding: 16px 40px; text-align: center;">
+              <p style="color: rgba(255,255,255,0.6); font-size: 11px; margin: 0;">This is an automated notification from VERITÉ SCALP Quiz</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+    `;
+
+    const adminEmailResponse = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "VERITÉ SCALP <hello@veritescalp.com>",
+        to: ["support@veritescalp.com"],
+        subject: `New Quiz: ${email} - Score ${score}/15 (${resultType.replace('_', ' ')})`,
+        html: adminEmailHtml,
+        reply_to: email,
+      }),
+    });
+
+    if (!adminEmailResponse.ok) {
+      const adminError = await adminEmailResponse.json();
+      console.error("Failed to send admin notification:", adminError);
+      // Don't throw - customer email was sent successfully
+    } else {
+      console.log("Admin notification email sent successfully");
+    }
+
     return new Response(
       JSON.stringify({ success: true, discount: emailContent.discount }),
       {
