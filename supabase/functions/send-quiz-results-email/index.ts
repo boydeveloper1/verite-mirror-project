@@ -19,22 +19,18 @@ interface QuizEmailRequest {
 const getEmailContent = (score: number, resultType: string) => {
   const configs = {
     healthy: {
-      subject: "Your Scalp is Healthy! Here's How to Keep It That Way 🌿",
+      subject: "Your Scalp Health Results Are In! 🌿",
       headline: "Great News! Your Scalp is Healthy",
-      intro: "Your quiz results show that your scalp is in excellent condition. But maintaining scalp health is an ongoing journey.",
+      intro: "Your quiz results show that your scalp is in excellent condition. Maintaining scalp health is an ongoing journey, and you're doing great!",
       recommendation: "Our Scalp Soothing Mist is perfect for maintaining your healthy scalp and protecting against environmental stressors.",
-      discount: "HEALTHY10",
-      discountAmount: "10%",
       urgency: "low",
-      color: "#22c55e",
+      color: "#1B7F4D",
     },
     early_warning: {
-      subject: "We've Spotted Early Signs - Let's Fix This Now ⚡",
+      subject: "Your Personalized Scalp Health Results ⚡",
       headline: "Early Warning Signs Detected",
       intro: "Your quiz reveals early signs of scalp stress. The good news? Taking action now can prevent these issues from progressing.",
       recommendation: "Our Scalp Soothing Mist helps calm early-stage inflammation. Pair it with our filtered shower head for best results.",
-      discount: "EARLY15",
-      discountAmount: "15%",
       urgency: "medium",
       color: "#eab308",
     },
@@ -43,18 +39,14 @@ const getEmailContent = (score: number, resultType: string) => {
       headline: "Your Scalp Needs Attention",
       intro: "Your responses indicate noticeable scalp inflammation, which can affect hair growth and cause increased shedding. But don't worry - we have a solution.",
       recommendation: "We recommend our Scalp Soothing Mist for daily use. Our complete system has helped thousands of women restore their scalp health.",
-      discount: "RECOVER20",
-      discountAmount: "20%",
       urgency: "high",
       color: "#f97316",
     },
     priority: {
-      subject: "URGENT: Your Scalp Needs Immediate Care 🚨",
-      headline: "Priority Care Required",
-      intro: "Your quiz results show significant scalp inflammation. Addressing this NOW is crucial for your hair health. Many women in your situation have seen remarkable improvements with our system.",
+      subject: "Your Scalp Health Report - Action Required 🚨",
+      headline: "Priority Care Recommended",
+      intro: "Your quiz results show significant scalp inflammation. Addressing this is crucial for your hair health. Many women in your situation have seen remarkable improvements with our system.",
       recommendation: "Our complete scalp care system targets inflammation at multiple points. Start your recovery journey today with our most effective bundle.",
-      discount: "PRIORITY25",
-      discountAmount: "25%",
       urgency: "critical",
       color: "#ef4444",
     },
@@ -66,86 +58,151 @@ const getEmailContent = (score: number, resultType: string) => {
     ...config,
     html: `
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${config.subject}</title>
 </head>
-<body style="margin: 0; padding: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f8f5f0;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f8f5f0; padding: 40px 20px;">
+<body style="margin: 0; padding: 0; font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #F5F1E8;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #F5F1E8;">
     <tr>
-      <td align="center">
-        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);">
+      <td style="padding: 40px 20px;">
+        <table role="presentation" width="100%" max-width="600" cellspacing="0" cellpadding="0" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+          
           <!-- Header -->
           <tr>
-            <td style="background: linear-gradient(135deg, #3d3424 0%, #5c4a36 100%); padding: 32px; text-align: center;">
-              <h1 style="color: #ffffff; font-size: 28px; margin: 0; font-weight: 600;">VERITÉ SCALP</h1>
-              <p style="color: rgba(255,255,255,0.8); margin: 8px 0 0; font-size: 14px;">Your Personalized Scalp Health Report</p>
+            <td style="background: linear-gradient(135deg, #2D5A3D 0%, #1B7F4D 100%); padding: 50px 30px; text-align: center;">
+              <h1 style="color: #ffffff; font-size: 28px; margin: 0; font-weight: 700; letter-spacing: 2px;">VERITÉ SCALP</h1>
+              <p style="color: rgba(255,255,255,0.8); font-size: 12px; margin: 8px 0 0 0; letter-spacing: 1px;">SCALP CARE BEFORE HAIR CARE</p>
             </td>
           </tr>
           
           <!-- Score Badge -->
           <tr>
-            <td style="padding: 32px 40px 0; text-align: center;">
-              <div style="display: inline-block; background-color: ${config.color}15; border: 2px solid ${config.color}; border-radius: 50px; padding: 8px 24px;">
-                <span style="color: ${config.color}; font-weight: 600; font-size: 14px;">Score: ${score}/15</span>
+            <td style="padding: 30px 30px 0 30px; text-align: center;">
+              <div style="display: inline-block; background-color: ${config.color}15; border: 2px solid ${config.color}; border-radius: 50px; padding: 10px 28px;">
+                <span style="color: ${config.color}; font-weight: 600; font-size: 15px;">Your Score: ${score}/15</span>
               </div>
             </td>
           </tr>
-
+          
           <!-- Main Content -->
           <tr>
-            <td style="padding: 24px 40px;">
-              <h2 style="color: #3d3424; font-size: 24px; margin: 0 0 16px; text-align: center;">${config.headline}</h2>
-              <p style="color: #5c4a36; font-size: 16px; line-height: 1.6; margin: 0 0 24px;">${config.intro}</p>
+            <td style="padding: 30px 30px 0 30px;">
+              <h2 style="color: #2D5A3D; font-size: 24px; margin: 0 0 10px 0; font-weight: 700; text-align: center;">${config.headline}</h2>
+              <div style="height: 3px; width: 80px; background: linear-gradient(90deg, #1B7F4D, #2D5A3D); border-radius: 2px; margin: 0 auto 25px auto;"></div>
+              
+              <p style="color: #444; font-size: 16px; line-height: 1.8; margin: 0 0 25px 0;">
+                ${config.intro}
+              </p>
               
               <!-- Recommendation Box -->
-              <div style="background-color: #f8f5f0; border-left: 4px solid ${config.color}; padding: 20px; border-radius: 0 8px 8px 0; margin-bottom: 24px;">
-                <p style="color: #3d3424; font-size: 15px; line-height: 1.6; margin: 0;">
-                  <strong>Our Recommendation:</strong><br>
-                  ${config.recommendation}
-                </p>
-              </div>
-
-              <!-- Discount Offer -->
-              <div style="background: linear-gradient(135deg, #b8860b 0%, #d4a742 100%); border-radius: 12px; padding: 24px; text-align: center; margin-bottom: 24px;">
-                <p style="color: #ffffff; font-size: 14px; margin: 0 0 8px; text-transform: uppercase; letter-spacing: 1px;">Exclusive Offer for You</p>
-                <p style="color: #ffffff; font-size: 32px; font-weight: 700; margin: 0 0 8px;">${config.discountAmount} OFF</p>
-                <p style="color: rgba(255,255,255,0.9); font-size: 14px; margin: 0 0 16px;">Use code: <strong>${config.discount}</strong></p>
-                <a href="https://veritescalp.com/store" style="display: inline-block; background-color: #ffffff; color: #3d3424; text-decoration: none; padding: 14px 32px; border-radius: 50px; font-weight: 600; font-size: 16px;">Shop Now</a>
-              </div>
-
-              <!-- Trust Elements -->
-              <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background: linear-gradient(135deg, #F5F1E8 0%, #EDE9E0 100%); border-radius: 12px; border-left: 4px solid #1B7F4D; margin-bottom: 25px;">
                 <tr>
-                  <td width="33%" style="text-align: center; padding: 16px;">
-                    <p style="color: #b8860b; font-size: 24px; font-weight: 700; margin: 0;">4-8</p>
-                    <p style="color: #5c4a36; font-size: 12px; margin: 4px 0 0;">Weeks to Results</p>
-                  </td>
-                  <td width="33%" style="text-align: center; padding: 16px; border-left: 1px solid #e5e5e5; border-right: 1px solid #e5e5e5;">
-                    <p style="color: #b8860b; font-size: 24px; font-weight: 700; margin: 0;">10K+</p>
-                    <p style="color: #5c4a36; font-size: 12px; margin: 4px 0 0;">Happy Customers</p>
-                  </td>
-                  <td width="33%" style="text-align: center; padding: 16px;">
-                    <p style="color: #b8860b; font-size: 24px; font-weight: 700; margin: 0;">60-Day</p>
-                    <p style="color: #5c4a36; font-size: 12px; margin: 4px 0 0;">Money Back</p>
+                  <td style="padding: 20px 25px;">
+                    <p style="color: #2D5A3D; font-size: 14px; margin: 0 0 8px 0; font-weight: 600;">💡 Our Recommendation</p>
+                    <p style="color: #555; font-size: 15px; line-height: 1.6; margin: 0;">
+                      ${config.recommendation}
+                    </p>
                   </td>
                 </tr>
               </table>
             </td>
           </tr>
-
-          <!-- Footer -->
+          
+          <!-- Trust Elements -->
           <tr>
-            <td style="background-color: #3d3424; padding: 24px 40px; text-align: center;">
-              <p style="color: rgba(255,255,255,0.8); font-size: 12px; margin: 0;">
-                © 2025 VERITÉ SCALP. All rights reserved.<br>
-                <a href="https://veritescalp.com/privacy-policy" style="color: #b8860b; text-decoration: none;">Privacy Policy</a> | 
-                <a href="https://veritescalp.com/terms-of-service" style="color: #b8860b; text-decoration: none;">Terms of Service</a>
-              </p>
+            <td style="padding: 0 30px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 25px; background-color: #F5F1E8; border-radius: 12px;">
+                <tr>
+                  <td width="33%" style="text-align: center; padding: 20px 10px;">
+                    <p style="color: #1B7F4D; font-size: 22px; font-weight: 700; margin: 0;">4-8</p>
+                    <p style="color: #5c4a36; font-size: 11px; margin: 5px 0 0 0;">Weeks to Results</p>
+                  </td>
+                  <td width="33%" style="text-align: center; padding: 20px 10px; border-left: 1px solid #E8E4DC; border-right: 1px solid #E8E4DC;">
+                    <p style="color: #1B7F4D; font-size: 22px; font-weight: 700; margin: 0;">10K+</p>
+                    <p style="color: #5c4a36; font-size: 11px; margin: 5px 0 0 0;">Happy Customers</p>
+                  </td>
+                  <td width="33%" style="text-align: center; padding: 20px 10px;">
+                    <p style="color: #1B7F4D; font-size: 22px; font-weight: 700; margin: 0;">60-Day</p>
+                    <p style="color: #5c4a36; font-size: 11px; margin: 5px 0 0 0;">Money Back</p>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
+          
+          <!-- CTA Buttons -->
+          <tr>
+            <td style="padding: 0 30px 35px 30px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td style="text-align: center; padding-bottom: 15px;">
+                    <a href="https://veritescalp.com/store" style="display: inline-block; background: linear-gradient(135deg, #1B7F4D 0%, #2D5A3D 100%); color: #ffffff; text-decoration: none; padding: 16px 45px; border-radius: 8px; font-weight: 700; font-size: 15px; letter-spacing: 0.5px;">Shop Our Products</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="text-align: center;">
+                    <a href="https://veritescalp.com/blog" style="display: inline-block; background-color: transparent; color: #1B7F4D; text-decoration: none; padding: 14px 35px; border-radius: 8px; font-weight: 600; font-size: 14px; border: 2px solid #1B7F4D;">Learn About Scalp Health</a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          
+          <!-- Signature -->
+          <tr>
+            <td style="padding: 0 30px 30px 30px; border-top: 1px solid #E8E4DC;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td style="padding-top: 25px;">
+                    <p style="color: #444; font-size: 15px; line-height: 1.6; margin: 0;">
+                      With love,<br>
+                      <strong style="color: #2D5A3D;">The VERITÉ SCALP Team</strong>
+                    </p>
+                    <p style="color: #888; font-size: 13px; margin: 15px 0 0 0; font-style: italic;">
+                      "Fix your scalp environment. Watch your edges grow back naturally."
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #2D5A3D; padding: 30px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td style="text-align: center; padding-bottom: 20px;">
+                    <a href="https://veritescalp.com/store" style="color: #ffffff; text-decoration: none; font-size: 13px; margin: 0 12px; font-weight: 500;">Shop</a>
+                    <a href="https://veritescalp.com/about" style="color: #ffffff; text-decoration: none; font-size: 13px; margin: 0 12px; font-weight: 500;">About</a>
+                    <a href="https://veritescalp.com/blog" style="color: #ffffff; text-decoration: none; font-size: 13px; margin: 0 12px; font-weight: 500;">Blog</a>
+                    <a href="https://veritescalp.com/contact" style="color: #ffffff; text-decoration: none; font-size: 13px; margin: 0 12px; font-weight: 500;">Contact</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="text-align: center; padding-bottom: 15px;">
+                    <p style="color: rgba(255,255,255,0.9); font-size: 13px; margin: 0;">
+                      📧 hello@veritescalp.com
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px; text-align: center;">
+                    <p style="color: rgba(255,255,255,0.7); font-size: 11px; margin: 0 0 10px 0;">
+                      <a href="https://veritescalp.com/privacy-policy" style="color: rgba(255,255,255,0.7); text-decoration: none;">Privacy Policy</a> &nbsp;|&nbsp; 
+                      <a href="https://veritescalp.com/terms-of-service" style="color: rgba(255,255,255,0.7); text-decoration: none;">Terms of Service</a> &nbsp;|&nbsp;
+                      <a href="https://veritescalp.com/refund-policy" style="color: rgba(255,255,255,0.7); text-decoration: none;">Refund Policy</a>
+                    </p>
+                    <p style="color: rgba(255,255,255,0.5); font-size: 11px; margin: 0;">© 2025 VERITÉ SCALP. All rights reserved.</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          
         </table>
       </td>
     </tr>
@@ -190,7 +247,7 @@ const handler = async (req: Request): Promise<Response> => {
     // Get email content based on result type
     const emailContent = getEmailContent(score, resultType);
 
-    // Send email using verified domain
+    // Send email with proper headers to reduce spam likelihood
     const emailResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -203,6 +260,10 @@ const handler = async (req: Request): Promise<Response> => {
         subject: emailContent.subject,
         html: emailContent.html,
         reply_to: "hello@veritescalp.com",
+        headers: {
+          "X-Entity-Ref-ID": `quiz-${Date.now()}`,
+          "List-Unsubscribe": "<mailto:unsubscribe@veritescalp.com>",
+        },
       }),
     });
 
@@ -218,90 +279,110 @@ const handler = async (req: Request): Promise<Response> => {
     // Send admin notification email
     const adminEmailHtml = `
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>New Quiz Submission</title>
 </head>
-<body style="margin: 0; padding: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f8f5f0;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f8f5f0; padding: 40px 20px;">
+<body style="margin: 0; padding: 0; font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #F5F1E8;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #F5F1E8;">
     <tr>
-      <td align="center">
-        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);">
+      <td style="padding: 40px 20px;">
+        <table role="presentation" width="100%" max-width="600" cellspacing="0" cellpadding="0" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+          
           <!-- Header -->
           <tr>
-            <td style="background: linear-gradient(135deg, #3d3424 0%, #5c4a36 100%); padding: 24px; text-align: center;">
-              <h1 style="color: #ffffff; font-size: 24px; margin: 0; font-weight: 600;">New Quiz Submission</h1>
+            <td style="background: linear-gradient(135deg, #2D5A3D 0%, #1B7F4D 100%); padding: 40px 30px; text-align: center;">
+              <h1 style="color: #ffffff; font-size: 24px; margin: 0; font-weight: 700; letter-spacing: 2px;">VERITÉ SCALP</h1>
+              <p style="color: rgba(255,255,255,0.8); font-size: 12px; margin: 8px 0 0 0; letter-spacing: 1px;">NEW QUIZ SUBMISSION</p>
             </td>
           </tr>
           
-          <!-- Content -->
+          <!-- Title -->
           <tr>
-            <td style="padding: 32px 40px;">
-              <h2 style="color: #3d3424; font-size: 20px; margin: 0 0 24px;">Customer Information</h2>
-              
-              <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
+            <td style="padding: 30px 30px 0 30px;">
+              <h2 style="color: #2D5A3D; font-size: 22px; margin: 0 0 20px 0; font-weight: 700;">📊 New Quiz Results</h2>
+              <div style="height: 3px; width: 60px; background: linear-gradient(90deg, #1B7F4D, #2D5A3D); border-radius: 2px;"></div>
+            </td>
+          </tr>
+          
+          <!-- Customer Details Card -->
+          <tr>
+            <td style="padding: 25px 30px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #F5F1E8; border-radius: 12px; overflow: hidden;">
                 <tr>
-                  <td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5;">
-                    <strong style="color: #5c4a36;">Email:</strong>
-                  </td>
-                  <td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; text-align: right;">
-                    <a href="mailto:${email}" style="color: #b8860b; text-decoration: none;">${email}</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5;">
-                    <strong style="color: #5c4a36;">Quiz Score:</strong>
-                  </td>
-                  <td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; text-align: right;">
-                    <span style="color: ${emailContent.color}; font-weight: 600;">${score}/15</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5;">
-                    <strong style="color: #5c4a36;">Result Type:</strong>
-                  </td>
-                  <td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; text-align: right;">
-                    <span style="background-color: ${emailContent.color}20; color: ${emailContent.color}; padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: 500;">${resultType.replace('_', ' ').toUpperCase()}</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5;">
-                    <strong style="color: #5c4a36;">Discount Sent:</strong>
-                  </td>
-                  <td style="padding: 12px 0; border-bottom: 1px solid #e5e5e5; text-align: right;">
-                    <span style="color: #3d3424; font-weight: 600;">${emailContent.discount} (${emailContent.discountAmount} off)</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding: 12px 0;">
-                    <strong style="color: #5c4a36;">Quiz Answers:</strong>
-                  </td>
-                  <td style="padding: 12px 0; text-align: right;">
-                    <span style="color: #5c4a36;">${answers.join(', ')}</span>
+                  <td style="padding: 25px;">
+                    <!-- Email -->
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 15px;">
+                      <tr>
+                        <td style="width: 120px; color: #666; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; vertical-align: top; padding-top: 3px;">Email</td>
+                        <td style="color: #1B7F4D; font-size: 15px;"><a href="mailto:${email}" style="color: #1B7F4D; text-decoration: none;">${email}</a></td>
+                      </tr>
+                    </table>
+                    
+                    <!-- Score -->
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 15px;">
+                      <tr>
+                        <td style="width: 120px; color: #666; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; vertical-align: top; padding-top: 3px;">Quiz Score</td>
+                        <td style="font-size: 15px;"><span style="color: ${emailContent.color}; font-weight: 700;">${score}/15</span></td>
+                      </tr>
+                    </table>
+                    
+                    <!-- Result Type -->
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 15px;">
+                      <tr>
+                        <td style="width: 120px; color: #666; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; vertical-align: top; padding-top: 3px;">Result Type</td>
+                        <td style="font-size: 15px;"><span style="background-color: ${emailContent.color}20; color: ${emailContent.color}; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 600;">${resultType.replace('_', ' ').toUpperCase()}</span></td>
+                      </tr>
+                    </table>
+                    
+                    <!-- Answers -->
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td style="width: 120px; color: #666; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; vertical-align: top; padding-top: 3px;">Quiz Answers</td>
+                        <td style="color: #333; font-size: 15px;">${answers.join(', ')}</td>
+                      </tr>
+                    </table>
                   </td>
                 </tr>
               </table>
-
-              <!-- Recommendation Sent -->
-              <div style="background-color: #f8f5f0; border-left: 4px solid ${emailContent.color}; padding: 16px; border-radius: 0 8px 8px 0; margin-bottom: 24px;">
-                <p style="color: #5c4a36; font-size: 13px; margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.5px;">Recommendation Sent to Customer:</p>
-                <p style="color: #3d3424; font-size: 14px; line-height: 1.5; margin: 0;">${emailContent.recommendation}</p>
+            </td>
+          </tr>
+          
+          <!-- Recommendation Sent -->
+          <tr>
+            <td style="padding: 0 30px 25px 30px;">
+              <h3 style="color: #2D5A3D; font-size: 16px; margin: 0 0 15px 0; font-weight: 700;">💬 Recommendation Sent to Customer</h3>
+              <div style="background-color: #ffffff; border: 2px solid #E8E4DC; border-radius: 12px; padding: 20px;">
+                <p style="color: #444; font-size: 15px; line-height: 1.7; margin: 0;">${emailContent.recommendation}</p>
               </div>
-
-              <!-- Timestamp -->
-              <p style="color: #888; font-size: 12px; margin: 0; text-align: center;">
+            </td>
+          </tr>
+          
+          <!-- Timestamp -->
+          <tr>
+            <td style="padding: 0 30px 25px 30px; text-align: center;">
+              <p style="color: #888; font-size: 12px; margin: 0;">
                 Submitted on ${new Date().toLocaleString('en-US', { dateStyle: 'full', timeStyle: 'short' })}
               </p>
             </td>
           </tr>
-
-          <!-- Footer -->
+          
+          <!-- Quick Reply Button -->
           <tr>
-            <td style="background-color: #3d3424; padding: 16px 40px; text-align: center;">
-              <p style="color: rgba(255,255,255,0.6); font-size: 11px; margin: 0;">This is an automated notification from VERITÉ SCALP Quiz</p>
+            <td style="padding: 0 30px 30px 30px; text-align: center;">
+              <a href="mailto:${email}?subject=Your VERITÉ SCALP Quiz Results" style="display: inline-block; background: linear-gradient(135deg, #1B7F4D 0%, #2D5A3D 100%); color: #ffffff; text-decoration: none; padding: 14px 35px; border-radius: 8px; font-weight: 600; font-size: 14px; letter-spacing: 0.5px;">Reply to Customer</a>
             </td>
           </tr>
+          
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #2D5A3D; padding: 20px 30px; text-align: center;">
+              <p style="color: rgba(255,255,255,0.6); font-size: 11px; margin: 0;">This is an automated notification from VERITÉ SCALP Quiz System</p>
+            </td>
+          </tr>
+          
         </table>
       </td>
     </tr>
@@ -334,7 +415,7 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     return new Response(
-      JSON.stringify({ success: true, discount: emailContent.discount }),
+      JSON.stringify({ success: true }),
       {
         status: 200,
         headers: {
