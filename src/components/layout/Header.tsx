@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CartDrawer } from "@/components/cart/CartDrawer";
+import { ProductSearch } from "@/components/search/ProductSearch";
 import logoImg from "@/assets/logo.png";
 
 export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -83,6 +85,19 @@ export const Header = () => {
 
           {/* Right Side Actions */}
           <div className="flex items-center gap-3">
+            {/* Desktop Search */}
+            <div className="hidden lg:block">
+              {isSearchOpen ? (
+                <div className="w-64">
+                  <ProductSearch onClose={() => setIsSearchOpen(false)} />
+                </div>
+              ) : (
+                <Button variant="ghost" size="icon" onClick={() => setIsSearchOpen(true)}>
+                  <Search className="h-5 w-5" />
+                </Button>
+              )}
+            </div>
+            
             <CartDrawer />
 
             {/* Mobile Menu Button */}
@@ -101,6 +116,9 @@ export const Header = () => {
         {isMobileMenuOpen && (
           <div className="lg:hidden bg-background border-t border-border animate-fade-in">
             <nav className="container mx-auto px-4 py-4 flex flex-col gap-4">
+              {/* Mobile Search */}
+              <ProductSearch className="mb-2" onClose={() => setIsMobileMenuOpen(false)} />
+              
               {navLinks.map((link, index) => (
                 <a
                   key={link.label}
