@@ -1,11 +1,67 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { z } from "https://deno.land/x/zod@v3.22.4/mod.ts";
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-};
+// Restrict CORS to the project domain
+const allowedOrigins = [
+  "https://veritescalp.com",
+  "https://www.veritescalp.com",
+  "https://replica-radiance-repo.lovable.app",
+  "http://localhost:5173",
+  "http://localhost:8080",
+];
+
+function getCorsHeaders(origin: string | null): Record<string, string> {
+  const allowedOrigin =
+    origin && allowedOrigins.some((allowed) => origin.startsWith(allowed.replace(/\/$/, "")))
+      ? origin
+      : allowedOrigins[0];
+
+  return {
+    "Access-Control-Allow-Origin": allowedOrigin,
+    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  };
+}
+
+// Input validation schema with proper email format
+const NewsletterSchema = z.object({
+  email: z.string().email("Invalid email format").max(255, "Email too long").trim().toLowerCase(),
+  // Honeypot field - should be empty (bots will fill it)
+  website: z.string().max(0, "Invalid submission").optional(),
+});
+
+// Simple in-memory rate limiting (per IP, 3 requests per 15 minutes)
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000; // 15 minutes
+const RATE_LIMIT_MAX_REQUESTS = 3;
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+
+  if (!entry || now > entry.resetTime) {
+    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW_MS });
+    return false;
+  }
+
+  if (entry.count >= RATE_LIMIT_MAX_REQUESTS) {
+    return true;
+  }
+
+  entry.count++;
+  return false;
+}
+
+// Clean up old rate limit entries periodically
+function cleanupRateLimitMap() {
+  const now = Date.now();
+  for (const [ip, entry] of rateLimitMap.entries()) {
+    if (now > entry.resetTime) {
+      rateLimitMap.delete(ip);
+    }
+  }
+}
 
 const getSubscriberEmailHtml = () => `
 <!DOCTYPE html>
@@ -97,7 +153,19 @@ const getSubscriberEmailHtml = () => `
 </html>
 `;
 
-const getAdminEmailHtml = (email: string) => `
+// HTML escape function to prevent XSS in email content
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+const getAdminEmailHtml = (email: string) => {
+  const safeEmail = escapeHtml(email);
+  return `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -116,7 +184,7 @@ const getAdminEmailHtml = (email: string) => `
           </tr>
           <tr>
             <td style="padding: 30px;">
-              <p style="color: #333; font-size: 16px; margin: 0 0 15px 0;"><strong>Email:</strong> ${email}</p>
+              <p style="color: #333; font-size: 16px; margin: 0 0 15px 0;"><strong>Email:</strong> ${safeEmail}</p>
               <p style="color: #333; font-size: 16px; margin: 0 0 15px 0;"><strong>Subscribed at:</strong> ${new Date().toLocaleString()}</p>
               <p style="color: #333; font-size: 16px; margin: 0;"><strong>Source:</strong> Website Newsletter</p>
             </td>
@@ -128,24 +196,62 @@ const getAdminEmailHtml = (email: string) => `
 </body>
 </html>
 `;
+};
 
 const handler = async (req: Request): Promise<Response> => {
+  const origin = req.headers.get("origin");
+  const corsHeaders = getCorsHeaders(origin);
+
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { email } = await req.json();
+    // Rate limiting check
+    const clientIP =
+      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      req.headers.get("cf-connecting-ip") ||
+      "unknown";
 
-    if (!email || !email.includes("@")) {
+    if (isRateLimited(clientIP)) {
+      console.warn(`Rate limit exceeded for IP: ${clientIP}`);
       return new Response(
-        JSON.stringify({ error: "Valid email is required" }),
+        JSON.stringify({ error: "Too many requests. Please try again later." }),
+        { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Cleanup old entries periodically
+    cleanupRateLimitMap();
+
+    // Parse and validate input
+    const rawBody = await req.json();
+    
+    // Check honeypot field (if filled, it's likely a bot)
+    if (rawBody.website && rawBody.website.length > 0) {
+      console.warn(`Honeypot triggered from IP: ${clientIP}`);
+      // Return success to not alert the bot, but don't process
+      return new Response(
+        JSON.stringify({ success: true, message: "Successfully subscribed!" }),
+        { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const validationResult = NewsletterSchema.safeParse(rawBody);
+    
+    if (!validationResult.success) {
+      const errors = validationResult.error.errors.map(e => e.message).join(", ");
+      console.warn(`Validation failed: ${errors}`);
+      return new Response(
+        JSON.stringify({ error: errors }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    console.log("Processing newsletter subscription for:", email);
+    const { email } = validationResult.data;
+
+    console.log(`Processing newsletter subscription for: ${email.substring(0, 3)}***@***`);
 
     // Send welcome email to subscriber - improved for deliverability
     const subscriberRes = await fetch("https://api.resend.com/emails", {
@@ -204,7 +310,7 @@ const handler = async (req: Request): Promise<Response> => {
   } catch (error: any) {
     console.error("Error in send-newsletter-email function:", error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: "An error occurred. Please try again." }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
   }
