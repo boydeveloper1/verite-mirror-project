@@ -13,6 +13,7 @@ import { MoneyBackGuarantee } from "@/components/product/MoneyBackGuarantee";
 import { WhyChooseUs } from "@/components/product/WhyChooseUs";
 import { PreFooterSubscribe } from "@/components/shared/PreFooterSubscribe";
 import { EmailPopup } from "@/components/shared/EmailPopup";
+import { StickyAddToCart } from "@/components/product/StickyAddToCart";
 import { Link } from "react-router-dom";
 
 interface ProductVariant {
@@ -102,6 +103,7 @@ const ProductPage = () => {
       <PreFooterSubscribe />
       <Footer />
       <EmailPopup />
+      <StickyAddToCart product={product} selectedVariant={selectedVariant} />
     </div>
   );
 };
