@@ -148,13 +148,12 @@ export const StickyAddToCart = ({ product, selectedVariant }: StickyAddToCartPro
           <Button
             variant="cta"
             size="lg"
-            className="flex-shrink-0 h-11 md:h-12 px-4 md:px-6 text-sm md:text-base"
+            className="flex-shrink-0 h-11 md:h-12 px-3 sm:px-4 md:px-6 text-xs sm:text-sm md:text-base whitespace-nowrap"
             onClick={handleAddToCart}
             disabled={!selectedVariant}
           >
-            <ShoppingCart className="w-4 h-4 md:w-5 md:h-5 mr-2" />
-            <span className="hidden sm:inline">Add to Cart</span>
-            <span className="sm:hidden">Add</span>
+            <ShoppingCart className="w-4 h-4 md:w-5 md:h-5 mr-1 sm:mr-2 flex-shrink-0" />
+            <span>Add to Cart</span>
           </Button>
         </div>
       </div>
