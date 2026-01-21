@@ -38,7 +38,7 @@ export const createBundles = (basePrice: number, productType: 'mist' | 'showerhe
   ];
 };
 
-export const defaultBundles: BundleOption[] = createBundles(24, 'mist');
+export const defaultBundles: BundleOption[] = createBundles(45, 'mist');
 export const showerFilterBundles: BundleOption[] = createBundles(118, 'showerhead');
 
 export const BundleSelector = ({

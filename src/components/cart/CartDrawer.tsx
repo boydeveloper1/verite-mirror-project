@@ -28,7 +28,11 @@ import { toast } from "sonner";
 
 const CART_TIMEOUT_SECONDS = 7 * 60; // 7 minutes
 
-export const CartDrawer = () => {
+interface CartDrawerProps {
+  variant?: "default" | "light";
+}
+
+export const CartDrawer = ({ variant = "default" }: CartDrawerProps) => {
   const [timeRemaining, setTimeRemaining] = useState(CART_TIMEOUT_SECONDS);
   const [cartStartTime, setCartStartTime] = useState<number | null>(null);
 
@@ -101,10 +105,14 @@ export const CartDrawer = () => {
   return (
     <Sheet open={isOpen} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="relative">
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          className={`relative ${variant === "light" ? "text-white hover:bg-white/10" : ""}`}
+        >
           <ShoppingCart className="h-5 w-5" />
           {totalItems > 0 && (
-            <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-accent text-accent-foreground">
+            <Badge className={`absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs ${variant === "light" ? "bg-amber-500 text-primary" : "bg-accent text-accent-foreground"}`}>
               {totalItems}
             </Badge>
           )}
