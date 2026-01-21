@@ -28,8 +28,8 @@ import showerHeadImage from "@/assets/shower-head-silver.jpg";
 import showerHeadBlack from "@/assets/shower-head-black.jpg";
 
 // Real price from Shopify
-const PRODUCT_PRICE = "$105.00";
-const PRODUCT_HANDLE = "verite-scalp-purifying-shower-filter-1";
+const PRODUCT_PRICE = "$118.00";
+const PRODUCT_HANDLE = "verite-scalp-purifying-shower-head";
 
 const AnimatedSection = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => {
   const ref = useRef(null);
@@ -58,7 +58,7 @@ const CTAButton = ({ className = "", variant = "primary" }: { className?: string
     } ${className}`}
   >
     <Link to={`/product/${PRODUCT_HANDLE}`}>
-      Get Your Shower Head — {PRODUCT_PRICE}
+      Get Your Purifying Shower Head — {PRODUCT_PRICE}
       <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
     </Link>
   </Button>
@@ -83,7 +83,7 @@ const FloatingCTA = () => {
     >
       <div className="container mx-auto flex items-center justify-between gap-4">
         <div className="hidden sm:block">
-          <p className="text-sm font-semibold text-foreground">Verité Scalp Purifying Shower Head</p>
+          <p className="text-sm font-semibold text-foreground">Verité Purifying Shower Head</p>
           <p className="text-xs text-muted-foreground">Free shipping • 30-day guarantee</p>
         </div>
         <Button 
@@ -110,8 +110,8 @@ const ShowerHeadLandingPage = () => {
   return (
     <>
       <SEOHead
-        title="Why Your $50 Hair Growth Serum Isn't Working | The Hidden Enemy"
-        description="Discover the hidden reason your hair products fail. Learn how tap water sabotages your scalp health and what thousands are doing to finally see results."
+        title="Verité Purifying Shower Head - Transform Your Hair at the Source"
+        description="Stop blaming your products. The Verité Purifying Shower Head removes chlorine, heavy metals, and hard water minerals with built-in 15-stage filtration. See results in 8 weeks. Only $118."
       />
       
       <div className="min-h-screen bg-background">
@@ -318,7 +318,7 @@ const ShowerHeadLandingPage = () => {
             <AnimatedSection className="text-center mb-16">
               <span className="text-sm font-semibold text-accent uppercase tracking-wider mb-4 block">Real Results</span>
               <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-                The $105 Shower Head That Outperformed
+                The $118 Purifying Shower Head That Outperformed
                 <span className="text-accent"> $500 in Serums</span>
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -350,7 +350,7 @@ const ShowerHeadLandingPage = () => {
             <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-12">
               {[
                 {
-                  quote: "I've spent over $500 on hair products that did nothing. This $105 shower head with built-in filtration gave me visible results in 3 weeks. My edges are actually growing back.",
+                  quote: "I've spent over $500 on hair products that did nothing. This $118 purifying shower head with built-in filtration gave me visible results in 3 weeks. My edges are actually growing back.",
                   name: "Aisha M.",
                   location: "Atlanta, GA",
                   result: "Edge regrowth in 3 weeks",
@@ -364,14 +364,14 @@ const ShowerHeadLandingPage = () => {
                   timeline: "Using for 6 weeks",
                 },
                 {
-                  quote: "I was SO skeptical. A shower filter for hair loss? But the science made sense. Now I'm seeing baby hairs everywhere and way less in my brush.",
+                  quote: "I was SO skeptical. A purifying shower head for hair loss? But the science made sense. Now I'm seeing baby hairs everywhere and way less in my brush.",
                   name: "Priya S.",
                   location: "Las Vegas, NV",
                   result: "70% less shedding",
                   timeline: "Using for 5 weeks",
                 },
                 {
-                  quote: "Moved to a new city with terrible hard water. My hair was breaking off at the ends. This filter saved my length—no more breakage since week 2.",
+                  quote: "Moved to a new city with terrible hard water. My hair was breaking off at the ends. This purifying shower head saved my length—no more breakage since week 2.",
                   name: "Marcus L.",
                   location: "Houston, TX",
                   result: "Breakage stopped",
@@ -445,7 +445,7 @@ const ShowerHeadLandingPage = () => {
                 <div className="relative">
                   <motion.img
                     src={showerHeadImage}
-                    alt="Verité Scalp Purifying Shower Head"
+                    alt="Verité Purifying Shower Head"
                     className="w-full max-w-md mx-auto rounded-3xl shadow-2xl"
                     whileHover={{ scale: 1.02 }}
                   />
@@ -482,7 +482,7 @@ const ShowerHeadLandingPage = () => {
               {/* Benefits */}
               <AnimatedSection className="order-1 lg:order-2">
                 <h3 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-8">
-                  What the Verité Shower Head Does Differently
+                  What the Verité Purifying Shower Head Does Differently
                 </h3>
                 
                 <div className="space-y-5">
@@ -601,7 +601,7 @@ const ShowerHeadLandingPage = () => {
                 { q: "Will this really help with hair loss?", a: "If your hair loss is related to scalp inflammation or hard water damage (which affects 85% of US homes), yes. By removing the contaminants that cause inflammation and buildup, your scalp can finally heal and support healthy hair growth." },
                 { q: "How long before I see results?", a: "Most customers notice softer water immediately and reduced scalp irritation within days. Visible hair improvements typically begin around week 3-4, with significant results by week 8." },
                 { q: "How long does the filter last?", a: "The built-in filter cartridge lasts 3-6 months depending on your water quality. We recommend replacing every 4 months for optimal results. Replacement cartridges are available on our store." },
-                { q: "Is it easy to install?", a: "Yes! This shower head replaces your existing one completely. Just unscrew your old shower head and screw on the Verité. Takes less than 2 minutes, no tools needed. Works with 99% of standard showers." },
+                { q: "Is it easy to install?", a: "Yes! This purifying shower head replaces your existing one completely. Just unscrew your old shower head and screw on the Verité. Takes less than 2 minutes, no tools needed. Works with 99% of standard showers." },
                 { q: "What if it doesn't work for me?", a: "We offer a 30-day money-back guarantee. If you don't see improvements in your hair or scalp within 30 days, return it for a full refund—no questions asked." },
               ].map((faq, index) => (
                 <AnimatedSection key={index} delay={index * 0.05}>
@@ -659,7 +659,7 @@ const ShowerHeadLandingPage = () => {
                     className="h-16 px-12 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-lg rounded-full group"
                   >
                     <Link to={`/product/${PRODUCT_HANDLE}`}>
-                      Get Your Shower Head Now
+                      Get Your Purifying Shower Head Now
                       <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </Link>
                   </Button>
