@@ -194,10 +194,6 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
         selectedOptions: selectedVariant.selectedOptions || [],
       });
     }
-
-    toast.success(`Added ${selectedBundle.quantity}x ${product.title} to cart`, {
-      position: "top-center",
-    });
   };
 
   const totalPrice = selectedBundle.totalPrice * quantity;

@@ -45,7 +45,6 @@ const StorePage = () => {
       quantity: 1,
       selectedOptions: firstVariant.selectedOptions || [],
     });
-    toast.success("Added to cart", { description: product.node.title, position: "top-center" });
   };
 
   return (

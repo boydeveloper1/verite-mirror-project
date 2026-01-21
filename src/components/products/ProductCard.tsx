@@ -32,11 +32,6 @@ export const ProductCard = ({ product, isBestSeller = false }: ProductCardProps)
       quantity: 1,
       selectedOptions: firstVariant.selectedOptions || [],
     });
-
-    toast.success("Added to cart", {
-      description: node.title,
-      position: "top-center",
-    });
   };
 
   return (
