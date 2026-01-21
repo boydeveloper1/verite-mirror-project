@@ -14,7 +14,6 @@ import { WhyChooseUs } from "@/components/product/WhyChooseUs";
 import { PreFooterSubscribe } from "@/components/shared/PreFooterSubscribe";
 import { EmailPopup } from "@/components/shared/EmailPopup";
 import { StickyAddToCart } from "@/components/product/StickyAddToCart";
-import { PurchaseNotifications } from "@/components/shared/PurchaseNotifications";
 import { Link } from "react-router-dom";
 
 interface ProductVariant {
@@ -105,7 +104,6 @@ const ProductPage = () => {
       <Footer />
       <EmailPopup />
       <StickyAddToCart product={product} selectedVariant={selectedVariant} />
-      <PurchaseNotifications />
     </div>
   );
 };

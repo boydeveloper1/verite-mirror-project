@@ -214,10 +214,12 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
       {/* Product Name */}
       <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary mb-2 md:mb-3">{product.title}</h1>
 
-      {/* Units Sold Badge - Social Proof */}
-      <div className="mb-3">
-        <UnitsSoldBadge productHandle={product.handle} />
-      </div>
+      {/* Units Sold Badge - Social Proof (hidden for shower head) */}
+      {!isShowerHead && (
+        <div className="mb-3">
+          <UnitsSoldBadge productHandle={product.handle} />
+        </div>
+      )}
 
       {/* Short Description */}
       <p className="text-sm md:text-base text-muted-foreground mb-4 leading-relaxed">
@@ -357,16 +359,20 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
           </div>
         </div>
         
-        {/* Guarantee Seal */}
-        <div className="mt-4">
-          <RiskFreeGuarantee variant="seal" />
-        </div>
+        {/* Guarantee Seal (hidden for shower head) */}
+        {!isShowerHead && (
+          <div className="mt-4">
+            <RiskFreeGuarantee variant="seal" />
+          </div>
+        )}
       </div>
 
-      {/* Low Stock & Viewing Indicators - Scarcity */}
-      <div className="mb-4 md:mb-6">
-        <LowStockIndicator productHandle={product.handle} />
-      </div>
+      {/* Low Stock Indicator - Scarcity (hidden for shower head) */}
+      {!isShowerHead && (
+        <div className="mb-4 md:mb-6">
+          <LowStockIndicator productHandle={product.handle} />
+        </div>
+      )}
 
       {/* Replicas Warning */}
       <ReplicasWarning />
@@ -401,7 +407,7 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
           <ShoppingCart className="w-4 h-4 md:w-5 md:h-5" />
           Add to Cart
         </Button>
-        <RiskFreeGuarantee variant="badge" />
+        {!isShowerHead && <RiskFreeGuarantee variant="badge" />}
       </div>
 
       {/* Trust Badges */}
@@ -427,10 +433,12 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
         </div>
       </div>
 
-      {/* Expandable Guarantee Section */}
-      <div className="mt-4 md:mt-6">
-        <RiskFreeGuarantee variant="expanded" />
-      </div>
+      {/* Expandable Guarantee Section (hidden for shower head) */}
+      {!isShowerHead && (
+        <div className="mt-4 md:mt-6">
+          <RiskFreeGuarantee variant="expanded" />
+        </div>
+      )}
     </div>
   );
 };
