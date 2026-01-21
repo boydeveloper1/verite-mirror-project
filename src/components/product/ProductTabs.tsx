@@ -20,6 +20,7 @@ import {
   Sparkles,
   ChevronLeft,
   ChevronRight,
+  ThumbsUp,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -657,7 +658,25 @@ const ShowerFilterReviewsTab = () => {
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [sortBy, setSortBy] = useState("recent");
+  const [helpfulVotes, setHelpfulVotes] = useState<Record<string, number>>({});
+  const [userVotedReviews, setUserVotedReviews] = useState<Set<string>>(new Set());
   const reviewsPerPage = 10;
+
+  // Get helpful count (base + user votes)
+  const getHelpfulCount = (review: typeof showerHeadReviews[0]) => {
+    return review.helpful + (helpfulVotes[review.id] || 0);
+  };
+
+  // Handle marking review as helpful
+  const handleMarkHelpful = (reviewId: string) => {
+    if (userVotedReviews.has(reviewId)) return;
+    
+    setHelpfulVotes(prev => ({
+      ...prev,
+      [reviewId]: (prev[reviewId] || 0) + 1
+    }));
+    setUserVotedReviews(prev => new Set(prev).add(reviewId));
+  };
 
   // Filter reviews
   let filteredReviews = showerHeadReviews.filter(review => {
@@ -669,7 +688,7 @@ const ShowerFilterReviewsTab = () => {
   // Sort reviews
   switch (sortBy) {
     case 'helpful':
-      filteredReviews = [...filteredReviews].sort((a, b) => b.helpful - a.helpful);
+      filteredReviews = [...filteredReviews].sort((a, b) => getHelpfulCount(b) - getHelpfulCount(a));
       break;
     case 'highest':
       filteredReviews = [...filteredReviews].sort((a, b) => b.rating - a.rating);
@@ -717,27 +736,46 @@ const ShowerFilterReviewsTab = () => {
       />
 
       <div className="space-y-4">
-        {currentReviews.map((review, index) => (
-          <div key={review.id} className="p-5 rounded-lg border border-border bg-background">
-            <div className="flex flex-wrap items-start justify-between gap-2 mb-3">
-              <div>
-                <div className="flex items-center gap-2">
-                  <h4 className="font-semibold text-foreground">{review.name}</h4>
-                  {review.verified && (
-                    <span className="inline-flex items-center gap-1 text-xs text-accent">
-                      <CheckCircle className="w-3 h-3" /> Verified
-                    </span>
-                  )}
+        {currentReviews.map((review) => {
+          const hasVoted = userVotedReviews.has(review.id);
+          const helpfulCount = getHelpfulCount(review);
+          
+          return (
+            <div key={review.id} className="p-5 rounded-lg border border-border bg-background">
+              <div className="flex flex-wrap items-start justify-between gap-2 mb-3">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h4 className="font-semibold text-foreground">{review.name}</h4>
+                    {review.verified && (
+                      <span className="inline-flex items-center gap-1 text-xs text-accent">
+                        <CheckCircle className="w-3 h-3" /> Verified
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-muted-foreground">{review.date}</p>
                 </div>
-                <p className="text-xs text-muted-foreground">{review.date}</p>
+                <div className="flex">{[...Array(review.rating)].map((_, i) => (<Star key={i} className="w-4 h-4 fill-brand-gold text-brand-gold" />))}</div>
               </div>
-              <div className="flex">{[...Array(review.rating)].map((_, i) => (<Star key={i} className="w-4 h-4 fill-brand-gold text-brand-gold" />))}</div>
+              <h5 className="font-semibold text-foreground mb-2">{review.title}</h5>
+              <p className="text-sm text-muted-foreground leading-relaxed">{review.content}</p>
+              <div className="flex items-center gap-3 mt-3">
+                <span className="text-xs text-muted-foreground">{helpfulCount} people found this helpful</span>
+                <button
+                  onClick={() => handleMarkHelpful(review.id)}
+                  disabled={hasVoted}
+                  className={`inline-flex items-center gap-1 text-xs px-2 py-1 rounded transition-colors ${
+                    hasVoted 
+                      ? 'bg-accent/20 text-accent cursor-default' 
+                      : 'bg-secondary hover:bg-secondary/80 text-foreground cursor-pointer'
+                  }`}
+                >
+                  <ThumbsUp className="w-3 h-3" />
+                  {hasVoted ? 'Voted' : 'Helpful'}
+                </button>
+              </div>
             </div>
-            <h5 className="font-semibold text-foreground mb-2">{review.title}</h5>
-            <p className="text-sm text-muted-foreground leading-relaxed">{review.content}</p>
-            <p className="text-xs text-muted-foreground mt-3">{review.helpful} people found this helpful</p>
-          </div>
-        ))}
+          );
+        })}
       </div>
       {totalPages > 1 && (
         <div className="flex items-center justify-center gap-2 mt-8">
