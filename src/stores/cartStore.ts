@@ -14,10 +14,10 @@ const getBundlePricing = (productType: 'mist' | 'showerhead', basePrice: number)
   }
   // Mist pricing
   return [
-    { minQty: 1, maxQty: 1, pricePerUnit: basePrice }, // Starter: $40
-    { minQty: 2, maxQty: 2, pricePerUnit: basePrice * 0.95 }, // Growth Duo: $38
-    { minQty: 3, maxQty: 3, pricePerUnit: basePrice * 0.9 }, // Full Treatment: $36
-    { minQty: 4, maxQty: Infinity, pricePerUnit: basePrice * 0.85 }, // Best for Routine: $34
+    { minQty: 1, maxQty: 1, pricePerUnit: basePrice }, // Starter: $24
+    { minQty: 2, maxQty: 2, pricePerUnit: basePrice * 0.95 }, // Growth Duo: $22.80
+    { minQty: 3, maxQty: 3, pricePerUnit: basePrice * 0.9 }, // Full Treatment: $21.60
+    { minQty: 4, maxQty: Infinity, pricePerUnit: basePrice * 0.85 }, // Best for Routine: $20.40
   ];
 };
 
@@ -38,7 +38,7 @@ const getProductType = (handle: string): 'mist' | 'showerhead' => {
 
 // Get base price for product type
 const getBasePrice = (productType: 'mist' | 'showerhead'): number => {
-  return productType === 'showerhead' ? 105 : 40;
+  return productType === 'showerhead' ? 105 : 24;
 };
 
 export interface ExtendedCartItem extends CartItem {
