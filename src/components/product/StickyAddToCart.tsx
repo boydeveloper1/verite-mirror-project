@@ -105,10 +105,6 @@ export const StickyAddToCart = ({ product, selectedVariant }: StickyAddToCartPro
       quantity: 1,
       selectedOptions: selectedVariant.selectedOptions || [],
     });
-
-    toast.success(`Added ${product.title} to cart`, {
-      position: "top-center",
-    });
   };
 
   const price = parseFloat(selectedVariant?.price?.amount || product.priceRange.minVariantPrice.amount);
