@@ -13,7 +13,6 @@ import { PreFooterSubscribe } from "@/components/shared/PreFooterSubscribe";
 import { EmailPopup } from "@/components/shared/EmailPopup";
 import { SectionDivider } from "@/components/shared/SectionDivider";
 import { FeaturedInSection } from "@/components/shared/FeaturedInSection";
-import { PurchaseNotifications } from "@/components/shared/PurchaseNotifications";
 
 const Index = () => {
   return (
@@ -41,7 +40,6 @@ const Index = () => {
       <Footer />
       <EducationalPopup />
       <EmailPopup />
-      <PurchaseNotifications />
     </div>
   );
 };
