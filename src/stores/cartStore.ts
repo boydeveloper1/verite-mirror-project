@@ -39,7 +39,7 @@ const getProductType = (handle: string): 'mist' | 'showerhead' => {
 
 // Get base price for product type
 const getBasePrice = (productType: 'mist' | 'showerhead'): number => {
-  return productType === 'showerhead' ? 105 : 24;
+  return productType === 'showerhead' ? 118 : 24;
 };
 
 export interface ExtendedCartItem extends CartItem {
