@@ -382,12 +382,10 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
           </Button>
         </div>
 
-        {/* Low Stock Indicator - Below Add to Cart for urgency (hidden for shower head) */}
-        {!isShowerHead && (
-          <div className="mt-3">
-            <LowStockIndicator productHandle={product.handle} />
-          </div>
-        )}
+        {/* Low Stock Indicator - Below Add to Cart for urgency */}
+        <div className="mt-3">
+          <LowStockIndicator productHandle={product.handle} />
+        </div>
       </div>
 
       {/* Replicas Warning */}

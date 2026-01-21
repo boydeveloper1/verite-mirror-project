@@ -5,8 +5,13 @@ interface LowStockIndicatorProps {
   productHandle?: string;
 }
 
-// Generate consistent stock count based on product handle
+// Get stock count - fixed values for specific products
 const getStockCount = (handle: string = "default"): number => {
+  // Shower head always shows 25
+  if (handle.includes("shower-filter") || handle.includes("shower-head")) {
+    return 25;
+  }
+  // For mist/other products, generate consistent count based on hash
   let hash = 0;
   for (let i = 0; i < handle.length; i++) {
     hash = ((hash << 5) - hash) + handle.charCodeAt(i);

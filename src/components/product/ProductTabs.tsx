@@ -25,6 +25,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { showerHeadReviews, showerHeadReviewCategories, TOTAL_SHOWER_HEAD_REVIEWS, SHOWER_HEAD_RATING } from "@/data/showerHeadReviews";
+import { mistReviews, mistReviewCategories, TOTAL_MIST_REVIEWS, MIST_RATING } from "@/data/mistReviews";
 import { ReviewFilters } from "./ReviewFilters";
 
 interface ProductTabsProps {
@@ -266,142 +267,60 @@ const MistTimelineTab = () => {
 
 const MistReviewsTab = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedRating, setSelectedRating] = useState<number | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [sortBy, setSortBy] = useState("recent");
+  const [helpfulVotes, setHelpfulVotes] = useState<Record<string, number>>({});
+  const [userVotedReviews, setUserVotedReviews] = useState<Set<string>>(new Set());
   const reviewsPerPage = 10;
 
-  const allReviews = [
-    { name: "Michelle T.", date: "2 weeks ago", title: "Finally something that actually works!", content: "I tried every growth serum out there. Nothing worked until I realized the problem was inflammation. This mist calmed my scalp in days. Week 4: I see baby hairs. Week 8: My edges are BACK." },
-    { name: "Jasmine R.", date: "1 month ago", title: "My braids do not hurt anymore", content: "I used to dread getting my braids done because of the pain. Now I spray this right after installation and the relief is instant. My scalp stays calm the entire time." },
-    { name: "Tiffany W.", date: "3 weeks ago", title: "Wig wearer essential", content: "As someone who wears wigs daily, my edges were suffering. This has become part of my morning routine. My hairline has never looked better." },
-    { name: "Keisha M.", date: "1 week ago", title: "Life changing product", content: "I was skeptical at first but this actually works. My scalp feels so much better and I can see new growth along my edges." },
-    { name: "Danielle S.", date: "2 months ago", title: "Best scalp product ever", content: "I have tried everything and nothing compares to this. The cooling sensation is amazing and my hair is growing back." },
-    { name: "Aaliyah J.", date: "3 weeks ago", title: "No more itching", content: "The itching under my wig was unbearable. This spray stopped it completely. I can finally wear my wigs comfortably all day." },
-    { name: "Brianna C.", date: "1 month ago", title: "My edges are coming back", content: "After years of tight ponytails, my edges were gone. Two months with this product and I can see real progress." },
-    { name: "Crystal D.", date: "2 weeks ago", title: "Perfect for protective styles", content: "I keep my hair in braids most of the time. This keeps my scalp healthy and my hair growing underneath." },
-    { name: "Destiny H.", date: "5 weeks ago", title: "Finally found what works", content: "I spent so much money on products that did not work. This is the only one that actually delivered results." },
-    { name: "Ebony L.", date: "1 month ago", title: "Game changer for my routine", content: "Added this to my morning routine and the difference is incredible. My scalp is no longer dry and flaky." },
-    { name: "Faith N.", date: "3 weeks ago", title: "Obsessed with this product", content: "The relief I feel after spraying this is amazing. My scalp thanks me every day." },
-    { name: "Gabrielle P.", date: "2 months ago", title: "Worth every penny", content: "I was hesitant about the price but the results speak for themselves. My hair has never been healthier." },
-    { name: "Harmony Q.", date: "1 week ago", title: "Quick results", content: "I noticed a difference within the first week. My scalp feels so much calmer and less irritated." },
-    { name: "Imani R.", date: "6 weeks ago", title: "Must have for braids", content: "I get my braids done every 6 weeks and this has saved my edges. No more tension headaches either." },
-    { name: "Jade S.", date: "1 month ago", title: "My hairstylist noticed", content: "My hairstylist commented on how healthy my scalp looks. I told her about this product immediately." },
-    { name: "Kiara T.", date: "2 weeks ago", title: "No more shedding", content: "I used to lose so much hair in the shower. Now my shedding has reduced dramatically." },
-    { name: "Latoya U.", date: "3 months ago", title: "Three bottles in and loving it", content: "I am on my third bottle and my edges are fuller than they have been in years." },
-    { name: "Maya V.", date: "1 month ago", title: "Cooling and soothing", content: "The peppermint feels so refreshing. Perfect for those hot summer days under my wig." },
-    { name: "Nia W.", date: "2 weeks ago", title: "Finally some relief", content: "I have had scalp issues for years. This is the first product that has given me real relief." },
-    { name: "Olivia X.", date: "5 weeks ago", title: "Buying for my sister too", content: "I loved it so much I bought one for my sister who also struggles with her edges." },
-    { name: "Porsha Y.", date: "1 month ago", title: "No more flakes", content: "My scalp used to be so dry and flaky. This has completely changed that. My scalp is healthy now." },
-    { name: "Queen Z.", date: "3 weeks ago", title: "Gentle but effective", content: "I have sensitive skin and this works without any irritation. So happy I found it." },
-    { name: "Raven A.", date: "2 months ago", title: "Regrowth is real", content: "I can see baby hairs all along my hairline. This product is the real deal." },
-    { name: "Simone B.", date: "1 week ago", title: "Perfect size bottle", content: "The bottle lasts a long time even with daily use. Great value for what you get." },
-    { name: "Tamara C.", date: "6 weeks ago", title: "My go-to product now", content: "I have tried so many products. This is now the only one I use for my scalp." },
-    { name: "Unique D.", date: "1 month ago", title: "Fast shipping too", content: "Product arrived quickly and works exactly as described. Very impressed." },
-    { name: "Vivian E.", date: "2 weeks ago", title: "Smells amazing", content: "Not only does it work but it smells so good. The natural scent is perfect." },
-    { name: "Whitney F.", date: "4 weeks ago", title: "Noticed results quickly", content: "Within two weeks I could feel the difference. My scalp was less tender and itchy." },
-    { name: "Xena G.", date: "1 month ago", title: "My edges thank you", content: "My edges were basically gone. Now they are growing back thicker than before." },
-    { name: "Yolanda H.", date: "3 weeks ago", title: "Perfect for daily use", content: "I use it every morning and night. It has become an essential part of my routine." },
-    { name: "Zaria I.", date: "2 months ago", title: "Highly recommend", content: "I have recommended this to all my friends. Everyone who tries it loves it." },
-    { name: "Amber J.", date: "1 week ago", title: "Relief from day one", content: "I felt relief from the very first application. My scalp was so grateful." },
-    { name: "Briana K.", date: "5 weeks ago", title: "No more scalp pain", content: "The pain I used to feel after getting braids is gone. This product is a lifesaver." },
-    { name: "Chanel L.", date: "1 month ago", title: "My secret weapon", content: "This is my secret weapon for healthy edges. No one believes my hair is natural." },
-    { name: "Diamond M.", date: "2 weeks ago", title: "Exceeded expectations", content: "I had low expectations but this product blew me away. Real results!" },
-    { name: "Essence N.", date: "6 weeks ago", title: "Love the ingredients", content: "I love that it is all natural. No harsh chemicals on my scalp." },
-    { name: "Francesca O.", date: "1 month ago", title: "Perfect for sensitive scalp", content: "My scalp is very sensitive and this works without any burning or irritation." },
-    { name: "Grace P.", date: "3 weeks ago", title: "Visible improvement", content: "I took before and after photos. The improvement is visible and amazing." },
-    { name: "Hope Q.", date: "2 months ago", title: "Consistent results", content: "I have been using this for two months and the results keep getting better." },
-    { name: "Ivy R.", date: "1 week ago", title: "Easy to apply", content: "The spray bottle makes it so easy to apply. Gets right to the scalp." },
-    { name: "Jasmin S.", date: "4 weeks ago", title: "No residue", content: "Unlike other products, this does not leave any greasy residue. Love it." },
-    { name: "Kayla T.", date: "1 month ago", title: "My hairline is back", content: "I thought my hairline was gone forever. This product proved me wrong." },
-    { name: "Lauren U.", date: "2 weeks ago", title: "Best investment", content: "This is the best investment I have made for my hair. Worth every dollar." },
-    { name: "Monica V.", date: "5 weeks ago", title: "Finally found the solution", content: "After years of searching, I finally found something that works for my scalp." },
-    { name: "Naomi W.", date: "1 month ago", title: "Transformed my hair journey", content: "This product has completely transformed my hair journey. I am so grateful." },
-    { name: "Opal X.", date: "3 weeks ago", title: "Lightweight formula", content: "I love how lightweight it is. Does not weigh down my hair at all." },
-    { name: "Paris Y.", date: "2 months ago", title: "Stopped my hair loss", content: "I was losing so much hair. This product stopped the loss and promoted growth." },
-    { name: "Queenie Z.", date: "1 week ago", title: "Amazing customer service too", content: "Not only is the product great but the customer service is excellent too." },
-    { name: "Rosa A.", date: "6 weeks ago", title: "My scalp is happy", content: "For the first time in years, my scalp is happy and healthy." },
-    { name: "Serena B.", date: "1 month ago", title: "Repurchased already", content: "I am already on my second bottle. That should tell you how much I love it." },
-    { name: "Tiana C.", date: "2 weeks ago", title: "Dermatologist approved", content: "My dermatologist even approved of the ingredients. That gave me confidence." },
-    { name: "Uma D.", date: "4 weeks ago", title: "Great for all hair types", content: "I have 4C hair and this works perfectly. Great for all hair types." },
-    { name: "Vanessa E.", date: "1 month ago", title: "No more embarrassment", content: "I used to be embarrassed about my edges. Not anymore thanks to this product." },
-    { name: "Wendy F.", date: "3 weeks ago", title: "Saw results in two weeks", content: "Two weeks in and I already saw significant improvement. So happy!" },
-    { name: "Xiomara G.", date: "2 months ago", title: "My stylist recommends it", content: "My hairstylist now recommends this to all her clients." },
-    { name: "Yasmine H.", date: "1 week ago", title: "Travel friendly size", content: "Perfect size for traveling. I never leave home without it now." },
-    { name: "Zoe I.", date: "5 weeks ago", title: "Changed my life", content: "I know it sounds dramatic but this product changed my life. My confidence is back." },
-    { name: "Alicia J.", date: "1 month ago", title: "No more tension headaches", content: "I used to get terrible headaches from tight styles. This has helped so much." },
-    { name: "Bethany K.", date: "2 weeks ago", title: "Cooling sensation is everything", content: "The cooling sensation is so soothing. It is like a spa treatment for my scalp." },
-    { name: "Camille L.", date: "6 weeks ago", title: "Real ingredients real results", content: "I love that I can read and understand all the ingredients. And they work!" },
-    { name: "Deja M.", date: "1 month ago", title: "My edges are thriving", content: "My edges went from struggling to thriving in just a few weeks." },
-    { name: "Erica N.", date: "3 weeks ago", title: "Perfect under wigs", content: "I wear wigs every day and this keeps my scalp comfortable all day long." },
-    { name: "Felicia O.", date: "2 months ago", title: "Wish I found this sooner", content: "I wish I had found this product years ago. Better late than never!" },
-    { name: "Giselle P.", date: "1 week ago", title: "Baby hairs everywhere", content: "I have so many baby hairs growing in. This product really works." },
-    { name: "Hazel Q.", date: "4 weeks ago", title: "Gentle yet powerful", content: "It is gentle enough for daily use but powerful enough to see results." },
-    { name: "Indigo R.", date: "1 month ago", title: "No more buildup", content: "My scalp used to have so much buildup. This keeps it clean and fresh." },
-    { name: "Jenna S.", date: "2 weeks ago", title: "Perfect for cornrows", content: "I keep my hair in cornrows and this keeps my scalp healthy underneath." },
-    { name: "Kendra T.", date: "5 weeks ago", title: "My new holy grail", content: "This is officially my holy grail product for scalp health." },
-    { name: "Lisa U.", date: "1 month ago", title: "Affordable and effective", content: "Finally a product that is both affordable and actually works." },
-    { name: "Mariah V.", date: "3 weeks ago", title: "My scalp needed this", content: "I did not realize how much my scalp needed this until I started using it." },
-    { name: "Nadia W.", date: "2 months ago", title: "Consistent use pays off", content: "I used it consistently for two months and the results are incredible." },
-    { name: "Octavia X.", date: "1 week ago", title: "Best purchase this year", content: "This is the best purchase I have made all year. No regrets." },
-    { name: "Priscilla Y.", date: "6 weeks ago", title: "Restored my edges", content: "My edges were damaged from years of tight ponytails. This restored them." },
-    { name: "Rochelle Z.", date: "1 month ago", title: "Love the natural ingredients", content: "I only use natural products and this fits perfectly into my routine." },
-    { name: "Sabrina A.", date: "2 weeks ago", title: "My mom loves it too", content: "I got one for my mom and she loves it just as much as I do." },
-    { name: "Tatiana B.", date: "4 weeks ago", title: "Noticeable difference", content: "Everyone keeps asking what I am using on my hair. The difference is noticeable." },
-    { name: "Ursula C.", date: "1 month ago", title: "Quick absorption", content: "It absorbs quickly and does not leave my hair feeling wet or greasy." },
-    { name: "Valerie D.", date: "3 weeks ago", title: "Perfect for box braids", content: "I get box braids every few months and this is essential for scalp care." },
-    { name: "Willow E.", date: "2 months ago", title: "Healthy scalp healthy hair", content: "I finally understand that healthy scalp means healthy hair. This product taught me." },
-    { name: "Ximena F.", date: "1 week ago", title: "No more dryness", content: "My scalp used to be so dry it would crack. Not anymore with this product." },
-    { name: "Yvonne G.", date: "5 weeks ago", title: "Soothing and healing", content: "My scalp was so damaged. This product is soothing and healing it." },
-    { name: "Zelda H.", date: "1 month ago", title: "Five stars all the way", content: "I rarely give five stars but this product deserves every single one." },
-    { name: "Andrea I.", date: "2 weeks ago", title: "My go-to scalp spray", content: "This is now my go-to scalp spray. Nothing else compares." },
-    { name: "Bianca J.", date: "6 weeks ago", title: "Refreshing feeling", content: "The refreshing feeling after each spray is amazing. I look forward to it." },
-    { name: "Candace K.", date: "1 month ago", title: "Reduced inflammation", content: "I had so much inflammation on my scalp. This product reduced it significantly." },
-    { name: "Deanna L.", date: "3 weeks ago", title: "Perfect spray mechanism", content: "The spray mechanism is perfect. It distributes the product evenly." },
-    { name: "Elena M.", date: "2 months ago", title: "My hair is growing", content: "I can see my hair growing in areas that were completely bald before." },
-    { name: "Fiona N.", date: "1 week ago", title: "Love this brand", content: "I love everything about this brand. The product, the packaging, everything." },
-    { name: "Gloria O.", date: "4 weeks ago", title: "Gentle formula", content: "The formula is so gentle yet so effective. Perfect for my sensitive scalp." },
-    { name: "Helena P.", date: "1 month ago", title: "My scalp is thriving", content: "My scalp went from surviving to thriving thanks to this product." },
-    { name: "Iris Q.", date: "2 weeks ago", title: "Instant relief", content: "I feel instant relief every time I spray it. So soothing and calming." },
-    { name: "Julia R.", date: "5 weeks ago", title: "Worth the hype", content: "I heard so much about this product. It is definitely worth the hype." },
-    { name: "Kira S.", date: "1 month ago", title: "My edges are growing", content: "I cannot believe my edges are actually growing back. I am so happy." },
-    { name: "Lila T.", date: "3 weeks ago", title: "Perfect daily spray", content: "I use it every single day. It has become an essential part of my routine." },
-    { name: "Mia U.", date: "2 months ago", title: "Transformed my scalp", content: "My scalp was in terrible condition. This product transformed it completely." },
-    { name: "Nina V.", date: "1 week ago", title: "Easy to use", content: "So easy to use and the results speak for themselves. Highly recommend." },
-    { name: "Ophelia W.", date: "6 weeks ago", title: "No more itchiness", content: "The constant itchiness is gone. My scalp feels so comfortable now." },
-    { name: "Penelope X.", date: "1 month ago", title: "Best scalp treatment", content: "I have tried many treatments. This is by far the best one." },
-    { name: "Rachel Y.", date: "2 weeks ago", title: "Promoting healthy growth", content: "This product is promoting healthy growth all over my scalp." },
-    { name: "Sandra Z.", date: "4 weeks ago", title: "My confidence is back", content: "I was so self-conscious about my edges. My confidence is finally back." },
-    { name: "Teresa A.", date: "1 month ago", title: "Amazing results", content: "The results I have seen are nothing short of amazing. Thank you!" },
-    { name: "Ulani B.", date: "3 weeks ago", title: "Lightweight and effective", content: "It is so lightweight but still incredibly effective. Perfect combination." },
-    { name: "Vera C.", date: "2 months ago", title: "My stylist is impressed", content: "My hairstylist is so impressed with my scalp health now. She wants to try it." },
-    { name: "Wanda D.", date: "1 week ago", title: "Soothing and refreshing", content: "Every application is soothing and refreshing. Love this feeling." },
-    { name: "Xyla E.", date: "5 weeks ago", title: "No harsh chemicals", content: "I appreciate that there are no harsh chemicals. My scalp appreciates it too." },
-    { name: "Yara F.", date: "1 month ago", title: "Finally seeing growth", content: "After years of no growth, I am finally seeing real progress. So grateful." },
-    { name: "Zena G.", date: "2 weeks ago", title: "Changed my hair care routine", content: "This product changed my entire hair care routine for the better." },
-    { name: "Adriana H.", date: "6 weeks ago", title: "My favorite product", content: "Out of all my hair products, this is my absolute favorite." },
-    { name: "Blair I.", date: "1 month ago", title: "Quick and easy", content: "Takes just a minute to apply but the benefits last all day." },
-    { name: "Cynthia J.", date: "3 weeks ago", title: "Healthy and happy scalp", content: "For the first time ever, my scalp is both healthy and happy." },
-    { name: "Denise K.", date: "2 months ago", title: "Real transformation", content: "I have pictures to prove the transformation. This product works." },
-    { name: "Elise L.", date: "1 week ago", title: "Perfect for protective styles", content: "Whether I have braids, twists, or wigs, this product is perfect." },
-    { name: "Flora M.", date: "4 weeks ago", title: "My scalp loves it", content: "My scalp literally loves this product. I can feel the difference." },
-    { name: "Gwen N.", date: "1 month ago", title: "No more damage", content: "My scalp was so damaged before. Now it is healing and healthy." },
-    { name: "Heidi O.", date: "2 weeks ago", title: "Best discovery ever", content: "Discovering this product was the best thing to happen to my hair journey." },
-    { name: "Ingrid P.", date: "5 weeks ago", title: "Consistent quality", content: "I have bought multiple bottles and the quality is always consistent." },
-    { name: "Joyce Q.", date: "1 month ago", title: "My edges are fuller", content: "My edges are noticeably fuller. I am over the moon with joy." },
-    { name: "Karen R.", date: "2 weeks ago", title: "Incredible product", content: "This has made such a difference for my scalp. Absolutely love it." },
-    { name: "Lana S.", date: "3 weeks ago", title: "No more problems", content: "All my scalp problems have disappeared since using this spray." },
-    { name: "Mercedes T.", date: "1 month ago", title: "Best money spent", content: "This is the best money I have ever spent on hair care." },
-  ];
-
-  const totalPages = Math.ceil(allReviews.length / reviewsPerPage);
-  const startIndex = (currentPage - 1) * reviewsPerPage;
-  const currentReviews = allReviews.slice(startIndex, startIndex + reviewsPerPage);
-
-  const getRating = (index: number) => {
-    return (index % 5 === 0 || index % 7 === 0) ? 4 : 5;
+  // Get helpful count (base + user votes)
+  const getHelpfulCount = (review: typeof mistReviews[0]) => {
+    return review.helpful + (helpfulVotes[review.id] || 0);
   };
+
+  // Handle marking review as helpful
+  const handleMarkHelpful = (reviewId: string) => {
+    if (userVotedReviews.has(reviewId)) return;
+    
+    setHelpfulVotes(prev => ({
+      ...prev,
+      [reviewId]: (prev[reviewId] || 0) + 1
+    }));
+    setUserVotedReviews(prev => new Set(prev).add(reviewId));
+  };
+
+  // Filter reviews
+  let filteredReviews = mistReviews.filter(review => {
+    if (selectedRating && review.rating !== selectedRating) return false;
+    if (selectedCategory !== 'all' && review.category !== selectedCategory) return false;
+    return true;
+  });
+
+  // Sort reviews
+  switch (sortBy) {
+    case 'helpful':
+      filteredReviews = [...filteredReviews].sort((a, b) => getHelpfulCount(b) - getHelpfulCount(a));
+      break;
+    case 'highest':
+      filteredReviews = [...filteredReviews].sort((a, b) => b.rating - a.rating);
+      break;
+    case 'lowest':
+      filteredReviews = [...filteredReviews].sort((a, b) => a.rating - b.rating);
+      break;
+    case 'recent':
+    default:
+      // Keep original order (most recent first)
+      break;
+  }
+
+  const totalPages = Math.ceil(filteredReviews.length / reviewsPerPage);
+  const startIndex = (currentPage - 1) * reviewsPerPage;
+  const currentReviews = filteredReviews.slice(startIndex, startIndex + reviewsPerPage);
 
   return (
     <div className="max-w-4xl">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
           <h2 className="text-2xl md:text-3xl font-bold text-primary">Customer Reviews</h2>
           <div className="flex items-center gap-2 mt-2">
@@ -409,22 +328,64 @@ const MistReviewsTab = () => {
               {[1, 2, 3, 4].map((star) => (<Star key={star} className="w-5 h-5 fill-brand-gold text-brand-gold" />))}
               <div className="relative w-5 h-5"><Star className="absolute w-5 h-5 text-brand-gold" /><div className="absolute overflow-hidden" style={{ width: '90%' }}><Star className="w-5 h-5 fill-brand-gold text-brand-gold" /></div></div>
             </div>
-            <span className="font-semibold">4.9</span>
-            <span className="text-muted-foreground">({allReviews.length} reviews)</span>
+            <span className="font-semibold">{MIST_RATING}</span>
+            <span className="text-muted-foreground">({TOTAL_MIST_REVIEWS.toLocaleString()} reviews)</span>
           </div>
         </div>
       </div>
+
+      {/* Filters */}
+      <ReviewFilters
+        categories={mistReviewCategories}
+        selectedRating={selectedRating}
+        selectedCategory={selectedCategory}
+        sortBy={sortBy}
+        onRatingChange={(rating) => { setSelectedRating(rating); setCurrentPage(1); }}
+        onCategoryChange={(cat) => { setSelectedCategory(cat); setCurrentPage(1); }}
+        onSortChange={(sort) => { setSortBy(sort); setCurrentPage(1); }}
+        totalReviews={TOTAL_MIST_REVIEWS}
+        filteredCount={filteredReviews.length}
+        displayedCount={currentReviews.length}
+      />
+
       <div className="space-y-4">
-        {currentReviews.map((review, index) => {
-          const rating = getRating(startIndex + index);
+        {currentReviews.map((review) => {
+          const hasVoted = userVotedReviews.has(review.id);
+          const helpfulCount = getHelpfulCount(review);
+          
           return (
-            <div key={startIndex + index} className="p-5 rounded-lg border border-border bg-background">
+            <div key={review.id} className="p-5 rounded-lg border border-border bg-background">
               <div className="flex flex-wrap items-start justify-between gap-2 mb-3">
-                <div><h4 className="font-semibold text-foreground">{review.name}</h4><p className="text-xs text-muted-foreground">{review.date}</p></div>
-                <div className="flex">{[...Array(5)].map((_, i) => (<Star key={i} className={cn("w-4 h-4", i < rating ? "fill-brand-gold text-brand-gold" : "text-muted-foreground/30")} />))}</div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h4 className="font-semibold text-foreground">{review.name}</h4>
+                    {review.verified && (
+                      <span className="inline-flex items-center gap-1 text-xs text-accent">
+                        <CheckCircle className="w-3 h-3" /> Verified
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-muted-foreground">{review.date}</p>
+                </div>
+                <div className="flex">{[...Array(review.rating)].map((_, i) => (<Star key={i} className="w-4 h-4 fill-brand-gold text-brand-gold" />))}</div>
               </div>
               <h5 className="font-semibold text-foreground mb-2">{review.title}</h5>
               <p className="text-sm text-muted-foreground leading-relaxed">{review.content}</p>
+              <div className="flex items-center gap-3 mt-3">
+                <span className="text-xs text-muted-foreground">{helpfulCount} people found this helpful</span>
+                <button
+                  onClick={() => handleMarkHelpful(review.id)}
+                  disabled={hasVoted}
+                  className={`inline-flex items-center gap-1 text-xs px-2 py-1 rounded transition-colors ${
+                    hasVoted 
+                      ? 'bg-accent/20 text-accent cursor-default' 
+                      : 'bg-secondary hover:bg-secondary/80 text-foreground cursor-pointer'
+                  }`}
+                >
+                  <ThumbsUp className="w-3 h-3" />
+                  {hasVoted ? 'Voted' : 'Helpful'}
+                </button>
+              </div>
             </div>
           );
         })}
