@@ -119,11 +119,6 @@ export const ReviewFilters = ({
       {/* Results Count */}
       <div className="text-sm text-muted-foreground">
         Showing {displayedCount.toLocaleString()} of {totalReviews.toLocaleString()} reviews
-        {filteredCount !== totalReviews && (
-          <span className="text-accent ml-1">
-            ({filteredCount.toLocaleString()} match your filters)
-          </span>
-        )}
       </div>
     </div>
   );
