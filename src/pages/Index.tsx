@@ -12,6 +12,8 @@ import { ScalpHealthQuiz } from "@/components/sections/ScalpHealthQuiz";
 import { PreFooterSubscribe } from "@/components/shared/PreFooterSubscribe";
 import { EmailPopup } from "@/components/shared/EmailPopup";
 import { SectionDivider } from "@/components/shared/SectionDivider";
+import { FeaturedInSection } from "@/components/shared/FeaturedInSection";
+import { PurchaseNotifications } from "@/components/shared/PurchaseNotifications";
 
 const Index = () => {
   return (
@@ -19,6 +21,7 @@ const Index = () => {
       <Header />
       <main>
         <HeroSection />
+        <FeaturedInSection />
         <SectionDivider variant="gradient" />
         <ProductsSection />
         <SectionDivider variant="line" />
@@ -38,6 +41,7 @@ const Index = () => {
       <Footer />
       <EducationalPopup />
       <EmailPopup />
+      <PurchaseNotifications />
     </div>
   );
 };
