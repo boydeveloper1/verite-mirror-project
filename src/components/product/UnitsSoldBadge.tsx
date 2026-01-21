@@ -90,16 +90,16 @@ export const UnitsSoldBadge = ({ productHandle }: UnitsSoldBadgeProps) => {
         initial={{ opacity: 0, y: 5 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="flex items-center gap-2 text-sm text-muted-foreground"
+        className="flex items-center gap-2 bg-violet-50 px-3 py-1.5 rounded-full text-sm"
       >
         <motion.div
           animate={{ scale: [1, 1.15, 1] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         >
-          <Eye className="w-4 h-4 text-accent" />
+          <Eye className="w-4 h-4 text-violet-600" />
         </motion.div>
-        <span>
-          <span className="font-semibold text-foreground">{viewersCount}</span> people viewing this right now
+        <span className="text-violet-700">
+          <span className="font-bold text-violet-800">{viewersCount}</span> people viewing this right now
         </span>
       </motion.div>
     </div>

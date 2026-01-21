@@ -34,7 +34,6 @@ export const LowStockIndicator = ({ productHandle }: LowStockIndicatorProps) => 
       <span className="font-medium text-orange-600">
         Only {stockCount} left in stock
       </span>
-      <span className="text-muted-foreground">— Order soon!</span>
     </motion.div>
   );
 };

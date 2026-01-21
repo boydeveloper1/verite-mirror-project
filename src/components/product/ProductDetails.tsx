@@ -359,20 +359,8 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
           </div>
         </div>
         
-        {/* Guarantee Seal (hidden for shower head) */}
-        {!isShowerHead && (
-          <div className="mt-4">
-            <RiskFreeGuarantee variant="seal" />
-          </div>
-        )}
       </div>
 
-      {/* Low Stock Indicator - Scarcity (hidden for shower head) */}
-      {!isShowerHead && (
-        <div className="mb-4 md:mb-6">
-          <LowStockIndicator productHandle={product.handle} />
-        </div>
-      )}
 
       {/* Replicas Warning */}
       <ReplicasWarning />
@@ -409,6 +397,13 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
         </Button>
         {!isShowerHead && <RiskFreeGuarantee variant="badge" />}
       </div>
+
+      {/* Low Stock Indicator - Below Add to Cart for urgency (hidden for shower head) */}
+      {!isShowerHead && (
+        <div className="mb-3 md:mb-4">
+          <LowStockIndicator productHandle={product.handle} />
+        </div>
+      )}
 
       {/* Trust Badges */}
       <div className="mb-4 md:mb-6">
