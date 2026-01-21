@@ -38,9 +38,9 @@ const AnimatedSection = ({ children, className = "", delay = 0 }: { children: Re
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-      transition={{ duration: 0.6, ease: "easeOut", delay }}
+      initial={{ opacity: 0, y: 40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay }}
       className={className}
     >
       {children}
@@ -48,20 +48,39 @@ const AnimatedSection = ({ children, className = "", delay = 0 }: { children: Re
   );
 };
 
+// Premium decorative divider
+const SectionDivider = () => (
+  <div className="relative h-24 overflow-hidden">
+    <div className="absolute inset-0 flex items-center justify-center">
+      <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-border to-transparent" />
+    </div>
+    <div className="absolute inset-0 flex items-center justify-center">
+      <div className="w-2 h-2 rounded-full bg-accent/50" />
+    </div>
+  </div>
+);
+
 const CTAButton = ({ className = "", variant = "primary" }: { className?: string; variant?: "primary" | "secondary" }) => (
-  <Button 
-    asChild
-    className={`h-14 px-10 font-bold text-base rounded-full group ${
-      variant === "primary" 
-        ? "bg-accent hover:bg-accent/90 text-accent-foreground" 
-        : "bg-primary-foreground hover:bg-primary-foreground/90 text-primary"
-    } ${className}`}
+  <motion.div
+    whileHover={{ scale: 1.02 }}
+    whileTap={{ scale: 0.98 }}
   >
-    <Link to={`/product/${PRODUCT_HANDLE}`}>
-      Get Your Purifying Shower Head — {PRODUCT_PRICE}
-      <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-    </Link>
-  </Button>
+    <Button 
+      asChild
+      className={`h-14 px-10 font-bold text-base rounded-full group relative overflow-hidden ${
+        variant === "primary" 
+          ? "bg-accent hover:bg-accent/90 text-accent-foreground shadow-[0_8px_30px_-8px_hsl(var(--accent)/0.5)]" 
+          : "bg-primary-foreground hover:bg-primary-foreground/90 text-primary shadow-[0_8px_30px_-8px_rgba(255,255,255,0.3)]"
+      } ${className}`}
+    >
+      <Link to={`/product/${PRODUCT_HANDLE}`}>
+        <span className="relative z-10 flex items-center">
+          Get Your Purifying Shower Head — {PRODUCT_PRICE}
+          <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+        </span>
+      </Link>
+    </Button>
+  </motion.div>
 );
 
 const FloatingCTA = () => {
@@ -79,22 +98,30 @@ const FloatingCTA = () => {
     <motion.div
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: isVisible ? 0 : 100, opacity: isVisible ? 1 : 0 }}
-      className="fixed bottom-0 left-0 right-0 bg-card/95 backdrop-blur-lg border-t border-border p-4 z-50"
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      className="fixed bottom-0 left-0 right-0 bg-card/95 backdrop-blur-xl border-t border-border/50 p-4 z-50 shadow-[0_-4px_30px_-4px_rgba(0,0,0,0.15)]"
     >
       <div className="container mx-auto flex items-center justify-between gap-4">
-        <div className="hidden sm:block">
-          <p className="text-sm font-semibold text-foreground">Verité Purifying Shower Head</p>
-          <p className="text-xs text-muted-foreground">Free shipping • 30-day guarantee</p>
+        <div className="hidden sm:flex items-center gap-4">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center">
+            <Droplets className="w-6 h-6 text-accent" />
+          </div>
+          <div>
+            <p className="text-sm font-semibold text-foreground">Verité Purifying Shower Head</p>
+            <p className="text-xs text-muted-foreground">Free shipping • 30-day guarantee</p>
+          </div>
         </div>
-        <Button 
-          asChild
-          className="flex-1 sm:flex-none h-12 px-8 bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-full"
-        >
-          <Link to={`/product/${PRODUCT_HANDLE}`}>
-            Get Yours — {PRODUCT_PRICE}
-            <ArrowRight className="ml-2 w-4 h-4" />
-          </Link>
-        </Button>
+        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+          <Button 
+            asChild
+            className="flex-1 sm:flex-none h-12 px-8 bg-accent hover:bg-accent/90 text-accent-foreground font-bold rounded-full shadow-[0_4px_20px_-4px_hsl(var(--accent)/0.5)]"
+          >
+            <Link to={`/product/${PRODUCT_HANDLE}`}>
+              Get Yours — {PRODUCT_PRICE}
+              <ArrowRight className="ml-2 w-4 h-4" />
+            </Link>
+          </Button>
+        </motion.div>
       </div>
     </motion.div>
   );
@@ -120,38 +147,85 @@ const ShowerHeadLandingPage = () => {
         {/* ============================================ */}
         {/* SECTION 1: PROBLEM AGITATION - HOOK */}
         {/* ============================================ */}
-        <section className="relative min-h-screen flex items-center bg-primary">
+        <section className="relative min-h-screen flex items-center bg-primary overflow-hidden">
+          {/* Premium background layers */}
           <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary to-destructive/20" />
-          <div className="absolute inset-0 opacity-5" style={{
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_hsl(var(--brand-gold)/0.15)_0%,transparent_50%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_hsl(var(--accent)/0.1)_0%,transparent_50%)]" />
+          <div className="absolute inset-0 opacity-[0.03]" style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
           }} />
+          
+          {/* Animated orbs */}
+          <motion.div 
+            className="absolute top-1/4 -right-20 w-80 h-80 bg-brand-gold/10 rounded-full blur-3xl"
+            animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div 
+            className="absolute bottom-1/4 -left-20 w-96 h-96 bg-accent/10 rounded-full blur-3xl"
+            animate={{ scale: [1.2, 1, 1.2], opacity: [0.2, 0.4, 0.2] }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          />
 
           <div className="container mx-auto px-4 md:px-10 relative z-10 py-16">
             <div className="max-w-4xl mx-auto text-center">
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               >
-                <div className="inline-flex items-center gap-2 bg-destructive/20 border border-destructive/30 rounded-full px-5 py-2.5 mb-8">
+                <motion.div 
+                  className="inline-flex items-center gap-2 bg-destructive/20 border border-destructive/30 rounded-full px-5 py-2.5 mb-8 backdrop-blur-sm"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.2, duration: 0.5 }}
+                >
                   <AlertTriangle className="w-4 h-4 text-destructive" />
                   <span className="text-sm font-medium text-primary-foreground">The $500 Mistake 94% of Women Make</span>
-                </div>
+                </motion.div>
                 
-                <h1 className="font-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-primary-foreground leading-[1.1] mb-8">
+                <motion.h1 
+                  className="font-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-primary-foreground leading-[1.1] mb-8"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3, duration: 0.8 }}
+                >
                   Why Your $50 Growth Serum
-                  <span className="block text-brand-gold mt-2">Isn't Working</span>
-                </h1>
+                  <motion.span 
+                    className="block text-brand-gold mt-2"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.6, duration: 0.6 }}
+                  >
+                    Isn't Working
+                  </motion.span>
+                </motion.h1>
                 
-                <p className="text-xl md:text-2xl text-primary-foreground/80 leading-relaxed mb-6 max-w-3xl mx-auto">
+                <motion.p 
+                  className="text-xl md:text-2xl text-primary-foreground/80 leading-relaxed mb-6 max-w-3xl mx-auto"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5, duration: 0.6 }}
+                >
                   You've tried the oils. The serums. The supplements. The $200 salon treatments.
-                </p>
-                <p className="text-xl md:text-2xl text-primary-foreground font-semibold mb-10 max-w-3xl mx-auto">
+                </motion.p>
+                <motion.p 
+                  className="text-xl md:text-2xl text-primary-foreground font-semibold mb-10 max-w-3xl mx-auto"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.6, duration: 0.6 }}
+                >
                   Yet every morning, more hair in your brush. Every shower, more strands down the drain.
-                </p>
+                </motion.p>
 
-                {/* The frustration story */}
-                <div className="bg-primary-foreground/10 backdrop-blur-sm rounded-2xl p-8 border border-primary-foreground/10 mb-10 text-left max-w-2xl mx-auto">
+                {/* The frustration story - Glass card */}
+                <motion.div 
+                  className="bg-primary-foreground/5 backdrop-blur-md rounded-3xl p-8 border border-primary-foreground/10 mb-10 text-left max-w-2xl mx-auto shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.7, duration: 0.6 }}
+                >
                   <p className="text-primary-foreground/90 text-lg leading-relaxed italic">
                     "I spent over $500 on hair products last year. Biotin supplements, rosemary oil, expensive growth serums... 
                     Nothing worked. I thought I was doing something wrong. Turns out, <span className="text-brand-gold font-semibold not-italic">the problem wasn't my products—it was my water.</span>"
@@ -164,16 +238,22 @@ const ShowerHeadLandingPage = () => {
                     </div>
                     <span className="text-primary-foreground/70 text-sm">— Jasmine T., after 3 weeks of using the shower head</span>
                   </div>
-                </div>
+                </motion.div>
 
-                <Button 
-                  variant="ghost"
-                  className="text-primary-foreground/70 hover:text-primary-foreground hover:bg-transparent p-0 h-auto font-normal text-lg"
-                  onClick={scrollToContent}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.9, duration: 0.6 }}
                 >
-                  <span>Discover what's really happening</span>
-                  <ChevronDown className="ml-2 w-6 h-6 animate-bounce" />
-                </Button>
+                  <Button 
+                    variant="ghost"
+                    className="text-primary-foreground/70 hover:text-primary-foreground hover:bg-transparent p-0 h-auto font-normal text-lg group"
+                    onClick={scrollToContent}
+                  >
+                    <span>Discover what's really happening</span>
+                    <ChevronDown className="ml-2 w-6 h-6 animate-bounce" />
+                  </Button>
+                </motion.div>
               </motion.div>
             </div>
           </div>
@@ -310,13 +390,18 @@ const ShowerHeadLandingPage = () => {
           </div>
         </section>
 
+        <SectionDivider />
+
         {/* ============================================ */}
         {/* SECTION 3: SOCIAL PROOF & CREDIBILITY */}
         {/* ============================================ */}
-        <section className="py-20 md:py-28 bg-muted/30">
-          <div className="container mx-auto px-4 md:px-10">
+        <section className="py-20 md:py-28 bg-muted/30 relative overflow-hidden">
+          {/* Subtle background texture */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,_hsl(var(--accent)/0.05)_0%,transparent_50%)]" />
+          
+          <div className="container mx-auto px-4 md:px-10 relative z-10">
             <AnimatedSection className="text-center mb-16">
-              <span className="text-sm font-semibold text-accent uppercase tracking-wider mb-4 block">Real Results</span>
+              <span className="inline-block text-sm font-semibold text-accent uppercase tracking-wider mb-4 px-4 py-1.5 bg-accent/10 rounded-full">Real Results</span>
               <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
                 The $118 Purifying Shower Head That Outperformed
                 <span className="text-accent"> $500 in Serums</span>
@@ -326,22 +411,32 @@ const ShowerHeadLandingPage = () => {
               </p>
             </AnimatedSection>
 
-            {/* Trust Badges Row */}
+            {/* Trust Badges Row - Premium glass style */}
             <AnimatedSection className="mb-12">
-              <div className="flex flex-wrap justify-center gap-6 md:gap-10">
+              <div className="flex flex-wrap justify-center gap-4 md:gap-6">
                 {[
                   { icon: Users, value: "14,520+", label: "5-Star Reviews" },
                   { icon: TrendingUp, value: "98%", label: "Recommend Us" },
                   { icon: Award, value: "70%", label: "Less Shedding" },
                   { icon: ShieldCheck, value: "30-Day", label: "Money Back" },
-                ].map((item) => (
-                  <div key={item.label} className="flex items-center gap-3 bg-card rounded-full px-5 py-3 border border-border">
-                    <item.icon className="w-5 h-5 text-accent" />
+                ].map((item, index) => (
+                  <motion.div 
+                    key={item.label} 
+                    className="flex items-center gap-3 bg-card/80 backdrop-blur-sm rounded-2xl px-5 py-4 border border-border/50 shadow-soft"
+                    whileHover={{ y: -2, boxShadow: "0 8px 30px -8px rgba(0,0,0,0.1)" }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center">
+                      <item.icon className="w-5 h-5 text-accent" />
+                    </div>
                     <div>
-                      <span className="font-bold text-foreground">{item.value}</span>
+                      <span className="font-bold text-foreground text-lg">{item.value}</span>
                       <span className="text-muted-foreground text-sm ml-1">{item.label}</span>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </AnimatedSection>
@@ -405,14 +500,17 @@ const ShowerHeadLandingPage = () => {
               ))}
             </div>
 
-            {/* Dermatologist Quote */}
+            {/* Dermatologist Quote - Premium styling */}
             <AnimatedSection>
-              <div className="bg-card rounded-2xl p-8 md:p-10 border-2 border-accent/20 max-w-3xl mx-auto text-center">
-                <Award className="w-12 h-12 text-accent mx-auto mb-4" />
-                <blockquote className="text-xl md:text-2xl text-foreground font-medium leading-relaxed mb-6">
+              <div className="relative bg-gradient-to-br from-card to-muted/50 rounded-3xl p-8 md:p-12 border border-accent/20 max-w-3xl mx-auto text-center shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)]">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center">
+                  <Award className="w-8 h-8 text-accent" />
+                </div>
+                <blockquote className="text-xl md:text-2xl text-foreground font-medium leading-relaxed mb-6 mt-4">
                   "Most of my patients don't realize that hard water is a major contributor to scalp inflammation and hair loss. 
                   Filtering your shower water is one of the simplest, most effective changes you can make."
                 </blockquote>
+                <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-accent/30 to-transparent mx-auto mb-4" />
                 <p className="text-muted-foreground">
                   <span className="font-semibold text-foreground">Dr. Sarah Chen, MD</span> — Board-Certified Dermatologist
                 </p>
@@ -421,15 +519,19 @@ const ShowerHeadLandingPage = () => {
           </div>
         </section>
 
+        <SectionDivider />
+
         {/* ============================================ */}
         {/* SECTION 4: THE SOLUTION (TEASER) */}
         {/* ============================================ */}
-        <section className="py-20 md:py-28 bg-background relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-accent/5 via-transparent to-brand-gold/5" />
+        <section className="py-24 md:py-32 bg-background relative overflow-hidden">
+          {/* Premium gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-brand-gold/5" />
+          <div className="absolute top-0 right-0 w-1/2 h-full bg-[radial-gradient(ellipse_at_top_right,_hsl(var(--accent)/0.08)_0%,transparent_60%)]" />
           
           <div className="container mx-auto px-4 md:px-10 relative z-10">
             <AnimatedSection className="text-center mb-16">
-              <span className="text-sm font-semibold text-accent uppercase tracking-wider mb-4 block">The Solution</span>
+              <span className="inline-block text-sm font-semibold text-accent uppercase tracking-wider mb-4 px-4 py-1.5 bg-accent/10 rounded-full">The Solution</span>
               <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
                 Stop the Inflammation
                 <span className="text-accent"> at the Source</span>
@@ -439,39 +541,47 @@ const ShowerHeadLandingPage = () => {
               </p>
             </AnimatedSection>
 
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-              {/* Product Visual */}
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+              {/* Product Visual - Enhanced */}
               <AnimatedSection className="order-2 lg:order-1">
                 <div className="relative">
-                  <motion.img
-                    src={showerHeadImage}
-                    alt="Verité Purifying Shower Head"
-                    className="w-full max-w-md mx-auto rounded-3xl shadow-2xl"
-                    whileHover={{ scale: 1.02 }}
-                  />
+                  {/* Glow effect behind image */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-accent/20 via-transparent to-brand-gold/20 rounded-3xl blur-3xl scale-110 opacity-50" />
                   
-                  {/* Floating feature badges */}
                   <motion.div
-                    className="absolute -left-4 md:left-0 top-1/4 bg-card/95 backdrop-blur-md rounded-xl px-4 py-3 shadow-lg border border-border"
-                    animate={{ y: [0, -8, 0] }}
-                    transition={{ duration: 3, repeat: Infinity }}
+                    className="relative"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ type: "spring", stiffness: 300 }}
                   >
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
-                        <Check className="w-4 h-4 text-accent" />
+                    <img
+                      src={showerHeadImage}
+                      alt="Verité Purifying Shower Head"
+                      className="w-full max-w-md mx-auto rounded-3xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.25)] border border-white/10"
+                    />
+                  </motion.div>
+                  
+                  {/* Floating feature badges - Enhanced glass effect */}
+                  <motion.div
+                    className="absolute -left-4 md:left-0 top-1/4 bg-card/90 backdrop-blur-xl rounded-2xl px-5 py-4 shadow-[0_8px_32px_-8px_rgba(0,0,0,0.15)] border border-white/20"
+                    animate={{ y: [0, -8, 0] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent/30 to-accent/10 flex items-center justify-center">
+                        <Check className="w-5 h-5 text-accent" />
                       </div>
                       <span className="text-sm font-semibold text-foreground">15-Stage Filtration</span>
                     </div>
                   </motion.div>
                   
                   <motion.div
-                    className="absolute -right-4 md:right-0 bottom-1/3 bg-card/95 backdrop-blur-md rounded-xl px-4 py-3 shadow-lg border border-border"
+                    className="absolute -right-4 md:right-0 bottom-1/3 bg-card/90 backdrop-blur-xl rounded-2xl px-5 py-4 shadow-[0_8px_32px_-8px_rgba(0,0,0,0.15)] border border-white/20"
                     animate={{ y: [0, 8, 0] }}
-                    transition={{ duration: 3.5, repeat: Infinity }}
+                    transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
                   >
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-brand-gold/20 flex items-center justify-center">
-                        <Sparkles className="w-4 h-4 text-brand-gold" />
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-gold/30 to-brand-gold/10 flex items-center justify-center">
+                        <Sparkles className="w-5 h-5 text-brand-gold" />
                       </div>
                       <span className="text-sm font-semibold text-foreground">Vitamin C Infused</span>
                     </div>
