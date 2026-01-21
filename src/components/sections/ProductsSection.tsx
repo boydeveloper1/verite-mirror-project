@@ -103,7 +103,7 @@ export const ProductsSection = () => {
                   {/* Image */}
                   <div className="aspect-square bg-secondary overflow-hidden relative">
                     {/* Best Seller Badge */}
-                    {node.handle?.includes("mist") && (
+                    {(node.handle?.includes("shower-filter") || node.handle?.includes("shower-head")) && (
                       <div className="absolute top-3 left-3 z-10 bg-accent text-accent-foreground text-xs font-bold px-2.5 py-1 rounded-full shadow-md">
                         Best Seller
                       </div>
@@ -142,7 +142,7 @@ export const ProductsSection = () => {
                     {(() => {
                       const isShowerHead = node.handle?.includes("shower-filter") || node.handle?.includes("shower-head");
                       const rating = isShowerHead ? "5.0" : "4.9";
-                      const reviewCount = isShowerHead ? 54 : 127;
+                      const reviewCount = isShowerHead ? "14,520" : "127";
                       return (
                         <div className="flex items-center gap-2 mb-3">
                           <div className="flex">

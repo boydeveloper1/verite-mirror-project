@@ -42,7 +42,7 @@ const comparisonData = {
     ],
     rating: 4.9,
     reviews: 127,
-    badge: "Best Seller",
+    badge: "Popular Choice",
   },
   showerHead: {
     name: "Scalp Purifying Shower Head",
@@ -74,8 +74,8 @@ const comparisonData = {
       { text: "Filters chlorine/metals", included: true },
     ],
     rating: 5.0,
-    reviews: 54,
-    badge: "Premium Choice",
+    reviews: 14520,
+    badge: "Best Seller",
   },
 };
 
@@ -129,8 +129,8 @@ export default function ProductComparisonPage() {
               className="bg-card rounded-2xl border border-border overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
             >
               {/* Badge */}
-              <div className="bg-accent text-accent-foreground text-center py-2 text-sm font-semibold">
-                <Star className="inline-block w-4 h-4 mr-1 -mt-0.5" />
+              <div className="bg-primary text-primary-foreground text-center py-2 text-sm font-semibold">
+                <Droplets className="inline-block w-4 h-4 mr-1 -mt-0.5" />
                 {comparisonData.mist.badge}
               </div>
               
@@ -155,7 +155,7 @@ export default function ProductComparisonPage() {
                     ))}
                   </div>
                   <span className="text-sm text-muted-foreground">
-                    {comparisonData.mist.rating} ({comparisonData.mist.reviews} reviews)
+                    {comparisonData.mist.rating} ({comparisonData.mist.reviews.toLocaleString()} reviews)
                   </span>
                 </div>
                 <p className="text-3xl font-bold text-accent">{comparisonData.mist.price}</p>
@@ -219,8 +219,8 @@ export default function ProductComparisonPage() {
               className="bg-card rounded-2xl border border-border overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
             >
               {/* Badge */}
-              <div className="bg-primary text-primary-foreground text-center py-2 text-sm font-semibold">
-                <Shield className="inline-block w-4 h-4 mr-1 -mt-0.5" />
+              <div className="bg-accent text-accent-foreground text-center py-2 text-sm font-semibold">
+                <Star className="inline-block w-4 h-4 mr-1 -mt-0.5" />
                 {comparisonData.showerHead.badge}
               </div>
               
@@ -245,7 +245,7 @@ export default function ProductComparisonPage() {
                     ))}
                   </div>
                   <span className="text-sm text-muted-foreground">
-                    {comparisonData.showerHead.rating} ({comparisonData.showerHead.reviews} reviews)
+                    {comparisonData.showerHead.rating} ({comparisonData.showerHead.reviews.toLocaleString()} reviews)
                   </span>
                 </div>
                 <p className="text-3xl font-bold text-primary">{comparisonData.showerHead.price}</p>
