@@ -29,7 +29,7 @@ import showerHeadBlack from "@/assets/shower-head-black.jpg";
 
 // Real price from Shopify
 const PRODUCT_PRICE = "$118.00";
-const PRODUCT_HANDLE = "verite-scalp-purifying-shower-head";
+const PRODUCT_HANDLE = "verite-scalp-purifying-shower-filter-1";
 
 const AnimatedSection = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => {
   const ref = useRef(null);
