@@ -26,7 +26,6 @@ export const Header = () => {
   const navLinks = [
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },
-    { label: "Compare", href: "/compare" },
     { label: "Blog", href: "/blog" },
     { label: "Contact", href: "/contact" },
   ];

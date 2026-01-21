@@ -17,7 +17,6 @@ const policyLinks = [
 
 const siteLinks = [
   { label: "Products", to: "/store" },
-  { label: "Compare Products", to: "/compare" },
   { label: "Info", to: "/shower-head" },
   { label: "About Us", to: "/about" },
   { label: "Blog", to: "/blog" },
