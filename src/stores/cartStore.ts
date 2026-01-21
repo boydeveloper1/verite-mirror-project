@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { CartItem, createStorefrontCheckout } from '@/lib/shopify';
+import { trackAddToCart, trackInitiateCheckout } from '@/lib/shopify-analytics';
 import { toast } from 'sonner';
 
 // Bundle pricing tiers for different product types
@@ -122,6 +123,21 @@ export const useCartStore = create<CartStore>()(
             currency: item.price.currencyCode,
           });
         }
+
+        // Track Shopify Analytics AddToCart event
+        trackAddToCart(
+          {
+            id: item.product.node.id,
+            title: item.product.node.title,
+            handle: item.product.node.handle,
+          },
+          {
+            id: item.variantId,
+            title: item.variantTitle || 'Default Title',
+            price: item.price,
+          },
+          item.quantity
+        );
       },
 
       updateQuantity: (variantId, quantity) => {
@@ -186,6 +202,18 @@ export const useCartStore = create<CartStore>()(
             currency: items[0]?.price.currencyCode || 'USD',
           });
         }
+
+        // Track Shopify Analytics Checkout event
+        trackInitiateCheckout(
+          items.map(item => ({
+            product: item.product,
+            variantId: item.variantId,
+            variantTitle: item.variantTitle || 'Default Title',
+            price: item.price,
+            quantity: item.quantity,
+          })),
+          getTotalPrice()
+        );
 
         setLoading(true);
         try {
