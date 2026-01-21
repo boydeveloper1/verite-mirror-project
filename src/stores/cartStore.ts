@@ -110,8 +110,11 @@ export const useCartStore = create<CartStore>()(
             productType,
             basePrice,
           };
-          set({ items: [...items, extendedItem] });
+          set({ items: [...items, extendedItem], isOpen: true });
         }
+        
+        // Auto-open cart drawer when item is added
+        set({ isOpen: true });
 
         // Track Meta Pixel AddToCart event
         if (typeof window !== 'undefined' && (window as any).fbq) {

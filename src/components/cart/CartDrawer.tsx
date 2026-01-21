@@ -29,13 +29,14 @@ import { toast } from "sonner";
 const CART_TIMEOUT_SECONDS = 7 * 60; // 7 minutes
 
 export const CartDrawer = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(CART_TIMEOUT_SECONDS);
   const [cartStartTime, setCartStartTime] = useState<number | null>(null);
 
   const {
     items,
     isLoading,
+    isOpen,
+    setOpen,
     checkoutUrl,
     updateQuantity,
     removeItem,
@@ -71,7 +72,7 @@ export const CartDrawer = () => {
       if (remaining === 0) {
         clearCart();
         setCartStartTime(null);
-        setIsOpen(false);
+        setOpen(false);
         toast.error("Cart expired", {
           description:
             "Your reserved items have been released due to inactivity. Add items again to continue shopping.",
@@ -94,11 +95,11 @@ export const CartDrawer = () => {
     const windowRef = window.open("about:blank", "_blank");
     await createCheckout(windowRef);
     setCartStartTime(null); // Reset timer on checkout
-    setIsOpen(false);
+    setOpen(false);
   };
 
   return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+    <Sheet open={isOpen} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button variant="ghost" size="icon" className="relative">
           <ShoppingCart className="h-5 w-5" />
@@ -118,7 +119,7 @@ export const CartDrawer = () => {
           </SheetDescription>
         </SheetHeader>
 
-        <div className="flex flex-col flex-1 pt-6 min-h-0">
+        <div className="flex flex-col flex-1 min-h-0">
           {items.length === 0 ? (
             <div className="flex-1 flex items-center justify-center">
               <div className="text-center">
@@ -129,8 +130,63 @@ export const CartDrawer = () => {
             </div>
           ) : (
             <>
+              {/* Urgency Timer - Prominent Green Banner at Top */}
+              <AnimatePresence>
+                {timeRemaining > 0 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className={`flex-shrink-0 -mx-6 px-6 py-3 ${
+                      timeRemaining <= 60
+                        ? "bg-red-500"
+                        : timeRemaining <= 180
+                          ? "bg-amber-500"
+                          : "bg-emerald-500"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-white/20">
+                          <Clock className="h-5 w-5 text-white" />
+                        </div>
+                        <div>
+                          <p className="text-white font-semibold text-sm">
+                            {timeRemaining <= 60
+                              ? "⚡ Hurry! Cart expires soon"
+                              : timeRemaining <= 180
+                                ? "🔥 Items in high demand"
+                                : "✓ Items reserved for you"}
+                          </p>
+                          <p className="text-white/80 text-xs">
+                            Complete checkout before time runs out
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-end">
+                        <span className="font-mono text-2xl font-bold text-white">
+                          {formatTime(timeRemaining)}
+                        </span>
+                        {timeRemaining <= 120 && (
+                          <AlertTriangle className="h-4 w-4 text-white animate-pulse" />
+                        )}
+                      </div>
+                    </div>
+                    {/* Progress bar */}
+                    <div className="mt-2 h-1 bg-white/30 rounded-full overflow-hidden">
+                      <motion.div
+                        className="h-full bg-white"
+                        initial={{ width: "100%" }}
+                        animate={{ width: `${(timeRemaining / CART_TIMEOUT_SECONDS) * 100}%` }}
+                        transition={{ duration: 0.5 }}
+                      />
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
               {/* Scrollable items area */}
-              <div className="flex-1 overflow-y-auto pr-2 min-h-0">
+              <div className="flex-1 overflow-y-auto pr-2 min-h-0 pt-4">
                 <div className="space-y-4">
                   {items.map((item) => (
                     <div key={item.variantId} className="flex gap-4 p-3 bg-secondary/50 rounded-lg">
@@ -197,104 +253,17 @@ export const CartDrawer = () => {
               {/* Fixed checkout section */}
               <div className="flex-shrink-0 space-y-3 pt-4 border-t mt-4">
                 {/* Quantity Savings Notice */}
-                {items.length > 0 && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="flex items-start gap-2 p-2 bg-accent/10 border border-accent/20 rounded-md"
-                  >
-                    <Sparkles className="h-3 w-3 text-accent flex-shrink-0 mt-0.5" />
-                    <p className="text-[10px] text-foreground/70 leading-tight">
-                      <span className="font-medium text-accent">Bundle savings!</span> Additional discounts may apply at
-                      checkout based on your order quantity and bundle selected.
-                    </p>
-                  </motion.div>
-                )}
-
-                {/* Urgency Timer */}
-                <AnimatePresence>
-                  {items.length > 0 && timeRemaining > 0 && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      className={`relative overflow-hidden rounded-md p-2 ${
-                        timeRemaining <= 60
-                          ? "bg-gradient-to-r from-red-500/10 to-orange-500/10 border border-red-500/30"
-                          : timeRemaining <= 180
-                            ? "bg-gradient-to-r from-amber-500/10 to-yellow-500/10 border border-amber-500/30"
-                            : "bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/20"
-                      }`}
-                    >
-                      {/* Animated background pulse for urgency */}
-                      {timeRemaining <= 120 && (
-                        <motion.div
-                          className="absolute inset-0 bg-red-500/5"
-                          animate={{ opacity: [0, 0.3, 0] }}
-                          transition={{ duration: 1.5, repeat: Infinity }}
-                        />
-                      )}
-
-                      <div className="relative flex items-center gap-2">
-                        <div
-                          className={`flex items-center justify-center w-7 h-7 rounded-full ${
-                            timeRemaining <= 60
-                              ? "bg-red-500/20"
-                              : timeRemaining <= 180
-                                ? "bg-amber-500/20"
-                                : "bg-primary/10"
-                          }`}
-                        >
-                          <Clock
-                            className={`h-3.5 w-3.5 ${
-                              timeRemaining <= 60
-                                ? "text-red-500"
-                                : timeRemaining <= 180
-                                  ? "text-amber-500"
-                                  : "text-primary"
-                            }`}
-                          />
-                        </div>
-
-                        <div className="flex-1">
-                          <div className="flex items-center gap-1.5">
-                            <span
-                              className={`font-mono text-sm font-bold ${
-                                timeRemaining <= 60
-                                  ? "text-red-500"
-                                  : timeRemaining <= 180
-                                    ? "text-amber-600"
-                                    : "text-foreground"
-                              }`}
-                            >
-                              {formatTime(timeRemaining)}
-                            </span>
-                            {timeRemaining <= 120 && <AlertTriangle className="h-3 w-3 text-red-500 animate-pulse" />}
-                          </div>
-                          <p className="text-[10px] text-muted-foreground leading-tight">
-                            {timeRemaining <= 60
-                              ? "Hurry! Cart expires soon"
-                              : timeRemaining <= 180
-                                ? "Items in high demand"
-                                : "Items reserved for limited time"}
-                          </p>
-                        </div>
-                      </div>
-
-                      {/* Progress bar */}
-                      <div className="mt-1.5 h-0.5 bg-muted/30 rounded-full overflow-hidden">
-                        <motion.div
-                          className={`h-full ${
-                            timeRemaining <= 60 ? "bg-red-500" : timeRemaining <= 180 ? "bg-amber-500" : "bg-primary"
-                          }`}
-                          initial={{ width: "100%" }}
-                          animate={{ width: `${(timeRemaining / CART_TIMEOUT_SECONDS) * 100}%` }}
-                          transition={{ duration: 0.5 }}
-                        />
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-start gap-2 p-2 bg-accent/10 border border-accent/20 rounded-md"
+                >
+                  <Sparkles className="h-3 w-3 text-accent flex-shrink-0 mt-0.5" />
+                  <p className="text-[10px] text-foreground/70 leading-tight">
+                    <span className="font-medium text-accent">Bundle savings!</span> Additional discounts may apply at
+                    checkout based on your order quantity and bundle selected.
+                  </p>
+                </motion.div>
 
                 <div className="flex justify-between items-center">
                   <span className="text-base font-medium">Subtotal</span>
