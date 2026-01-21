@@ -27,30 +27,11 @@ export const Header = () => {
     { label: "Contact", href: "/contact" },
   ];
 
-  // Marquee messages for the top bar
-  const marqueeMessages = [
-    "🌍 FREE WORLDWIDE SHIPPING ON ALL ORDERS",
-    "⚡ LIMITED TIME OFFER — 30% OFF TODAY ONLY",
-    "✨ DERMATOLOGIST RECOMMENDED SCALP CARE!",
-  ];
-
   return (
     <>
-
-      {/* Animated Marquee Top Bar */}
-      <div className="bg-primary text-primary-foreground py-2.5 sticky top-0 z-[60] overflow-hidden">
-        <div className="animate-marquee whitespace-nowrap flex">
-          {[...marqueeMessages, ...marqueeMessages].map((msg, idx) => (
-            <span key={idx} className="mx-12 text-sm font-semibold tracking-wide inline-block">
-              {msg}
-            </span>
-          ))}
-        </div>
-      </div>
-
       {/* Main Header */}
       <header
-        className={`sticky top-[40px] z-50 transition-all duration-300 ${
+        className={`sticky top-0 z-50 transition-all duration-300 ${
           isScrolled ? "bg-background/95 backdrop-blur-md shadow-soft py-2" : "bg-background py-3"
         }`}
       >
