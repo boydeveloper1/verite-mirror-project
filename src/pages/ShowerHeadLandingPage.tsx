@@ -58,7 +58,7 @@ const CTAButton = ({ className = "", variant = "primary" }: { className?: string
     } ${className}`}
   >
     <Link to={`/product/${PRODUCT_HANDLE}`}>
-      Get Your Filter Now — {PRODUCT_PRICE}
+      Get Your Shower Head — {PRODUCT_PRICE}
       <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
     </Link>
   </Button>
@@ -162,7 +162,7 @@ const ShowerHeadLandingPage = () => {
                         <Star key={i} className="w-4 h-4 fill-brand-gold text-brand-gold" />
                       ))}
                     </div>
-                    <span className="text-primary-foreground/70 text-sm">— Jasmine T., after 3 weeks of using the filter</span>
+                    <span className="text-primary-foreground/70 text-sm">— Jasmine T., after 3 weeks of using the shower head</span>
                   </div>
                 </div>
 
@@ -318,11 +318,11 @@ const ShowerHeadLandingPage = () => {
             <AnimatedSection className="text-center mb-16">
               <span className="text-sm font-semibold text-accent uppercase tracking-wider mb-4 block">Real Results</span>
               <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-                The $105 Filter That Outperformed
+                The $105 Shower Head That Outperformed
                 <span className="text-accent"> $500 in Serums</span>
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Don't take our word for it. Here's what real customers experienced after making the switch.
+                Don't take our word for it. Here's what real customers experienced after upgrading their shower head.
               </p>
             </AnimatedSection>
 
@@ -350,14 +350,14 @@ const ShowerHeadLandingPage = () => {
             <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-12">
               {[
                 {
-                  quote: "I've spent over $500 on hair products that did nothing. This $105 shower filter gave me visible results in 3 weeks. My edges are actually growing back.",
+                  quote: "I've spent over $500 on hair products that did nothing. This $105 shower head with built-in filtration gave me visible results in 3 weeks. My edges are actually growing back.",
                   name: "Aisha M.",
                   location: "Atlanta, GA",
                   result: "Edge regrowth in 3 weeks",
                   timeline: "Using for 2 months",
                 },
                 {
-                  quote: "My dermatologist couldn't figure out why my scalp was always inflamed. Turns out it was my water. The inflammation cleared up within days of installing this.",
+                  quote: "My dermatologist couldn't figure out why my scalp was always inflamed. Turns out it was my water. The inflammation cleared up within days of installing this shower head.",
                   name: "Jessica T.",
                   location: "Phoenix, AZ",
                   result: "Inflammation gone",
@@ -482,30 +482,30 @@ const ShowerHeadLandingPage = () => {
               {/* Benefits */}
               <AnimatedSection className="order-1 lg:order-2">
                 <h3 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-8">
-                  What the Verité Filter Does Differently
+                  What the Verité Shower Head Does Differently
                 </h3>
                 
                 <div className="space-y-5">
                   {[
                     {
                       icon: ShieldCheck,
-                      title: "Removes 99% of Harmful Contaminants",
-                      description: "15-stage system filters chlorine, heavy metals, calcium, and 100+ chemicals before they touch your scalp.",
+                      title: "Built-In 15-Stage Filtration",
+                      description: "Our shower head has advanced filtration built right in—removes 99% of chlorine, heavy metals, calcium, and 100+ chemicals before they touch your scalp.",
                     },
                     {
                       icon: Sparkles,
-                      title: "Infuses Water with Vitamin C",
-                      description: "Neutralizes remaining chlorine on contact while delivering antioxidants that promote scalp healing.",
+                      title: "Vitamin C Infusion Technology",
+                      description: "Neutralizes remaining chlorine on contact while delivering antioxidants that promote scalp healing with every shower.",
                     },
                     {
                       icon: Leaf,
-                      title: "Adds Beneficial Minerals",
-                      description: "Tourmaline and germanium stones soften water and add minerals that strengthen hair structure.",
+                      title: "Mineral-Enriched Water Flow",
+                      description: "Tourmaline and germanium stones soften water and add beneficial minerals that strengthen hair structure.",
                     },
                     {
                       icon: Timer,
-                      title: "2-Minute Installation",
-                      description: "Universal fit for any standard shower. No tools, no plumber, no hassle. Just screw it on and go.",
+                      title: "Replaces Your Current Shower Head",
+                      description: "2-minute installation—just unscrew your old one, screw on ours. Universal fit, no tools, no plumber needed.",
                     },
                   ].map((benefit, index) => (
                     <motion.div
@@ -600,8 +600,8 @@ const ShowerHeadLandingPage = () => {
               {[
                 { q: "Will this really help with hair loss?", a: "If your hair loss is related to scalp inflammation or hard water damage (which affects 85% of US homes), yes. By removing the contaminants that cause inflammation and buildup, your scalp can finally heal and support healthy hair growth." },
                 { q: "How long before I see results?", a: "Most customers notice softer water immediately and reduced scalp irritation within days. Visible hair improvements typically begin around week 3-4, with significant results by week 8." },
-                { q: "How long does the filter last?", a: "Each filter lasts 3-6 months depending on your water quality. We recommend replacing every 4 months for optimal results. Replacement filters are available on our store." },
-                { q: "Is it easy to install?", a: "Yes! No tools or plumber needed. Simply unscrew your existing shower head and screw on the Verité filter. Takes less than 2 minutes. Works with 99% of standard showers." },
+                { q: "How long does the filter last?", a: "The built-in filter cartridge lasts 3-6 months depending on your water quality. We recommend replacing every 4 months for optimal results. Replacement cartridges are available on our store." },
+                { q: "Is it easy to install?", a: "Yes! This shower head replaces your existing one completely. Just unscrew your old shower head and screw on the Verité. Takes less than 2 minutes, no tools needed. Works with 99% of standard showers." },
                 { q: "What if it doesn't work for me?", a: "We offer a 30-day money-back guarantee. If you don't see improvements in your hair or scalp within 30 days, return it for a full refund—no questions asked." },
               ].map((faq, index) => (
                 <AnimatedSection key={index} delay={index * 0.05}>
@@ -659,7 +659,7 @@ const ShowerHeadLandingPage = () => {
                     className="h-16 px-12 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-lg rounded-full group"
                   >
                     <Link to={`/product/${PRODUCT_HANDLE}`}>
-                      Get Your Filter Now
+                      Get Your Shower Head Now
                       <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </Link>
                   </Button>
