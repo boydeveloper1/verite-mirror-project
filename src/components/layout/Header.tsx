@@ -4,7 +4,6 @@ import { Menu, X, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { ProductSearch } from "@/components/search/ProductSearch";
-import { SaleBanner } from "@/components/shared/SaleBanner";
 import logoImg from "@/assets/logo.png";
 
 export const Header = () => {
@@ -37,8 +36,6 @@ export const Header = () => {
 
   return (
     <>
-      {/* Flash Sale Banner */}
-      <SaleBanner />
 
       {/* Animated Marquee Top Bar */}
       <div className="bg-primary text-primary-foreground py-2.5 sticky top-0 z-[60] overflow-hidden">

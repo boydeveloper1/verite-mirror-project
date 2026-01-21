@@ -11,7 +11,6 @@ import { PaymentMethods } from "./PaymentMethods";
 import { ReplicasWarning } from "./ReplicasWarning";
 import { LowStockIndicator } from "./LowStockIndicator";
 import { UnitsSoldBadge } from "./UnitsSoldBadge";
-import { RiskFreeGuarantee } from "./RiskFreeGuarantee";
 import { cn } from "@/lib/utils";
 import showerHeadSilver from "@/assets/shower-head-silver.jpg";
 import showerHeadBlack from "@/assets/shower-head-black.jpg";
@@ -387,7 +386,6 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
             <ShoppingCart className="w-4 h-4 md:w-5 md:h-5" />
             Add to Cart
           </Button>
-          {!isShowerHead && <RiskFreeGuarantee variant="badge" />}
         </div>
 
         {/* Low Stock Indicator - Below Add to Cart for urgency (hidden for shower head) */}
@@ -438,13 +436,6 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
           </div>
         </div>
       </div>
-
-      {/* Expandable Guarantee Section (hidden for shower head) */}
-      {!isShowerHead && (
-        <div className="mt-4 md:mt-6">
-          <RiskFreeGuarantee variant="expanded" />
-        </div>
-      )}
     </div>
   );
 };
