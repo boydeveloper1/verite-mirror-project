@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { ScrollToTop } from "@/components/shared/ScrollToTop";
+import { ShopifyAnalyticsProvider } from "@/components/providers/ShopifyAnalyticsProvider";
 import Index from "./pages/Index";
 import ProductPage from "./pages/ProductPage";
 import StorePage from "./pages/StorePage";
@@ -30,6 +31,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ShopifyAnalyticsProvider />
           <ScrollToTop />
           <Routes>
             <Route path="/" element={<Index />} />

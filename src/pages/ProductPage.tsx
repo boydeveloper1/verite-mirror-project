@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchProductByHandle } from "@/lib/shopify";
+import { trackProductView } from "@/lib/shopify-analytics";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Loader2 } from "lucide-react";
@@ -49,7 +50,25 @@ const ProductPage = () => {
       try {
         const data = await fetchProductByHandle(handle);
         setProduct(data);
-        if (data?.variants?.edges?.[0]) setSelectedVariant(data.variants.edges[0].node);
+        if (data?.variants?.edges?.[0]) {
+          const variant = data.variants.edges[0].node;
+          setSelectedVariant(variant);
+          
+          // Track Shopify product view
+          trackProductView(
+            {
+              id: data.id,
+              title: data.title,
+              handle: data.handle,
+            },
+            {
+              id: variant.id,
+              title: variant.title,
+              price: variant.price,
+            },
+            window.location.href
+          );
+        }
       } catch (error) {
         console.error("Error loading product:", error);
       } finally {
