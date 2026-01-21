@@ -32,7 +32,7 @@ export const ProductTabs = ({ productHandle }: ProductTabsProps) => {
   const [activeTab, setActiveTab] = useState("overview");
   
   const isShowerHead = productHandle?.includes("shower-filter") || productHandle?.includes("shower-head");
-  const reviewCount = isShowerHead ? 54 : 127;
+  const reviewCount = isShowerHead ? "14,520" : "127";
   const rating = isShowerHead ? "5.0" : "4.9";
 
   return (
@@ -652,72 +652,91 @@ const ShowerFilterTimelineTab = () => {
 
 const ShowerFilterReviewsTab = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedRating, setSelectedRating] = useState<number | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [sortBy, setSortBy] = useState("recent");
   const reviewsPerPage = 10;
 
   const allReviews = [
-    { name: "Crystal M.", date: "1 week ago", title: "My scalp finally stopped itching!", content: "I never knew my shower water was the problem. After just one week with this filter, my scalp stopped itching completely. The water feels so soft and my hair is already shinier." },
-    { name: "Denise W.", date: "2 weeks ago", title: "Game changer for my edges", content: "I've been losing my edges for years and nothing worked. Two weeks with this shower filter and I can already feel less hair coming out when I wash. The pressure is amazing too!" },
-    { name: "Aaliyah P.", date: "3 weeks ago", title: "Worth every single penny", content: "I was skeptical about a shower head helping my hair, but WOW. My scalp used to burn after every shower. Now it feels calm and soothed. Installation took 3 minutes!" },
-    { name: "Brianna H.", date: "1 month ago", title: "My hair products finally work!", content: "I couldn't understand why my expensive products weren't working. Turns out there was a mineral barrier on my scalp from hard water. This filter changed everything!" },
-    { name: "Jasmine T.", date: "2 weeks ago", title: "Incredible water pressure", content: "Not only is my scalp healthier, but the water pressure is AMAZING. It's like a spa shower every day. My whole family loves it." },
-    { name: "Keisha L.", date: "1 month ago", title: "Reduced shedding dramatically", content: "I used to see so much hair in my drain after every shower. After 3 weeks with this filter, the shedding has reduced by at least 60%. I'm in shock." },
-    { name: "Monica R.", date: "3 weeks ago", title: "No more scalp inflammation", content: "My dermatologist couldn't figure out why my scalp was always red and irritated. Switched to this filter and the inflammation is GONE. Clean water makes such a difference." },
-    { name: "Tiffany J.", date: "2 weeks ago", title: "My braids last longer now", content: "Since using this filter, my braids look fresher longer. Less buildup, less itching, and my scalp stays healthy even under protective styles." },
-    { name: "Sierra K.", date: "1 week ago", title: "Installation was so easy", content: "I'm not handy at all but I installed this in under 5 minutes. No tools needed! And the results have been incredible for my hair." },
-    { name: "Destiny A.", date: "1 month ago", title: "Baby hairs are growing back", content: "I noticed new baby hairs along my hairline after just 4 weeks of using this filter. My edges are slowly coming back to life!" },
-    { name: "Ebony C.", date: "2 weeks ago", title: "Softest water ever", content: "The water feels SO soft compared to before. My skin and hair are both benefiting. No more dryness or irritation." },
-    { name: "Faith B.", date: "3 weeks ago", title: "My whole family uses it", content: "I bought this for my hair but everyone in my house has noticed improvements. My husband's dry scalp is better too!" },
-    { name: "Gabrielle S.", date: "1 month ago", title: "Finally understand the hype", content: "I didn't believe shower water could affect my hair this much. I was wrong. This filter has transformed my hair care routine completely." },
-    { name: "Hope D.", date: "2 weeks ago", title: "No more chlorine smell", content: "I could always smell chlorine in my bathroom before. Now the water smells clean and fresh. And my hair is so much healthier!" },
-    { name: "Imani F.", date: "1 week ago", title: "Spa-like experience", content: "This shower head makes every shower feel like a luxury spa treatment. Wide rainfall coverage, great pressure, and filtered water. Perfect!" },
-    { name: "Jade N.", date: "3 weeks ago", title: "My scalp can finally breathe", content: "It's like my scalp can finally breathe! No more clogged follicles from mineral buildup. I can feel the difference when I massage my scalp." },
-    { name: "Kiara G.", date: "1 month ago", title: "Hair growth is accelerating", content: "I've been tracking my hair growth and it's definitely faster since installing this filter. My follicles are finally in a healthy environment." },
-    { name: "Latoya V.", date: "2 weeks ago", title: "Best purchase I've made", content: "Out of all the hair products I've bought, this shower filter has made the biggest difference. Should have bought it sooner!" },
-    { name: "Maya E.", date: "3 weeks ago", title: "Inflammation is gone", content: "I had chronic scalp inflammation that no product could fix. Turns out it was my water! This filter solved the problem at the source." },
-    { name: "Nia Q.", date: "1 week ago", title: "My wig sits better now", content: "My scalp used to be so irritated under my wigs. Now it stays calm and comfortable all day. This filter was the missing piece!" },
-    { name: "Olivia Z.", date: "1 month ago", title: "Visible hair transformation", content: "My hair texture has completely changed. It's softer, shinier, and stronger. I never knew my water was causing so much damage." },
-    { name: "Porsha U.", date: "2 weeks ago", title: "No more flaky scalp", content: "My scalp used to flake so badly. After two weeks with this filter, the flakes are gone. Clean water = healthy scalp!" },
-    { name: "Queen Y.", date: "3 weeks ago", title: "Worth the investment", content: "I hesitated because of the price but this filter is worth every dollar. The improvement in my hair and scalp health is priceless." },
-    { name: "Raven O.", date: "1 month ago", title: "My stylist noticed the difference", content: "My hairstylist asked what I changed because my scalp looks so much healthier. I told her about this filter immediately!" },
-    { name: "Simone I.", date: "2 weeks ago", title: "No tools needed at all", content: "I installed this completely by hand. So easy! And the difference in water quality is immediately noticeable." },
-    { name: "Tamara X.", date: "1 week ago", title: "Hair shedding stopped", content: "I used to lose handfuls of hair in the shower. Now I barely see any hair in my drain. This filter stopped my shedding." },
-    { name: "Unique W.", date: "3 weeks ago", title: "Scalp feels renewed", content: "My scalp feels like it's been renewed. No more tightness, no more irritation. Just healthy, happy scalp every day." },
-    { name: "Vivian A.", date: "1 month ago", title: "Changed my hair game", content: "I thought I had tried everything for my hair. This filter changed the game completely. Clean water is the foundation." },
-    { name: "Whitney H.", date: "2 weeks ago", title: "Edges filling in!", content: "My edges are actually filling in! After years of loss, I'm finally seeing regrowth. This filter removed the barrier that was stopping growth." },
-    { name: "Xena M.", date: "3 weeks ago", title: "Pressure is incredible", content: "I was worried about losing water pressure with a filter but it's actually STRONGER! Plus my hair is so much healthier." },
-    { name: "Yolanda C.", date: "1 month ago", title: "Whole bathroom smells better", content: "No more chlorine smell in my bathroom. The water smells and feels clean. My hair and skin are thriving." },
-    { name: "Zaria T.", date: "2 weeks ago", title: "My hair finally shines", content: "My hair was always dull no matter what I did. Now it actually shines! The mineral coating is finally gone." },
-    { name: "Amber F.", date: "1 week ago", title: "Better than expected", content: "I had low expectations but this filter exceeded them all. Installation was easy, water feels amazing, and my hair is transforming." },
-    { name: "Briana D.", date: "3 weeks ago", title: "Scalp finally healed", content: "I had sores on my scalp from inflammation. After using this filter, they've healed completely. Clean water made all the difference." },
-    { name: "Chanel R.", date: "1 month ago", title: "My growth serums work now!", content: "I was wasting money on growth serums that couldn't penetrate my scalp. Now they actually work because the mineral barrier is gone!" },
-    { name: "Diamond L.", date: "2 weeks ago", title: "Luxury shower experience", content: "The rainfall pattern is so luxurious. It feels like a high-end spa every time I shower. And my hair has never been healthier." },
-    { name: "Essence B.", date: "3 weeks ago", title: "Hard water problem solved", content: "I live in a hard water area and it was destroying my hair. This filter solved the problem completely. Total transformation!" },
-    { name: "Francesca J.", date: "1 month ago", title: "My kids love it too", content: "My daughters' hair is also benefiting from the filtered water. Less tangles, more shine, healthier scalps all around." },
-    { name: "Grace K.", date: "2 weeks ago", title: "Finally found the solution", content: "After years of scalp problems, I finally found the solution. It was my water all along! This filter fixed everything." },
-    { name: "Harmony P.", date: "1 week ago", title: "Hair breakage reduced", content: "My hair used to break so easily. Since using this filter, the breakage has significantly reduced. My hair is stronger now." },
-    { name: "Iris S.", date: "3 weeks ago", title: "Best shower head ever", content: "This is the best shower head I've ever owned. Great pressure, wide coverage, and it's actually helping my hair grow!" },
-    { name: "Julia V.", date: "1 month ago", title: "Scalp pH is balanced", content: "I could tell my scalp pH was off because of constant irritation. This filter balanced everything. My scalp is finally neutral." },
-    { name: "Kira N.", date: "2 weeks ago", title: "No more product buildup", content: "I used to have so much buildup on my scalp. The filtered water rinses clean every time. My products work better now." },
-    { name: "Lila G.", date: "3 weeks ago", title: "Chlorine was the culprit", content: "I never realized chlorine was causing my hair problems. This filter removes 99% of it and my hair shows the difference!" },
-    { name: "Mia E.", date: "1 month ago", title: "Transformed my routine", content: "This filter has transformed my entire hair care routine. Everything works better when you start with clean water." },
-    { name: "Nina Q.", date: "2 weeks ago", title: "Easy maintenance", content: "The filter is easy to maintain and the touch-to-clean nozzles prevent mineral buildup. Practical and effective!" },
-    { name: "Ophelia Z.", date: "1 week ago", title: "My edges are safe", content: "My edges were disappearing. This filter stopped the damage at the source. Now they're recovering!" },
-    { name: "Penelope Y.", date: "3 weeks ago", title: "Water quality changed", content: "You can literally feel the difference in water quality. It's softer, cleaner, and better for your hair in every way." },
-    { name: "Rachel X.", date: "1 month ago", title: "Dermatologist recommended", content: "My dermatologist actually recommended filtering my shower water. This product delivered exactly what I needed." },
-    { name: "Sandra W.", date: "2 weeks ago", title: "Investment in my hair", content: "I see this as an investment in my hair's future. The results speak for themselves. Healthier scalp, stronger hair." },
-    { name: "Teresa U.", date: "3 weeks ago", title: "Rainfall is relaxing", content: "The wide rainfall pattern is so relaxing. Plus my hair is healthier. It's a win-win every single shower." },
-    { name: "Ulani T.", date: "1 month ago", title: "Fixed my shedding problem", content: "I was shedding excessively for years. This filter fixed the problem in weeks. My drain is finally clear!" },
-    { name: "Vera S.", date: "2 weeks ago", title: "Beautiful chrome finish", content: "It looks beautiful in my bathroom AND it works amazingly. The chrome finish is high quality and matches my fixtures." },
-    { name: "Wanda R.", date: "1 week ago", title: "Best decision for my hair", content: "Installing this filter was the best decision I made for my hair this year. Wish I had done it sooner!" },
+    { name: "Crystal M.", date: "1 week ago", rating: 5, title: "My scalp finally stopped itching!", content: "I never knew my shower water was the problem. After just one week with this filter, my scalp stopped itching completely. The water feels so soft and my hair is already shinier.", category: "water-quality" },
+    { name: "Denise W.", date: "2 weeks ago", rating: 5, title: "Game changer for my edges", content: "I've been losing my edges for years and nothing worked. Two weeks with this shower filter and I can already feel less hair coming out when I wash. The pressure is amazing too!", category: "hair-results" },
+    { name: "Aaliyah P.", date: "3 weeks ago", rating: 5, title: "Worth every single penny", content: "I was skeptical about a shower head helping my hair, but WOW. My scalp used to burn after every shower. Now it feels calm and soothed. Installation took 3 minutes!", category: "value" },
+    { name: "Brianna H.", date: "1 month ago", rating: 5, title: "My hair products finally work!", content: "I couldn't understand why my expensive products weren't working. Turns out there was a mineral barrier on my scalp from hard water. This filter changed everything!", category: "hair-results" },
+    { name: "Jasmine T.", date: "2 weeks ago", rating: 5, title: "Incredible water pressure", content: "Not only is my scalp healthier, but the water pressure is AMAZING. It's like a spa shower every day. My whole family loves it.", category: "water-quality" },
+    { name: "Keisha L.", date: "1 month ago", rating: 5, title: "Reduced shedding dramatically", content: "I used to see so much hair in my drain after every shower. After 3 weeks with this filter, the shedding has reduced by at least 60%. I'm in shock.", category: "hair-results" },
+    { name: "Monica R.", date: "3 weeks ago", rating: 5, title: "No more scalp inflammation", content: "My dermatologist couldn't figure out why my scalp was always red and irritated. Switched to this filter and the inflammation is GONE. Clean water makes such a difference.", category: "scalp-health" },
+    { name: "Tiffany J.", date: "2 weeks ago", rating: 5, title: "My braids last longer now", content: "Since using this filter, my braids look fresher longer. Less buildup, less itching, and my scalp stays healthy even under protective styles.", category: "scalp-health" },
+    { name: "Sierra K.", date: "1 week ago", rating: 5, title: "Installation was so easy", content: "I'm not handy at all but I installed this in under 5 minutes. No tools needed! And the results have been incredible for my hair.", category: "installation" },
+    { name: "Destiny A.", date: "1 month ago", rating: 5, title: "Baby hairs are growing back", content: "I noticed new baby hairs along my hairline after just 4 weeks of using this filter. My edges are slowly coming back to life!", category: "hair-results" },
+    { name: "Ebony C.", date: "2 weeks ago", rating: 5, title: "Softest water ever", content: "The water feels SO soft compared to before. My skin and hair are both benefiting. No more dryness or irritation.", category: "water-quality" },
+    { name: "Faith B.", date: "3 weeks ago", rating: 5, title: "My whole family uses it", content: "I bought this for my hair but everyone in my house has noticed improvements. My husband's dry scalp is better too!", category: "value" },
+    { name: "Gabrielle S.", date: "1 month ago", rating: 5, title: "Finally understand the hype", content: "I didn't believe shower water could affect my hair this much. I was wrong. This filter has transformed my hair care routine completely.", category: "hair-results" },
+    { name: "Hope D.", date: "2 weeks ago", rating: 5, title: "No more chlorine smell", content: "I could always smell chlorine in my bathroom before. Now the water smells clean and fresh. And my hair is so much healthier!", category: "water-quality" },
+    { name: "Imani F.", date: "1 week ago", rating: 5, title: "Spa-like experience", content: "This shower head makes every shower feel like a luxury spa treatment. Wide rainfall coverage, great pressure, and filtered water. Perfect!", category: "value" },
+    { name: "Jade N.", date: "3 weeks ago", rating: 5, title: "My scalp can finally breathe", content: "It's like my scalp can finally breathe! No more clogged follicles from mineral buildup. I can feel the difference when I massage my scalp.", category: "scalp-health" },
+    { name: "Kiara G.", date: "1 month ago", rating: 5, title: "Hair growth is accelerating", content: "I've been tracking my hair growth and it's definitely faster since installing this filter. My follicles are finally in a healthy environment.", category: "hair-results" },
+    { name: "Latoya V.", date: "2 weeks ago", rating: 5, title: "Best purchase I've made", content: "Out of all the hair products I've bought, this shower filter has made the biggest difference. Should have bought it sooner!", category: "value" },
+    { name: "Maya E.", date: "3 weeks ago", rating: 5, title: "Inflammation is gone", content: "I had chronic scalp inflammation that no product could fix. Turns out it was my water! This filter solved the problem at the source.", category: "scalp-health" },
+    { name: "Nia Q.", date: "1 week ago", rating: 5, title: "My wig sits better now", content: "My scalp used to be so irritated under my wigs. Now it stays calm and comfortable all day. This filter was the missing piece!", category: "scalp-health" },
+    { name: "Olivia Z.", date: "1 month ago", rating: 5, title: "Visible hair transformation", content: "My hair texture has completely changed. It's softer, shinier, and stronger. I never knew my water was causing so much damage.", category: "hair-results" },
+    { name: "Porsha U.", date: "2 weeks ago", rating: 5, title: "No more flaky scalp", content: "My scalp used to flake so badly. After two weeks with this filter, the flakes are gone. Clean water = healthy scalp!", category: "scalp-health" },
+    { name: "Queen Y.", date: "3 weeks ago", rating: 5, title: "Worth the investment", content: "I hesitated because of the price but this filter is worth every dollar. The improvement in my hair and scalp health is priceless.", category: "value" },
+    { name: "Raven O.", date: "1 month ago", rating: 5, title: "My stylist noticed the difference", content: "My hairstylist asked what I changed because my scalp looks so much healthier. I told her about this filter immediately!", category: "hair-results" },
+    { name: "Simone I.", date: "2 weeks ago", rating: 5, title: "No tools needed at all", content: "I installed this completely by hand. So easy! And the difference in water quality is immediately noticeable.", category: "installation" },
+    { name: "Tamara X.", date: "1 week ago", rating: 5, title: "Hair shedding stopped", content: "I used to lose handfuls of hair in the shower. Now I barely see any hair in my drain. This filter stopped my shedding.", category: "hair-results" },
+    { name: "Unique W.", date: "3 weeks ago", rating: 5, title: "Scalp feels renewed", content: "My scalp feels like it's been renewed. No more tightness, no more irritation. Just healthy, happy scalp every day.", category: "scalp-health" },
+    { name: "Vivian A.", date: "1 month ago", rating: 5, title: "Changed my hair game", content: "I thought I had tried everything for my hair. This filter changed the game completely. Clean water is the foundation.", category: "value" },
+    { name: "Whitney H.", date: "2 weeks ago", rating: 5, title: "Edges filling in!", content: "My edges are actually filling in! After years of loss, I'm finally seeing regrowth. This filter removed the barrier that was stopping growth.", category: "hair-results" },
+    { name: "Xena M.", date: "3 weeks ago", rating: 5, title: "Pressure is incredible", content: "I was worried about losing water pressure with a filter but it's actually STRONGER! Plus my hair is so much healthier.", category: "water-quality" },
+    { name: "Yolanda C.", date: "1 month ago", rating: 5, title: "Whole bathroom smells better", content: "No more chlorine smell in my bathroom. The water smells and feels clean. My hair and skin are thriving.", category: "water-quality" },
+    { name: "Zaria T.", date: "2 weeks ago", rating: 5, title: "My hair finally shines", content: "My hair was always dull no matter what I did. Now it actually shines! The mineral coating is finally gone.", category: "hair-results" },
+    { name: "Amber F.", date: "1 week ago", rating: 5, title: "Better than expected", content: "I had low expectations but this filter exceeded them all. Installation was easy, water feels amazing, and my hair is transforming.", category: "value" },
+    { name: "Briana D.", date: "3 weeks ago", rating: 5, title: "Scalp finally healed", content: "I had sores on my scalp from inflammation. After using this filter, they've healed completely. Clean water made all the difference.", category: "scalp-health" },
+    { name: "Chanel R.", date: "1 month ago", rating: 5, title: "My growth serums work now!", content: "I was wasting money on growth serums that couldn't penetrate my scalp. Now they actually work because the mineral barrier is gone!", category: "hair-results" },
+    { name: "Diamond L.", date: "2 weeks ago", rating: 5, title: "Luxury shower experience", content: "The rainfall pattern is so luxurious. It feels like a high-end spa every time I shower. And my hair has never been healthier.", category: "value" },
+    { name: "Essence B.", date: "3 weeks ago", rating: 5, title: "Hard water problem solved", content: "I live in a hard water area and it was destroying my hair. This filter solved the problem completely. Total transformation!", category: "water-quality" },
+    { name: "Francesca J.", date: "1 month ago", rating: 5, title: "My kids love it too", content: "My daughters' hair is also benefiting from the filtered water. Less tangles, more shine, healthier scalps all around.", category: "value" },
+    { name: "Grace K.", date: "2 weeks ago", rating: 5, title: "Finally found the solution", content: "After years of scalp problems, I finally found the solution. It was my water all along! This filter fixed everything.", category: "scalp-health" },
+    { name: "Harmony P.", date: "1 week ago", rating: 5, title: "Hair breakage reduced", content: "My hair used to break so easily. Since using this filter, the breakage has significantly reduced. My hair is stronger now.", category: "hair-results" },
+    { name: "Iris S.", date: "3 weeks ago", rating: 5, title: "Best shower head ever", content: "This is the best shower head I've ever owned. Great pressure, wide coverage, and it's actually helping my hair grow!", category: "value" },
+    { name: "Julia V.", date: "1 month ago", rating: 5, title: "Scalp pH is balanced", content: "I could tell my scalp pH was off because of constant irritation. This filter balanced everything. My scalp is finally neutral.", category: "scalp-health" },
+    { name: "Kira N.", date: "2 weeks ago", rating: 5, title: "No more product buildup", content: "I used to have so much buildup on my scalp. The filtered water rinses clean every time. My products work better now.", category: "water-quality" },
+    { name: "Lila G.", date: "3 weeks ago", rating: 5, title: "Chlorine was the culprit", content: "I never realized chlorine was causing my hair problems. This filter removes 99% of it and my hair shows the difference!", category: "water-quality" },
+    { name: "Mia E.", date: "1 month ago", rating: 5, title: "Transformed my routine", content: "This filter has transformed my entire hair care routine. Everything works better when you start with clean water.", category: "value" },
+    { name: "Nina Q.", date: "2 weeks ago", rating: 5, title: "Easy maintenance", content: "The filter is easy to maintain and the touch-to-clean nozzles prevent mineral buildup. Practical and effective!", category: "installation" },
+    { name: "Ophelia Z.", date: "1 week ago", rating: 5, title: "My edges are safe", content: "My edges were disappearing. This filter stopped the damage at the source. Now they're recovering!", category: "hair-results" },
+    { name: "Penelope Y.", date: "3 weeks ago", rating: 5, title: "Water quality changed", content: "You can literally feel the difference in water quality. It's softer, cleaner, and better for your hair in every way.", category: "water-quality" },
+    { name: "Rachel X.", date: "1 month ago", rating: 5, title: "Dermatologist recommended", content: "My dermatologist actually recommended filtering my shower water. This product delivered exactly what I needed.", category: "scalp-health" },
+    { name: "Sandra W.", date: "2 weeks ago", rating: 5, title: "Investment in my hair", content: "I see this as an investment in my hair's future. The results speak for themselves. Healthier scalp, stronger hair.", category: "value" },
+    { name: "Teresa U.", date: "3 weeks ago", rating: 5, title: "Rainfall is relaxing", content: "The wide rainfall pattern is so relaxing. Plus my hair is healthier. It's a win-win every single shower.", category: "value" },
+    { name: "Ulani T.", date: "1 month ago", rating: 5, title: "Fixed my shedding problem", content: "I was shedding excessively for years. This filter fixed the problem in weeks. My drain is finally clear!", category: "hair-results" },
+    { name: "Vera S.", date: "2 weeks ago", rating: 5, title: "Beautiful chrome finish", content: "It looks beautiful in my bathroom AND it works amazingly. The chrome finish is high quality and matches my fixtures.", category: "installation" },
+    { name: "Wanda R.", date: "1 week ago", rating: 5, title: "Best decision for my hair", content: "Installing this filter was the best decision I made for my hair this year. Wish I had done it sooner!", category: "value" },
   ];
 
-  const totalPages = Math.ceil(allReviews.length / reviewsPerPage);
+  const categories = [
+    { value: 'all', label: 'All Categories' },
+    { value: 'water-quality', label: 'Water Quality' },
+    { value: 'hair-results', label: 'Hair Results' },
+    { value: 'installation', label: 'Installation' },
+    { value: 'scalp-health', label: 'Scalp Health' },
+    { value: 'value', label: 'Value' },
+  ];
+
+  const filteredReviews = allReviews.filter(review => {
+    if (selectedRating && review.rating !== selectedRating) return false;
+    if (selectedCategory !== 'all' && review.category !== selectedCategory) return false;
+    return true;
+  });
+
+  const totalPages = Math.ceil(filteredReviews.length / reviewsPerPage);
   const startIndex = (currentPage - 1) * reviewsPerPage;
-  const currentReviews = allReviews.slice(startIndex, startIndex + reviewsPerPage);
+  const currentReviews = filteredReviews.slice(startIndex, startIndex + reviewsPerPage);
+  const totalReviewCount = 14520;
 
   return (
     <div className="max-w-4xl">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
           <h2 className="text-2xl md:text-3xl font-bold text-primary">Customer Reviews</h2>
           <div className="flex items-center gap-2 mt-2">
@@ -725,16 +744,57 @@ const ShowerFilterReviewsTab = () => {
               {[1, 2, 3, 4, 5].map((star) => (<Star key={star} className="w-5 h-5 fill-brand-gold text-brand-gold" />))}
             </div>
             <span className="font-semibold">5.0</span>
-            <span className="text-muted-foreground">({allReviews.length} reviews)</span>
+            <span className="text-muted-foreground">({totalReviewCount.toLocaleString()} reviews)</span>
           </div>
         </div>
       </div>
+
+      {/* Filters */}
+      <div className="space-y-4 mb-8">
+        <div className="space-y-2">
+          <label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Filter by Rating</label>
+          <div className="flex flex-wrap gap-2">
+            {[null, 5, 4, 3, 2, 1].map((rating) => (
+              <button
+                key={rating ?? 'all'}
+                onClick={() => { setSelectedRating(rating); setCurrentPage(1); }}
+                className={cn(
+                  "inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium transition-all",
+                  selectedRating === rating ? "bg-accent text-accent-foreground" : "bg-secondary text-foreground hover:bg-secondary/80"
+                )}
+              >
+                {rating === null ? 'All' : rating}
+                {rating && <Star className="w-3.5 h-3.5 fill-current" />}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {categories.map((cat) => (
+            <button
+              key={cat.value}
+              onClick={() => { setSelectedCategory(cat.value); setCurrentPage(1); }}
+              className={cn(
+                "px-3 py-1.5 rounded-full text-sm font-medium transition-all",
+                selectedCategory === cat.value ? "bg-accent text-accent-foreground" : "bg-secondary text-foreground hover:bg-secondary/80"
+              )}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+        <p className="text-sm text-muted-foreground">
+          Showing {currentReviews.length} of {totalReviewCount.toLocaleString()} reviews
+          {filteredReviews.length !== allReviews.length && <span className="text-accent ml-1">({filteredReviews.length} match filters)</span>}
+        </p>
+      </div>
+
       <div className="space-y-4">
         {currentReviews.map((review, index) => (
           <div key={startIndex + index} className="p-5 rounded-lg border border-border bg-background">
             <div className="flex flex-wrap items-start justify-between gap-2 mb-3">
               <div><h4 className="font-semibold text-foreground">{review.name}</h4><p className="text-xs text-muted-foreground">{review.date}</p></div>
-              <div className="flex">{[...Array(5)].map((_, i) => (<Star key={i} className="w-4 h-4 fill-brand-gold text-brand-gold" />))}</div>
+              <div className="flex">{[...Array(review.rating)].map((_, i) => (<Star key={i} className="w-4 h-4 fill-brand-gold text-brand-gold" />))}</div>
             </div>
             <h5 className="font-semibold text-foreground mb-2">{review.title}</h5>
             <p className="text-sm text-muted-foreground leading-relaxed">{review.content}</p>

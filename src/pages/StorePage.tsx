@@ -88,11 +88,11 @@ const StorePage = () => {
                     onMouseLeave={() => setHoveredProduct(null)}
                   >
                     <div className="aspect-square bg-secondary overflow-hidden relative">
-                      {node.handle?.includes("mist") && (
-                        <div className="absolute top-3 left-3 z-10 bg-accent text-accent-foreground text-xs font-bold px-2.5 py-1 rounded-full shadow-md">
-                          Best Seller
-                        </div>
-                      )}
+                    {(node.handle?.includes("shower-filter") || node.handle?.includes("shower-head")) && (
+                      <div className="absolute top-3 left-3 z-10 bg-accent text-accent-foreground text-xs font-bold px-2.5 py-1 rounded-full shadow-md">
+                        Best Seller
+                      </div>
+                    )}
                       {firstImage ? (
                         <img src={firstImage.url} alt={firstImage.altText || node.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                       ) : (
@@ -105,7 +105,7 @@ const StorePage = () => {
                       <p className="text-sm text-muted-foreground mb-4 line-clamp-1">{node.description || "Instant inflammation relief"}</p>
                       <div className="flex items-center gap-2 mb-3">
                         <div className="flex">{[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-brand-gold text-brand-gold" />)}</div>
-                        <span className="text-xs text-muted-foreground">({isShowerHead ? 54 : 127} reviews)</span>
+                        <span className="text-xs text-muted-foreground">({isShowerHead ? "14,520" : "127"} reviews)</span>
                       </div>
                       <div className="flex items-center gap-3 mb-4">
                         <span className="text-sm text-muted-foreground line-through">${(parseFloat(price.amount) / 0.7).toFixed(2)}</span>

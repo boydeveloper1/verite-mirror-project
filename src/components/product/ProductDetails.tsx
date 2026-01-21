@@ -268,7 +268,7 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
       {/* Rating - Dynamic based on product */}
       {(() => {
         const rating = isShowerHead ? "5.0" : "4.9";
-        const reviewCount = isShowerHead ? 54 : 127;
+        const reviewCount = isShowerHead ? "14,520" : "127";
         return (
           <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-4 md:mb-6">
             <button
@@ -290,7 +290,7 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
               </div>
               <span className="text-xs md:text-sm font-semibold">{rating}</span>
               <span className="text-xs md:text-sm text-muted-foreground hover:text-accent transition-colors underline">
-                ({reviewCount} Reviews)
+                ({reviewCount} reviews)
               </span>
             </button>
             <span className="text-[10px] md:text-xs font-semibold text-accent flex items-center gap-1">

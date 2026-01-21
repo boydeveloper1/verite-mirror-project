@@ -29,9 +29,9 @@ export const ProductImageGallery = ({ images, productTitle, productHandle }: Pro
 
   const currentImage = images[selectedIndex];
   
-  // Only show bestseller badge for the mist product, not the shower head
+  // Only show bestseller badge for the shower head product (Best Seller)
   const isShowerHead = productHandle?.includes("shower-filter") || productHandle?.includes("shower-head");
-  const showBestsellerBadge = !isShowerHead;
+  const showBestsellerBadge = isShowerHead;
 
   return (
     <div className="space-y-3 md:space-y-4 max-w-[80%] mx-auto lg:max-w-full lg:mx-0 lg:scale-[0.8] lg:origin-top-left">
