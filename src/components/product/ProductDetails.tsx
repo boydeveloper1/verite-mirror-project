@@ -2,13 +2,16 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
-import { ShoppingCart, Truck, CheckCircle2, Package } from "lucide-react";
+import { ShoppingCart, Truck, CheckCircle2 } from "lucide-react";
 import { Star } from "lucide-react";
 import { QuantitySelector } from "./QuantitySelector";
 import { BundleSelector, BundleOption, defaultBundles, showerFilterBundles } from "./BundleSelector";
 import { TrustBadges } from "./TrustBadges";
 import { PaymentMethods } from "./PaymentMethods";
 import { ReplicasWarning } from "./ReplicasWarning";
+import { LowStockIndicator } from "./LowStockIndicator";
+import { UnitsSoldBadge } from "./UnitsSoldBadge";
+import { RiskFreeGuarantee } from "./RiskFreeGuarantee";
 import { cn } from "@/lib/utils";
 import showerHeadSilver from "@/assets/shower-head-silver.jpg";
 import showerHeadBlack from "@/assets/shower-head-black.jpg";
@@ -211,6 +214,11 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
       {/* Product Name */}
       <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary mb-2 md:mb-3">{product.title}</h1>
 
+      {/* Units Sold Badge - Social Proof */}
+      <div className="mb-3">
+        <UnitsSoldBadge productHandle={product.handle} />
+      </div>
+
       {/* Short Description */}
       <p className="text-sm md:text-base text-muted-foreground mb-4 leading-relaxed">
         {isShowerHead
@@ -327,7 +335,7 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
         </div>
       )}
 
-      {/* Price Box */}
+      {/* Price Box with Guarantee Seal */}
       <div className="p-4 md:p-5 rounded-lg bg-secondary mb-4 md:mb-6">
         <div className="flex items-center gap-2 mb-1.5 md:mb-2">
           <p className="text-[10px] md:text-xs uppercase tracking-wide text-muted-foreground font-semibold">Price</p>
@@ -348,6 +356,16 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
             30-DAY MONEY-BACK GUARANTEE
           </div>
         </div>
+        
+        {/* Guarantee Seal */}
+        <div className="mt-4">
+          <RiskFreeGuarantee variant="seal" />
+        </div>
+      </div>
+
+      {/* Low Stock & Viewing Indicators - Scarcity */}
+      <div className="mb-4 md:mb-6">
+        <LowStockIndicator productHandle={product.handle} />
       </div>
 
       {/* Replicas Warning */}
@@ -371,17 +389,20 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
         />
       </div>
 
-      {/* Add to Cart Button */}
-      <Button
-        variant="cta"
-        size="xl"
-        className="w-full h-12 md:h-14 text-sm md:text-base mb-3 md:mb-4"
-        onClick={handleAddToCart}
-        disabled={!selectedVariant}
-      >
-        <ShoppingCart className="w-4 h-4 md:w-5 md:h-5" />
-        Add to Cart
-      </Button>
+      {/* Risk-Free Badge + Add to Cart Button */}
+      <div className="flex items-center gap-3 mb-3 md:mb-4">
+        <Button
+          variant="cta"
+          size="xl"
+          className="flex-1 h-12 md:h-14 text-sm md:text-base"
+          onClick={handleAddToCart}
+          disabled={!selectedVariant}
+        >
+          <ShoppingCart className="w-4 h-4 md:w-5 md:h-5" />
+          Add to Cart
+        </Button>
+        <RiskFreeGuarantee variant="badge" />
+      </div>
 
       {/* Trust Badges */}
       <div className="mb-4 md:mb-6">
@@ -406,10 +427,9 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
         </div>
       </div>
 
-      {/* Stock Status */}
-      <div className="flex items-center gap-1.5 md:gap-2 mt-3 md:mt-4 text-xs md:text-sm font-semibold text-accent">
-        <Package className="w-3.5 h-3.5 md:w-4 md:h-4" />
-        <span>✓ In Stock - Ships Next Business Day</span>
+      {/* Expandable Guarantee Section */}
+      <div className="mt-4 md:mt-6">
+        <RiskFreeGuarantee variant="expanded" />
       </div>
     </div>
   );
