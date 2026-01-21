@@ -149,10 +149,12 @@ const categories: Array<'water-quality' | 'hair-results' | 'installation' | 'sca
   'water-quality', 'hair-results', 'installation', 'scalp-health', 'value'
 ];
 
+// Force rebuild v2 - 500 reviews generating 50 pages
 function generateReviews(): Review[] {
   const reviews: Review[] = [];
+  const REVIEW_COUNT = 500; // 500 reviews = 50 pages at 10 per page
   
-  for (let i = 0; i < 500; i++) {
+  for (let i = 0; i < REVIEW_COUNT; i++) {
     const category = categories[i % categories.length];
     const name = names[i % names.length];
     const titleList = titles[category];
