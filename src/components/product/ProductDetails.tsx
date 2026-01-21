@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/stores/cartStore";
 import { toast } from "sonner";
-import { ShoppingCart, Truck, CheckCircle2 } from "lucide-react";
+import { ShoppingCart, Truck, CheckCircle2, ChevronDown } from "lucide-react";
 import { Star } from "lucide-react";
 import { QuantitySelector } from "./QuantitySelector";
 import { BundleSelector, BundleOption, defaultBundles, showerFilterBundles } from "./BundleSelector";
@@ -15,6 +15,7 @@ import { RiskFreeGuarantee } from "./RiskFreeGuarantee";
 import { cn } from "@/lib/utils";
 import showerHeadSilver from "@/assets/shower-head-silver.jpg";
 import showerHeadBlack from "@/assets/shower-head-black.jpg";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 interface ProductVariant {
   id: string;
@@ -229,7 +230,7 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
       </p>
 
       {/* Key Benefits */}
-      <ul className="space-y-2 mb-4 md:mb-6">
+      <ul className="space-y-2.5 md:space-y-2 mb-5 md:mb-6">
         {isShowerHead ? (
           <>
             <li className="flex items-center gap-2 text-sm text-foreground">
@@ -337,91 +338,101 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
         </div>
       )}
 
-      {/* Price Box with Guarantee Seal */}
-      <div className="p-4 md:p-5 rounded-lg bg-secondary mb-4 md:mb-6">
-        <div className="flex items-center gap-2 mb-1.5 md:mb-2">
-          <p className="text-[10px] md:text-xs uppercase tracking-wide text-muted-foreground font-semibold">Price</p>
-          <span className="text-[10px] md:text-xs font-bold text-white bg-red-500 px-2 py-0.5 rounded">30% OFF</span>
-        </div>
-        <div className="flex items-baseline gap-3 mb-2 md:mb-3">
-          <p className="text-3xl md:text-4xl font-bold text-accent">${totalPrice.toFixed(2)}</p>
-          <p className="text-lg md:text-xl text-muted-foreground line-through">${(totalPrice / 0.7).toFixed(2)}</p>
-          <span className="text-sm md:text-lg font-normal text-muted-foreground">{currency}</span>
-        </div>
-        <div className="space-y-1.5 md:space-y-2">
+      {/* Purchase Section - Visual Grouping */}
+      <div className="p-4 md:p-5 rounded-xl bg-secondary/50 border border-border/50 mb-6 md:mb-8">
+        {/* Price Box */}
+        <div className="pb-4 md:pb-5 mb-4 md:mb-5 border-b border-border/50">
+          <div className="flex items-center gap-2 mb-1.5 md:mb-2">
+            <p className="text-[10px] md:text-xs uppercase tracking-wide text-muted-foreground font-semibold">Price</p>
+            <span className="text-[10px] md:text-xs font-bold text-white bg-red-500 px-2 py-0.5 rounded">30% OFF</span>
+          </div>
+          <div className="flex items-baseline gap-3 mb-2">
+            <p className="text-3xl md:text-4xl font-bold text-accent">${totalPrice.toFixed(2)}</p>
+            <p className="text-lg md:text-xl text-muted-foreground line-through">${(totalPrice / 0.7).toFixed(2)}</p>
+            <span className="text-sm md:text-lg font-normal text-muted-foreground">{currency}</span>
+          </div>
           <div className="flex items-center gap-1.5 md:gap-2 text-[10px] md:text-xs font-semibold text-accent">
             <Truck className="w-3.5 h-3.5 md:w-4 md:h-4" />
             FREE WORLDWIDE SHIPPING
           </div>
-          <div className="flex items-center gap-1.5 md:gap-2 text-[10px] md:text-xs font-semibold text-accent">
-            <CheckCircle2 className="w-3.5 h-3.5 md:w-4 md:h-4" />
-            30-DAY MONEY-BACK GUARANTEE
-          </div>
         </div>
-        
-      </div>
 
+        {/* Quantity Selector */}
+        <div className="mb-4 md:mb-5">
+          <label className="block text-[10px] md:text-xs font-semibold uppercase tracking-wide text-foreground mb-2 md:mb-3">
+            Quantity
+          </label>
+          <QuantitySelector quantity={quantity} onQuantityChange={setQuantity} min={1} max={10} />
+        </div>
+
+        {/* Bundle Selector */}
+        <div className="mb-4 md:mb-5">
+          <BundleSelector
+            bundles={bundles}
+            selectedBundle={selectedBundle}
+            onBundleSelect={setSelectedBundle}
+            unitLabel={unitLabel}
+          />
+        </div>
+
+        {/* Risk-Free Badge + Add to Cart Button */}
+        <div className="flex items-center gap-3">
+          <Button
+            variant="cta"
+            size="xl"
+            className="flex-1 h-12 md:h-14 text-sm md:text-base"
+            onClick={handleAddToCart}
+            disabled={!selectedVariant}
+          >
+            <ShoppingCart className="w-4 h-4 md:w-5 md:h-5" />
+            Add to Cart
+          </Button>
+          {!isShowerHead && <RiskFreeGuarantee variant="badge" />}
+        </div>
+
+        {/* Low Stock Indicator - Below Add to Cart for urgency (hidden for shower head) */}
+        {!isShowerHead && (
+          <div className="mt-3">
+            <LowStockIndicator productHandle={product.handle} />
+          </div>
+        )}
+      </div>
 
       {/* Replicas Warning */}
-      <ReplicasWarning />
-
-      {/* Quantity Selector */}
-      <div className="mb-4 md:mb-6">
-        <label className="block text-[10px] md:text-xs font-semibold uppercase tracking-wide text-foreground mb-2 md:mb-3">
-          Quantity
-        </label>
-        <QuantitySelector quantity={quantity} onQuantityChange={setQuantity} min={1} max={10} />
+      <div className="mb-6 md:mb-8">
+        <ReplicasWarning />
       </div>
-
-      {/* Bundle Selector */}
-      <div className="mb-4 md:mb-6">
-        <BundleSelector
-          bundles={bundles}
-          selectedBundle={selectedBundle}
-          onBundleSelect={setSelectedBundle}
-          unitLabel={unitLabel}
-        />
-      </div>
-
-      {/* Risk-Free Badge + Add to Cart Button */}
-      <div className="flex items-center gap-3 mb-3 md:mb-4">
-        <Button
-          variant="cta"
-          size="xl"
-          className="flex-1 h-12 md:h-14 text-sm md:text-base"
-          onClick={handleAddToCart}
-          disabled={!selectedVariant}
-        >
-          <ShoppingCart className="w-4 h-4 md:w-5 md:h-5" />
-          Add to Cart
-        </Button>
-        {!isShowerHead && <RiskFreeGuarantee variant="badge" />}
-      </div>
-
-      {/* Low Stock Indicator - Below Add to Cart for urgency (hidden for shower head) */}
-      {!isShowerHead && (
-        <div className="mb-3 md:mb-4">
-          <LowStockIndicator productHandle={product.handle} />
-        </div>
-      )}
 
       {/* Trust Badges */}
-      <div className="mb-4 md:mb-6">
+      <div className="mb-6 md:mb-8">
         <TrustBadges productHandle={product.handle} />
       </div>
 
-      {/* Payment Methods */}
-      <div className="mb-4 md:mb-6">
-        <PaymentMethods />
+      {/* Payment Methods - Collapsible on Mobile */}
+      <div className="mb-6 md:mb-8">
+        <div className="hidden md:block">
+          <PaymentMethods />
+        </div>
+        <div className="md:hidden">
+          <Collapsible>
+            <CollapsibleTrigger className="flex items-center justify-between w-full py-2 text-[11px] uppercase tracking-wider text-muted-foreground font-semibold">
+              <span>We accept Visa, Mastercard, PayPal & more</span>
+              <ChevronDown className="w-4 h-4 transition-transform duration-200 [&[data-state=open]]:rotate-180" />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="pt-2">
+              <PaymentMethods />
+            </CollapsibleContent>
+          </Collapsible>
+        </div>
       </div>
 
-      {/* Shipping Info */}
-      <div className="p-3 md:p-4 rounded-lg bg-accent/10 border-l-4 border-accent">
-        <div className="flex items-start gap-2 md:gap-3">
-          <Truck className="w-4 h-4 md:w-5 md:h-5 text-accent flex-shrink-0 mt-0.5" />
+      {/* Shipping Info - More compact on mobile */}
+      <div className="p-2.5 md:p-4 rounded-lg bg-accent/10 border-l-4 border-accent">
+        <div className="flex items-center gap-2 md:gap-3">
+          <Truck className="w-4 h-4 md:w-5 md:h-5 text-accent flex-shrink-0" />
           <div>
-            <p className="text-xs md:text-sm font-semibold text-accent">FREE International Shipping (5-7 days)</p>
-            <p className="text-[10px] md:text-xs text-accent/80 mt-0.5 md:mt-1">
+            <p className="text-xs md:text-sm font-semibold text-accent">FREE Shipping (5-7 days)</p>
+            <p className="text-[10px] md:text-xs text-accent/80 hidden md:block mt-1">
               🌍 Ships to 195+ countries | Trackable
             </p>
           </div>
