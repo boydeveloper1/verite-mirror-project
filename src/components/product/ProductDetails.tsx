@@ -10,7 +10,6 @@ import { TrustBadges } from "./TrustBadges";
 import { PaymentMethods } from "./PaymentMethods";
 import { ReplicasWarning } from "./ReplicasWarning";
 import { LowStockIndicator } from "./LowStockIndicator";
-import { UnitsSoldBadge } from "./UnitsSoldBadge";
 import { cn } from "@/lib/utils";
 import showerHeadSilver from "@/assets/shower-head-silver.jpg";
 import showerHeadBlack from "@/assets/shower-head-black.jpg";
@@ -215,11 +214,6 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
       <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary mb-2 md:mb-3">{product.title}</h1>
 
       {/* Units Sold Badge - Social Proof (hidden for shower head) */}
-      {!isShowerHead && (
-        <div className="mb-3">
-          <UnitsSoldBadge productHandle={product.handle} />
-        </div>
-      )}
 
       {/* Short Description */}
       <p className="text-sm md:text-base text-muted-foreground mb-4 leading-relaxed">
