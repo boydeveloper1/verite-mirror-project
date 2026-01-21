@@ -168,8 +168,8 @@ function generateReviews(): Review[] {
       date = recentDates[Math.min(i % recentDates.length + 15, recentDates.length - 1)];
     }
     
-    // Mostly 5-star reviews, some 4-star
-    const rating: 1 | 2 | 3 | 4 | 5 = i % 10 === 9 ? 4 : 5;
+    // All 5-star reviews
+    const rating: 5 = 5;
     
     reviews.push({
       id: `sh-${i + 1}`,
