@@ -432,35 +432,37 @@ const MistFAQTab = () => {
 
 const ShowerFilterOverviewTab = () => {
   const benefits = [
-    { icon: Shield, title: "99% Chlorine Removal", description: "The 15-stage filtration system removes up to 99% of chlorine—the primary culprit behind scalp inflammation and hair damage." },
-    { icon: Zap, title: "High-Pressure Rainfall", description: "Supercharged water storage system delivers spa-quality pressure even in low-pressure homes. Luxurious coverage every shower." },
-    { icon: Sparkles, title: "Vitamin C & E Infusion", description: "Antioxidant protection neutralizes free radicals, protecting follicle cells from oxidative stress that causes hair aging." },
+    { icon: Shield, title: "99% Chlorine Removal", description: "Removes the primary culprit behind skin inflammation. Chlorine bonds to skin cells within seconds, damaging your barrier and triggering flare-ups." },
+    { icon: Zap, title: "Stops the Inflammation Cycle", description: "Clean, purified water every shower means no chemical irritants, no mineral coating, reduced inflammation, and skin that can finally heal." },
+    { icon: Sparkles, title: "Vitamin C & E Protection", description: "Antioxidants neutralize free radicals from chlorine exposure, protecting skin cells from oxidative stress—a major cause of chronic inflammation." },
     { icon: Wrench, title: "Tool-Free Installation", description: "Universal G1/2 inch connection fits all standard shower arms. Hand-tighten installation in just 2-5 minutes." },
   ];
 
   const useCases = [
-    "Women experiencing unexplained hair shedding",
-    "Those with sensitive, itchy, or irritated scalps",
-    "Anyone whose hair products aren't delivering results",
-    "Hard water area residents with dull, brittle hair",
-    "Protective style wearers fighting edge loss",
-    "Those seeking a spa-like shower experience",
+    "Eczema sufferers (atopic dermatitis, contact dermatitis)",
+    "Psoriasis sufferers (plaque psoriasis, scalp psoriasis)",
+    "Rosacea sufferers (persistent redness, flushing, inflammation)",
+    "Acne sufferers (facial acne, body acne, chloracne)",
+    "Seborrheic dermatitis (scalp irritation, flaking)",
+    "Chronically sensitive skin (burning, itching, reactive skin)",
+    "Post-shower irritation (tightness, redness, discomfort)",
+    "Hard water area residents (Southwest, Midwest, California, Texas)",
   ];
 
   return (
     <div className="max-w-4xl space-y-10">
       <section>
-        <h2 className="text-2xl md:text-3xl font-bold text-primary mb-4">Stop Scalp Inflammation At The Source</h2>
+        <h2 className="text-2xl md:text-3xl font-bold text-primary mb-4">Stop Skin Inflammation At The Source</h2>
         <div className="space-y-4 text-muted-foreground leading-relaxed">
-          <p>The Verite Purifying Shower Head doesn't treat symptoms—it <strong className="text-foreground">eliminates the root cause</strong>. Every shower with unfiltered water is another inflammatory assault on your scalp.</p>
-          <p>Chlorine strips your scalp's natural protective oils. Hard water minerals create an invisible barrier blocking your hair products. Heavy metals accumulate in scalp tissue, causing chronic inflammation.</p>
-          <p>This 15-stage filtration system breaks the daily damage cycle, giving your follicles the clean, calm environment they need to finally thrive.</p>
+          <p>The Verite Purifying Shower Head doesn't treat symptoms—it <strong className="text-foreground">eliminates the root cause</strong>. Every shower with unfiltered water is another inflammatory assault on your skin.</p>
+          <p>Chlorine oxidizes proteins in your skin barrier, causing structural damage and triggering inflammatory responses. Hard water minerals create an invisible residue that clogs pores, traps irritants, and blocks product absorption.</p>
+          <p>This 15-stage filtration system breaks the daily damage cycle, giving your skin the clean, calm environment it needs to finally heal.</p>
         </div>
       </section>
       <section>
-        <h3 className="text-xl font-bold text-primary mb-4">The Daily Damage Cycle</h3>
+        <h3 className="text-xl font-bold text-primary mb-4">The Daily Damage Cycle (Without Verite)</h3>
         <ul className="space-y-2 text-muted-foreground">
-          {["Chemical Assault: Chlorine and heavy metals strip your scalp's natural barrier", "Mineral Coating: Calcium and magnesium clog follicles and block oxygen flow", "Inflammatory Response: Your scalp responds with chronic, low-grade inflammation", "Product Barrier: Your $60 growth serum can't penetrate the mineral layer", "Premature Shedding: Inflamed follicles release hair months before natural cycle ends"].map((item, index) => (
+          {["Chemical Assault: Chlorine and heavy metals strip away your skin's natural protective barrier, leaving it vulnerable and reactive", "Mineral Coating: Calcium and magnesium form an invisible residue that clogs pores, traps irritants, and blocks product absorption", "Inflammatory Response: Your skin responds with chronic inflammation—redness, itching, burning, breakouts, and flare-ups become daily reality", "Product Barrier: Your expensive creams, serums, and medications can't penetrate the mineral layer—they sit on the surface, useless", "Barrier Breakdown: Damaged skin barrier leads to increased water loss, heightened sensitivity, and worsening symptoms", "Repeat Daily: This cycle repeats every time you shower. Chronic inflammation becomes your skin's default state."].map((item, index) => (
             <li key={index} className="flex items-start gap-2"><span className="text-accent mt-1">•</span><span>{item}</span></li>
           ))}
         </ul>
@@ -480,7 +482,7 @@ const ShowerFilterOverviewTab = () => {
         </div>
       </section>
       <section>
-        <h3 className="text-xl font-bold text-primary mb-4">Perfect For</h3>
+        <h3 className="text-xl font-bold text-primary mb-4">Perfect For People Suffering From</h3>
         <ul className="grid sm:grid-cols-2 gap-2">
           {useCases.map((useCase, index) => (
             <li key={index} className="flex items-center gap-2 text-muted-foreground"><CheckCircle className="w-4 h-4 text-accent flex-shrink-0" /><span>{useCase}</span></li>
@@ -550,14 +552,14 @@ const ShowerFilterStagesTab = () => {
     { stage: 1, name: "Ultra-fine Stainless Steel Mesh", purpose: "Initial filtration of large debris" },
     { stage: 2, name: "PP Cotton", purpose: "Removes large particles and sediment" },
     { stage: 3, name: "High-density Stainless Steel Mesh", purpose: "Secondary fine filtration" },
-    { stage: 4, name: "Alkaline Ceramic Balls", purpose: "Balances pH for optimal scalp health" },
+    { stage: 4, name: "Alkaline Ceramic Balls", purpose: "Balances pH for optimal skin barrier health" },
     { stage: 5, name: "Maifan Stone", purpose: "Mineral enhancement and water softening" },
-    { stage: 6, name: "KDF 55", purpose: "Removes chlorine and heavy metals" },
+    { stage: 6, name: "KDF 55", purpose: "Removes chlorine and heavy metals that trigger skin inflammation" },
     { stage: 7, name: "Microporous Ceramic Balls", purpose: "Micro-filtration of fine particles" },
-    { stage: 8, name: "Vitamin C & E Beads", purpose: "Antioxidant protection for hair and skin" },
+    { stage: 8, name: "Vitamin C & E Beads", purpose: "Antioxidant protection for skin and hair" },
     { stage: 9, name: "Coconut Activated Carbon", purpose: "Removes odors and chemicals" },
     { stage: 10, name: "Germanium Balls", purpose: "Energy enhancement and water ionization" },
-    { stage: 11, name: "Dechlorination Balls (Calcium Sulfite)", purpose: "99% chlorine removal" },
+    { stage: 11, name: "Dechlorination Balls (Calcium Sulfite)", purpose: "99% chlorine removal—stops chlorine from bonding to and damaging skin cells" },
     { stage: 12, name: "Magnetic Energy Ceramic Balls", purpose: "Water restructuring and softening" },
     { stage: 13, name: "Ultra-fine Stainless Steel Mesh", purpose: "Final particle capture" },
     { stage: 14, name: "PP Cotton", purpose: "Final purity stage" },
@@ -568,7 +570,7 @@ const ShowerFilterStagesTab = () => {
     <div className="max-w-4xl space-y-10">
       <section>
         <h2 className="text-2xl md:text-3xl font-bold text-primary mb-4">15-Stage Advanced Filtration System</h2>
-        <p className="text-muted-foreground leading-relaxed mb-8">Each stage of our filtration system targets specific contaminants that damage your scalp and hair. Together, they deliver the cleanest, most scalp-friendly water possible.</p>
+        <p className="text-muted-foreground leading-relaxed mb-8">Each stage targets specific contaminants that damage your skin and trigger inflammation. Together, they deliver the cleanest, healthiest water for your skin, scalp, and hair.</p>
         <div className="space-y-3">
           {stages.map((stage) => (
             <div key={stage.stage} className="flex items-start gap-4 p-4 rounded-lg border border-border bg-background hover:bg-secondary/30 transition-colors">
@@ -587,15 +589,15 @@ const ShowerFilterStagesTab = () => {
 
 const ShowerFilterTimelineTab = () => {
   const timeline = [
-    { weeks: "Week 1-2", title: "Immediate Relief", description: "No more post-shower itching, redness, or irritation. Scalp feels calm and balanced. Products absorb properly for the first time.", icon: Snowflake },
-    { weeks: "Week 3-4", title: "Inflammation Subsides", description: "Excessive shedding begins to decrease noticeably. Follicles enter recovery mode. Scalp texture improves.", icon: TrendingUp },
-    { weeks: "Week 5-8", title: "Growth Phase Extends", description: "Hair stays in follicles longer, completing natural growth cycles. New growth appears thicker and stronger. Edges begin to fill in.", icon: Leaf },
-    { weeks: "Week 9-12", title: "Visible Transformation", description: "Significantly less shedding in shower and on brush. Increased overall density. Natural shine returns. Products deliver visible results.", icon: Star },
+    { weeks: "Week 1-2", title: "Immediate Relief", description: "No more post-shower burning, itching, redness, or tightness. Skin feels calm immediately. Products absorb properly for the first time.", icon: Snowflake },
+    { weeks: "Week 3-4", title: "Inflammation Subsides", description: "Flare-ups decrease noticeably. Skin barrier enters recovery phase. Redness and irritation become less frequent.", icon: TrendingUp },
+    { weeks: "Week 5-8", title: "Recovery Phase", description: "Skin stays calm longer. Reduced breakouts and irritation. Visible improvement in texture and tone. Fewer reactive episodes.", icon: Leaf },
+    { weeks: "Week 9-12", title: "Visible Transformation", description: "Significantly fewer flare-ups. Healthier, more resilient skin. Natural glow returns. Skincare products finally deliver visible results.", icon: Star },
   ];
 
   return (
     <div className="max-w-4xl">
-      <h2 className="text-2xl md:text-3xl font-bold text-primary mb-6">Your Scalp Recovery Timeline</h2>
+      <h2 className="text-2xl md:text-3xl font-bold text-primary mb-6">Your Skin Recovery Timeline</h2>
       <div className="relative">
         <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-border hidden md:block" />
         <div className="space-y-6">
@@ -751,13 +753,14 @@ const ShowerFilterReviewsTab = () => {
 
 const ShowerFilterFAQTab = () => {
   const faqs = [
-    { question: "Will this fit my shower?", answer: "Yes! The Verite Shower Filter uses a standard G1/2 inch universal thread that fits 99% of household showers worldwide. It works with overhead/ceiling mounts and wall-mounted arms." },
+    { question: "Will this fit my shower?", answer: "Yes! The Verite Purifying Shower Head uses a standard G1/2 inch universal thread that fits 99% of household showers worldwide. It works with overhead/ceiling mounts and wall-mounted arms." },
     { question: "How long does the filter last?", answer: "The 15-stage filter typically lasts 6-8 months with regular use, depending on your water quality. You'll notice when it needs replacing as water flow may slightly decrease." },
     { question: "Will this reduce my water pressure?", answer: "No—quite the opposite! The supercharged water storage system actually enhances pressure, delivering spa-quality flow even in low-pressure homes." },
-    { question: "How does this help my hair grow?", answer: "By removing chlorine, heavy metals, and hard water minerals that cause scalp inflammation, blocked follicles, and premature shedding. When these irritants are eliminated, your scalp can heal and hair can grow naturally." },
+    { question: "How does this help my skin condition?", answer: "Chlorine and hard water minerals are proven triggers for eczema, psoriasis, rosacea, and acne. By removing 99% of these irritants, your skin stops getting re-inflamed every shower, allowing your natural barrier to finally heal." },
     { question: "Is installation really tool-free?", answer: "Absolutely! Simply unscrew your old shower head and hand-tighten the Verite filter in its place. The included Teflon tape and rubber washers ensure a leak-proof seal. Most installations take 2-5 minutes." },
-    { question: "Can I use this with other hair products?", answer: "Yes! In fact, your hair products will work BETTER because the mineral barrier that was blocking absorption is now gone. Filtered water allows products to penetrate your scalp properly." },
-    { question: "What if it doesn't work for me?", answer: "We offer a 30-day money-back guarantee. If you don't notice improvements in your scalp health and hair within 30 days, contact us for a full refund." },
+    { question: "Will my skincare products work better?", answer: "Yes! Hard water minerals create an invisible barrier that blocks absorption. Once removed, your creams, serums, and medications can finally penetrate your skin and work as intended." },
+    { question: "What skin conditions does this help?", answer: "Multiple clinical studies show filtered water significantly reduces skin inflammation. This is especially effective for eczema, psoriasis, rosacea, acne, dermatitis, and chronically sensitive skin—all conditions triggered or worsened by chlorine and hard water." },
+    { question: "What if it doesn't work for me?", answer: "We offer a 30-day money-back guarantee. If you don't notice improvements in your skin within 30 days, contact us for a full refund." },
   ];
 
   return (
