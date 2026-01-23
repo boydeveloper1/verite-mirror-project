@@ -20,11 +20,11 @@ export const WhyChooseUs = ({ productType = "mist" }: WhyChooseUsProps) => {
 
   const showerComparison = [
     { feature: "15-Stage Filtration System", us: true, others: false },
-    { feature: "Removes Chlorine & Heavy Metals", us: true, others: false },
-    { feature: "Stops Water-Based Inflammation", us: true, others: false },
-    { feature: "Protects Hair Follicles", us: true, others: false },
-    { feature: "Universal Easy Installation", us: true, others: false },
-    { feature: "High Water Pressure Maintained", us: true, others: false },
+    { feature: "99% Chlorine Removal (Skin Barrier Protection)", us: true, others: false },
+    { feature: "Stops Water-Based Skin Inflammation", us: true, others: false },
+    { feature: "Hard Water Mineral Elimination", us: true, others: false },
+    { feature: "Helps Eczema, Psoriasis, Rosacea & Acne", us: true, others: false },
+    { feature: "Universal Tool-Free Installation", us: true, others: false },
     { feature: "30-Day Money Back Guarantee", us: true, others: false },
     { feature: "Premium Build Quality", us: true, others: false },
     { feature: "Low-Quality Materials", us: false, others: true },

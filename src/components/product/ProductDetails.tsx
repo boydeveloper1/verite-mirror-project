@@ -214,7 +214,7 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
       {/* Short Description */}
       <p className="text-sm md:text-base text-muted-foreground mb-4 leading-relaxed">
         {isShowerHead
-          ? "Transform your shower into a scalp treatment. Our 15-stage filtration removes harsh chemicals that damage hair follicles and irritate your scalp."
+          ? "Stop skin inflammation before it starts. Our 15-stage filtration removes chlorine and hard water minerals that trigger eczema, psoriasis, rosacea, and acne flare-ups."
           : "Clinically-formulated mist that calms inflammation, balances scalp pH, and creates the ideal environment for stronger, healthier hair growth."}
       </p>
 
@@ -224,19 +224,19 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
           <>
             <li className="flex items-center gap-2 text-sm text-foreground">
               <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" />
-              <span>Removes 99% chlorine & heavy metals</span>
+              <span>Removes 99% chlorine that damages skin barrier</span>
             </li>
             <li className="flex items-center gap-2 text-sm text-foreground">
               <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" />
-              <span>Universal fit – installs in minutes</span>
+              <span>Eliminates hard water minerals that trigger flare-ups</span>
             </li>
             <li className="flex items-center gap-2 text-sm text-foreground">
               <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" />
-              <span>Reduces scalp dryness & irritation</span>
+              <span>Helps soothe eczema, psoriasis, rosacea & acne</span>
             </li>
             <li className="flex items-center gap-2 text-sm text-foreground">
               <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" />
-              <span>6-month filter life (included)</span>
+              <span>Universal fit – tool-free 2-5 minute install</span>
             </li>
           </>
         ) : (
