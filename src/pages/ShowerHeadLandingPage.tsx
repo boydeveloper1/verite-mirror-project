@@ -72,16 +72,18 @@ const CTAButton = ({ className = "", variant = "primary" }: { className?: string
   >
     <Button 
       asChild
-      className={`h-16 px-12 font-bold text-lg rounded-full group relative overflow-hidden transition-all duration-500 ${
+      className={`h-12 md:h-16 px-6 md:px-12 font-bold text-sm md:text-lg rounded-full group relative overflow-hidden transition-all duration-500 ${
         variant === "primary" 
           ? "bg-gradient-to-r from-accent via-accent to-accent/90 hover:from-accent/90 hover:to-accent text-accent-foreground shadow-[0_10px_40px_-10px_hsl(var(--accent)/0.6)]" 
           : "bg-gradient-to-r from-primary-foreground via-primary-foreground to-primary-foreground/90 hover:from-primary-foreground/90 hover:to-primary-foreground text-primary shadow-[0_10px_40px_-10px_rgba(255,255,255,0.4)]"
       } ${className}`}
     >
       <Link to={`/product/${PRODUCT_HANDLE}`}>
-        <span className="relative z-10 flex items-center">
-          Stop Skin Inflammation — {PRODUCT_PRICE}
-          <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-1.5 transition-transform duration-300" />
+        <span className="relative z-10 flex items-center whitespace-nowrap">
+          <span className="hidden sm:inline">Stop Skin Inflammation — </span>
+          <span className="sm:hidden">Get Relief — </span>
+          {PRODUCT_PRICE}
+          <ArrowRight className="ml-2 md:ml-3 w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1.5 transition-transform duration-300" />
         </span>
         <motion.div 
           className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
