@@ -153,13 +153,6 @@ const ConditionBadge = ({ condition, icon: Icon, delay }: { condition: string; i
 
 const ShowerHeadLandingPage = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const heroRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"]
-  });
-  const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
-  const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
 
   const scrollToContent = () => {
     window.scrollTo({ top: window.innerHeight * 0.85, behavior: "smooth" });
@@ -178,11 +171,7 @@ const ShowerHeadLandingPage = () => {
         {/* ============================================ */}
         {/* SECTION 1: HERO - IMMERSIVE EXPERIENCE */}
         {/* ============================================ */}
-        <motion.section 
-          ref={heroRef}
-          style={{ opacity: heroOpacity, scale: heroScale }}
-          className="relative min-h-screen flex items-center bg-primary overflow-hidden"
-        >
+        <section className="relative min-h-screen flex items-center bg-primary overflow-hidden">
           {/* Multi-layer gradient background */}
           <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary to-primary/95" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,_hsl(var(--brand-gold)/0.2)_0%,transparent_60%)]" />
@@ -362,7 +351,7 @@ const ShowerHeadLandingPage = () => {
           
           {/* Bottom gradient fade */}
           <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
-        </motion.section>
+        </section>
 
         {/* ============================================ */}
         {/* SECTION 2: THE HIDDEN ENEMY REVEAL */}
