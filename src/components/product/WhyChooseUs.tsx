@@ -43,7 +43,7 @@ export const WhyChooseUs = ({ productType = "mist" }: WhyChooseUsProps) => {
           Why Choose VERITÉ SCALP?
         </h2>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          See how our {productType === "shower" ? "Scalp Purifying Shower Head" : "Scalp Soothing Mist"} compares to other products on the market.
+          See how our {productType === "shower" ? "Purifying Shower Head" : "Scalp Soothing Mist"} compares to other products on the market.
         </p>
       </div>
 
