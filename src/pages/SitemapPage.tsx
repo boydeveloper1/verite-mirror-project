@@ -21,7 +21,7 @@ const SitemapPage = () => {
       title: "Products",
       links: [
         { label: "Verite Scalp Nourishing Scalp Relief Spray", to: "/product/nourishing-scalp-relief-spray" },
-        { label: "Verite Scalp Purifying Shower Filter", to: "/product/verite-scalp-purifying-shower-filter-1" },
+        { label: "Verite Purifying Shower Head", to: "/product/verite-scalp-purifying-shower-filter-1" },
       ],
     },
     {

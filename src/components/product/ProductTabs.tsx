@@ -452,7 +452,7 @@ const ShowerFilterOverviewTab = () => {
       <section>
         <h2 className="text-2xl md:text-3xl font-bold text-primary mb-4">Stop Scalp Inflammation At The Source</h2>
         <div className="space-y-4 text-muted-foreground leading-relaxed">
-          <p>The Verite Scalp Purifying Shower Filter doesn't treat symptoms—it <strong className="text-foreground">eliminates the root cause</strong>. Every shower with unfiltered water is another inflammatory assault on your scalp.</p>
+          <p>The Verite Purifying Shower Head doesn't treat symptoms—it <strong className="text-foreground">eliminates the root cause</strong>. Every shower with unfiltered water is another inflammatory assault on your scalp.</p>
           <p>Chlorine strips your scalp's natural protective oils. Hard water minerals create an invisible barrier blocking your hair products. Heavy metals accumulate in scalp tissue, causing chronic inflammation.</p>
           <p>This 15-stage filtration system breaks the daily damage cycle, giving your follicles the clean, calm environment they need to finally thrive.</p>
         </div>
@@ -536,7 +536,7 @@ const ShowerFilterInstallationTab = () => {
       <section>
         <h3 className="text-xl font-bold text-primary mb-4">What's In The Box</h3>
         <ul className="space-y-2">
-          {["1x Verite Scalp Purifying Rainfall Shower Head (with 15-stage filter)", "1x Shower Arm Extension (where applicable)", "1x Chrome Wall Flange", "2-3x Rubber Washers/Gaskets", "1x Teflon Tape", "1x Installation Manual"].map((item, index) => (
+          {["1x Verite Purifying Rainfall Shower Head (with 15-stage filter)", "1x Shower Arm Extension (where applicable)", "1x Chrome Wall Flange", "2-3x Rubber Washers/Gaskets", "1x Teflon Tape", "1x Installation Manual"].map((item, index) => (
             <li key={index} className="flex items-center gap-2 text-muted-foreground"><CheckCircle className="w-4 h-4 text-accent flex-shrink-0" /><span>{item}</span></li>
           ))}
         </ul>
