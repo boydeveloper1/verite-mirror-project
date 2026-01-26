@@ -1088,7 +1088,8 @@ const ShowerHeadLandingPage = () => {
                     className="h-18 px-14 bg-gradient-to-r from-accent to-accent/90 hover:from-accent/90 hover:to-accent text-accent-foreground font-bold text-xl rounded-full group shadow-[0_10px_40px_-10px_hsl(var(--accent)/0.6)]"
                   >
                     <Link to={`/product/${PRODUCT_HANDLE}`}>
-                      Get Relief Now
+                      <span className="hidden sm:inline">Get Relief Now</span>
+                      <span className="sm:hidden">Filter My Water</span>
                       <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-2 transition-transform" />
                     </Link>
                   </Button>
