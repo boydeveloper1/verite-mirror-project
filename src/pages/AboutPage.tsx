@@ -13,7 +13,7 @@ const AboutPage = () => {
       <Header />
       <main>
         <PageHeroBanner 
-          title="About VERITÉ SCALP" 
+          title="About VERITÉ" 
           breadcrumbs={[
             { label: "Home", href: "/" },
             { label: "About Us" }
@@ -30,15 +30,15 @@ const AboutPage = () => {
                 Our Mission
               </div>
               <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-8 animate-fade-in-up">
-                Scalp Care <span className="text-accent">Before</span> Hair Care
+                Pure Water. <span className="text-accent">Healthy Skin.</span>
               </h2>
               <p className="text-xl md:text-2xl text-foreground leading-relaxed mb-6 animate-fade-in-up [animation-delay:100ms]">
-                At VERITÉ SCALP, we believe that true hair health starts at the root—<em>literally</em>.
+                At VERITÉ, we believe that true skin health starts with your water.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto animate-fade-in-up [animation-delay:200ms]">
-                We're not just another hair growth brand making empty promises. We're a science-backed scalp care 
-                company dedicated to one mission: <strong className="text-foreground">stopping inflammation so your hair can grow naturally</strong>. 
-                Because when your scalp is healthy, your hair follows.
+                We're not just another skincare brand making empty promises. We're a science-backed company 
+                dedicated to one mission: <strong className="text-foreground">removing the chlorine and minerals that trigger your skin conditions</strong>. 
+                Because when you purify your water, your skin can finally heal.
               </p>
             </div>
           </div>
@@ -51,10 +51,10 @@ const AboutPage = () => {
               <div className="text-center mb-12">
                 <span className="inline-block text-accent font-bold uppercase tracking-wider mb-4">Our Products</span>
                 <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-4">
-                  A Complete Scalp Care Line
+                  A Complete Skin Care Line
                 </h2>
                 <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                  We've developed a variety of products specifically formulated to reduce inflammation and restore scalp health.
+                  We've developed products specifically formulated to reduce inflammation and restore skin health by addressing water quality.
                 </p>
               </div>
               
@@ -71,19 +71,19 @@ const AboutPage = () => {
                       Best Seller
                     </div>
                     <h3 className="font-display text-2xl md:text-3xl font-bold text-primary mb-3">
-                      Verité Scalp Soothing Mist
+                      Verité Purifying Shower Head
                     </h3>
                     <p className="text-muted-foreground mb-4 leading-relaxed">
-                      Our flagship product that started it all. The Soothing Mist calms inflammation in 2-3 weeks, 
-                      allowing dormant follicles to reactivate. With a 4.9-star rating from 127 verified customers, 
-                      it's the foundation of every successful scalp recovery journey.
+                      Our flagship product with 14,520+ verified 5-star reviews. The 15-stage filtration system 
+                      removes 99% of chlorine and hard water minerals that trigger eczema, psoriasis, rosacea, and acne flare-ups. 
+                      Most customers report calmer, less irritated skin within 2 weeks.
                     </p>
                     <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
                       <span className="inline-flex items-center gap-1.5 text-sm text-accent font-medium">
-                        <CheckCircle className="w-4 h-4" /> Dermatologist-Formulated
+                        <CheckCircle className="w-4 h-4" /> 15-Stage Filtration
                       </span>
                       <span className="inline-flex items-center gap-1.5 text-sm text-accent font-medium">
-                        <CheckCircle className="w-4 h-4" /> 100% Natural
+                        <CheckCircle className="w-4 h-4" /> Removes Chlorine & Minerals
                       </span>
                       <span className="inline-flex items-center gap-1.5 text-sm text-accent font-medium">
                         <CheckCircle className="w-4 h-4" /> Clinically Tested
@@ -94,7 +94,7 @@ const AboutPage = () => {
               </div>
               
               <p className="text-center text-muted-foreground mt-8">
-                Explore our full range of anti-inflammatory scalp treatments, each designed to work together 
+                Explore our full range of anti-inflammatory skin solutions, each designed to work together 
                 for maximum results.
               </p>
             </div>
@@ -117,28 +117,29 @@ const AboutPage = () => {
               
               <div className="space-y-8 text-lg text-muted-foreground leading-relaxed">
                 <p className="text-xl text-foreground font-medium">
-                  VERITÉ SCALP was founded by women who understood the frustration firsthand.
+                  VERITÉ was founded by people who understood the frustration of chronic skin conditions firsthand.
                 </p>
                 <p>
-                  After years of protective styling—braids, wigs, extensions—we watched our edges thin and disappear. 
-                  We tried every growth serum, every miracle oil, every trending product. <strong className="text-foreground">Nothing worked.</strong>
+                  After years of battling eczema, psoriasis, and sensitive skin, we tried every cream, every prescription, 
+                  every trending treatment. Steroid creams provided temporary relief but came with side effects. 
+                  Expensive moisturizers barely scratched the surface. <strong className="text-foreground">Nothing provided lasting relief.</strong>
                 </p>
                 <div className="p-6 rounded-xl bg-secondary/50 border-l-4 border-accent">
                   <p className="text-foreground font-medium italic">
-                    "Then we discovered the truth that changed everything: our scalps were inflamed. All those 
-                    products we were layering on? They couldn't penetrate because our scalps were too damaged 
-                    to absorb them. We weren't addressing the root cause."
+                    "Then we discovered the truth that changed everything: our tap water was the trigger. Every shower 
+                    was exposing our skin to chlorine and hard water minerals that stripped our natural barrier and 
+                    triggered inflammation. We were fighting a battle we couldn't win."
                   </p>
                 </div>
                 <p>
-                  Working with dermatologists and trichologists, we developed a formula that does one thing 
-                  exceptionally well: <strong className="text-foreground">calm scalp inflammation</strong>. Once we stopped the inflammation, our hair 
-                  started growing back naturally. No gimmicks. No false promises. Just science.
+                  Working with dermatologists and water quality experts, we developed a 15-stage filtration system 
+                  that does one thing exceptionally well: <strong className="text-foreground">remove the irritants before they touch your skin</strong>. 
+                  Once we stopped the daily damage, our skin finally had a chance to heal naturally.
                 </p>
                 <p className="text-xl font-semibold text-primary bg-accent/10 p-6 rounded-xl text-center">
-                  Today, VERITÉ SCALP has helped over <span className="text-accent">5,000+ women</span> reclaim their edges and restore their confidence. 
-                  Our clinically-tested, dermatologist-recommended formula is trusted by women worldwide who 
-                  refuse to give up on their hair.
+                  Today, VERITÉ has helped over <span className="text-accent">14,000+ customers</span> transform their skin by transforming their water. 
+                  Our clinically-tested filtration system is trusted by people with eczema, psoriasis, rosacea, and 
+                  sensitive skin worldwide.
                 </p>
               </div>
             </div>
@@ -156,38 +157,38 @@ const AboutPage = () => {
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-              {[
-                {
-                  icon: Leaf,
-                  title: "100% Natural Ingredients",
-                  description: "We use only clean, natural ingredients that are safe for sensitive scalps. No harsh chemicals, no parabens, no sulfates—ever."
-                },
-                {
-                  icon: Shield,
-                  title: "Clinically Tested",
-                  description: "Every product is dermatologist-formulated and clinically tested. We don't guess—we prove our products work."
-                },
-                {
-                  icon: Heart,
-                  title: "Made With Love",
-                  description: "We understand the emotional journey of hair loss because we've lived it. Every bottle is made with genuine care and understanding."
-                },
-                {
-                  icon: Sparkles,
-                  title: "Science-Backed",
-                  description: "Our formulations are based on the latest research in scalp health and trichology—not trends, not marketing hype, just real science."
-                },
-                {
-                  icon: Users,
-                  title: "Community First",
-                  description: "We're building a community of women who support each other on their hair journey. You're never alone in this."
-                },
-                {
-                  icon: Award,
-                  title: "Results Guaranteed",
-                  description: "We stand behind our products with a 30-day money-back guarantee. If it doesn't work for you, we'll give you your money back."
-                }
-              ].map((value, index) => (
+                {[
+                  {
+                    icon: Leaf,
+                    title: "Chemical-Free Filtration",
+                    description: "Our 15-stage filtration removes chlorine and hard water minerals without adding any chemicals. Pure, clean water for sensitive skin."
+                  },
+                  {
+                    icon: Shield,
+                    title: "Clinically Tested",
+                    description: "Every product is dermatologist-approved and clinically tested. We don't guess—we prove our products work."
+                  },
+                  {
+                    icon: Heart,
+                    title: "Made With Care",
+                    description: "We understand the emotional toll of chronic skin conditions because we've lived it. Every product is made with genuine care."
+                  },
+                  {
+                    icon: Sparkles,
+                    title: "Science-Backed",
+                    description: "Our filtration technology is based on the latest research in skin health and dermatology—not trends, just real science."
+                  },
+                  {
+                    icon: Users,
+                    title: "Community First",
+                    description: "We're building a community of people who support each other on their skin health journey. You're never alone in this."
+                  },
+                  {
+                    icon: Award,
+                    title: "Results Guaranteed",
+                    description: "We stand behind our products with a 30-day money-back guarantee. If it doesn't work for you, we'll give you your money back."
+                  }
+                ].map((value, index) => (
                 <div 
                   key={value.title}
                   className="group p-8 rounded-2xl bg-background border border-border hover:shadow-medium transition-all duration-500 hover:-translate-y-2 animate-fade-in-up"
@@ -210,9 +211,9 @@ const AboutPage = () => {
           <div className="container mx-auto px-4 md:px-10 relative">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 text-center max-w-4xl mx-auto">
               {[
-                { number: "5,000+", label: "Happy Customers" },
+                { number: "14,000+", label: "Happy Customers" },
                 { number: "98%", label: "Recommend Us" },
-                { number: "70%", label: "Less Shedding" },
+                { number: "89%", label: "Clearer Skin" },
                 { number: "30", label: "Day Guarantee" }
               ].map((stat, index) => (
                 <div 
@@ -237,11 +238,11 @@ const AboutPage = () => {
                 Start Your Journey
               </div>
               <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-6">
-                Ready to Start Your Scalp Recovery Journey?
+                Ready to Transform Your Skin?
               </h2>
               <p className="text-xl text-muted-foreground mb-10 leading-relaxed">
-                Join over 5,000 women who have transformed their scalp health and regrown their edges with VERITÉ SCALP. 
-                Your hair deserves a healthy foundation.
+                Join over 14,000 customers who have transformed their skin by changing their water. 
+                Relief from eczema, psoriasis, rosacea, and acne starts with pure water.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button 

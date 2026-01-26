@@ -57,11 +57,10 @@ export const ProductsSection = () => {
         <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20 animate-fade-in-up">
           <span className="inline-block bg-accent/10 text-accent font-semibold uppercase tracking-wider px-4 py-2 rounded-full text-sm mb-6">Our Products</span>
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-5">
-            Complete Scalp Care System
+            Complete Skin Care System
           </h2>
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
-            Each product stops inflammation at a different source. Together, they heal your scalp and restore hair
-            growth.
+            Each product targets inflammation at its source. Together, they calm your skin and restore your natural barrier.
           </p>
         </div>
 
@@ -120,7 +119,7 @@ export const ProductsSection = () => {
                   <div className="p-6">
                     {/* Category */}
                     <span className="text-xs uppercase tracking-wider font-semibold text-accent mb-2 block">
-                      SCALP CARE
+                      SKIN CARE
                     </span>
 
                     {/* Product Name */}
@@ -130,7 +129,7 @@ export const ProductsSection = () => {
 
                     {/* Benefit Copy */}
                     <p className="text-sm text-muted-foreground mb-4 line-clamp-1">
-                      {node.description || "Instant inflammation relief in 2-3 weeks"}
+                      {node.description || "Soothes irritated skin in 2-3 weeks"}
                     </p>
 
                     {/* Star Rating - Dynamic based on product */}
