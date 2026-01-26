@@ -19,34 +19,34 @@ interface QuizEmailRequest {
 const getEmailContent = (score: number, resultType: string) => {
   const configs = {
     healthy: {
-      subject: "Your Scalp Health Results Are In! 🌿",
-      headline: "Great News! Your Scalp is Healthy",
-      intro: "Your quiz results show that your scalp is in excellent condition. Maintaining scalp health is an ongoing journey, and you're doing great!",
-      recommendation: "Our Scalp Soothing Mist is perfect for maintaining your healthy scalp and protecting against environmental stressors.",
+      subject: "Your Skin Health Results Are In! 🌿",
+      headline: "Great News! Your Skin is Healthy",
+      intro: "Your quiz results show that your skin is in excellent condition. Maintaining healthy skin is an ongoing journey, and you're doing great!",
+      recommendation: "Our filtered shower head is perfect for maintaining your healthy skin and protecting against chlorine and hard water damage.",
       urgency: "low",
       color: "#1B7F4D",
     },
     early_warning: {
-      subject: "Your Personalized Scalp Health Results ⚡",
+      subject: "Your Personalized Skin Health Results ⚡",
       headline: "Early Warning Signs Detected",
-      intro: "Your quiz reveals early signs of scalp stress. The good news? Taking action now can prevent these issues from progressing.",
-      recommendation: "Our Scalp Soothing Mist helps calm early-stage inflammation. Pair it with our filtered shower head for best results.",
+      intro: "Your quiz reveals early signs of skin stress from water quality. The good news? Taking action now can prevent these issues from progressing.",
+      recommendation: "Our 15-stage filtered shower head removes chlorine and minerals that irritate your skin. Start protecting your skin today.",
       urgency: "medium",
       color: "#eab308",
     },
     needs_attention: {
-      subject: "Your Personalized Scalp Recovery Plan 📋",
-      headline: "Your Scalp Needs Attention",
-      intro: "Your responses indicate noticeable scalp inflammation, which can affect hair growth and cause increased shedding. But don't worry - we have a solution.",
-      recommendation: "We recommend our Scalp Soothing Mist for daily use. Our complete system has helped thousands of women restore their scalp health.",
+      subject: "Your Personalized Skin Recovery Plan 📋",
+      headline: "Your Skin Needs Attention",
+      intro: "Your responses indicate noticeable skin irritation, which is often triggered by chlorine and hard water minerals. But don't worry - we have a solution.",
+      recommendation: "Our purifying shower head removes 99% of chlorine and hard water minerals that trigger eczema, psoriasis, and rosacea flare-ups.",
       urgency: "high",
       color: "#f97316",
     },
     priority: {
-      subject: "Your Scalp Health Report - Action Required 🚨",
+      subject: "Your Skin Health Report - Action Required 🚨",
       headline: "Priority Care Recommended",
-      intro: "Your quiz results show significant scalp inflammation. Addressing this is crucial for your hair health. Many women in your situation have seen remarkable improvements with our system.",
-      recommendation: "Our complete scalp care system targets inflammation at multiple points. Start your recovery journey today with our most effective bundle.",
+      intro: "Your quiz results show significant skin irritation. Addressing the chlorine and minerals in your water is crucial for your skin health. Many customers in your situation have seen remarkable improvements.",
+      recommendation: "Our filtered shower head is specifically designed for sensitive skin conditions. Most customers report calmer, less irritated skin within 2 weeks.",
       urgency: "critical",
       color: "#ef4444",
     },
@@ -73,8 +73,8 @@ const getEmailContent = (score: number, resultType: string) => {
           <!-- Header -->
           <tr>
             <td style="background: linear-gradient(135deg, #2D5A3D 0%, #1B7F4D 100%); padding: 50px 30px; text-align: center;">
-              <h1 style="color: #ffffff; font-size: 28px; margin: 0; font-weight: 700; letter-spacing: 2px;">VERITÉ SCALP</h1>
-              <p style="color: rgba(255,255,255,0.8); font-size: 12px; margin: 8px 0 0 0; letter-spacing: 1px;">SCALP CARE BEFORE HAIR CARE</p>
+              <h1 style="color: #ffffff; font-size: 28px; margin: 0; font-weight: 700; letter-spacing: 2px;">VERITÉ</h1>
+              <p style="color: rgba(255,255,255,0.8); font-size: 12px; margin: 8px 0 0 0; letter-spacing: 1px;">PURE WATER. HEALTHY SKIN.</p>
             </td>
           </tr>
           
@@ -117,11 +117,11 @@ const getEmailContent = (score: number, resultType: string) => {
               <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 25px; background-color: #F5F1E8; border-radius: 12px;">
                 <tr>
                   <td width="33%" style="text-align: center; padding: 20px 10px;">
-                    <p style="color: #1B7F4D; font-size: 22px; font-weight: 700; margin: 0;">4-8</p>
+                    <p style="color: #1B7F4D; font-size: 22px; font-weight: 700; margin: 0;">2-4</p>
                     <p style="color: #5c4a36; font-size: 11px; margin: 5px 0 0 0;">Weeks to Results</p>
                   </td>
                   <td width="33%" style="text-align: center; padding: 20px 10px; border-left: 1px solid #E8E4DC; border-right: 1px solid #E8E4DC;">
-                    <p style="color: #1B7F4D; font-size: 22px; font-weight: 700; margin: 0;">10K+</p>
+                    <p style="color: #1B7F4D; font-size: 22px; font-weight: 700; margin: 0;">14K+</p>
                     <p style="color: #5c4a36; font-size: 11px; margin: 5px 0 0 0;">Happy Customers</p>
                   </td>
                   <td width="33%" style="text-align: center; padding: 20px 10px;">
@@ -144,7 +144,7 @@ const getEmailContent = (score: number, resultType: string) => {
                 </tr>
                 <tr>
                   <td style="text-align: center;">
-                    <a href="https://veritescalp.com/blog" style="display: inline-block; background-color: transparent; color: #1B7F4D; text-decoration: none; padding: 14px 35px; border-radius: 8px; font-weight: 600; font-size: 14px; border: 2px solid #1B7F4D;">Learn About Scalp Health</a>
+                    <a href="https://veritescalp.com/blog" style="display: inline-block; background-color: transparent; color: #1B7F4D; text-decoration: none; padding: 14px 35px; border-radius: 8px; font-weight: 600; font-size: 14px; border: 2px solid #1B7F4D;">Learn About Skin Health</a>
                   </td>
                 </tr>
               </table>
@@ -159,10 +159,10 @@ const getEmailContent = (score: number, resultType: string) => {
                   <td style="padding-top: 25px;">
                     <p style="color: #444; font-size: 15px; line-height: 1.6; margin: 0;">
                       With love,<br>
-                      <strong style="color: #2D5A3D;">The VERITÉ SCALP Team</strong>
+                      <strong style="color: #2D5A3D;">The VERITÉ Team</strong>
                     </p>
                     <p style="color: #888; font-size: 13px; margin: 15px 0 0 0; font-style: italic;">
-                      "Fix your scalp environment. Watch your edges grow back naturally."
+                      "Transform your shower water. Watch your skin heal naturally."
                     </p>
                   </td>
                 </tr>
@@ -196,7 +196,7 @@ const getEmailContent = (score: number, resultType: string) => {
                       <a href="https://veritescalp.com/terms-of-service" style="color: rgba(255,255,255,0.7); text-decoration: none;">Terms of Service</a> &nbsp;|&nbsp;
                       <a href="https://veritescalp.com/refund-policy" style="color: rgba(255,255,255,0.7); text-decoration: none;">Refund Policy</a>
                     </p>
-                    <p style="color: rgba(255,255,255,0.5); font-size: 11px; margin: 0;">© 2025 VERITÉ SCALP. All rights reserved.</p>
+                    <p style="color: rgba(255,255,255,0.5); font-size: 11px; margin: 0;">© 2025 VERITÉ. All rights reserved.</p>
                   </td>
                 </tr>
               </table>
@@ -222,7 +222,7 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     const { email, score, resultType, answers }: QuizEmailRequest = await req.json();
 
-    console.log("Sending quiz results email to:", email, "Score:", score, "Type:", resultType);
+    console.log("Sending skin quiz results email to:", email, "Score:", score, "Type:", resultType);
 
     // Save subscriber to database
     const supabaseClient = createClient(
@@ -255,7 +255,7 @@ const handler = async (req: Request): Promise<Response> => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "VERITÉ SCALP <hello@veritescalp.com>",
+        from: "VERITÉ <hello@veritescalp.com>",
         to: [email],
         subject: emailContent.subject,
         html: emailContent.html,
@@ -270,11 +270,11 @@ const handler = async (req: Request): Promise<Response> => {
     const emailResult = await emailResponse.json();
 
     if (!emailResponse.ok) {
-      console.error("Failed to send quiz results email:", emailResult);
+      console.error("Failed to send skin quiz results email:", emailResult);
       throw new Error(emailResult.message || "Failed to send email");
     }
 
-    console.log("Quiz results email sent successfully:", emailResult);
+    console.log("Skin quiz results email sent successfully:", emailResult);
 
     // Send admin notification email
     const adminEmailHtml = `
@@ -283,7 +283,7 @@ const handler = async (req: Request): Promise<Response> => {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>New Quiz Submission</title>
+  <title>New Skin Quiz Submission</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #F5F1E8;">
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #F5F1E8;">
@@ -294,15 +294,15 @@ const handler = async (req: Request): Promise<Response> => {
           <!-- Header -->
           <tr>
             <td style="background: linear-gradient(135deg, #2D5A3D 0%, #1B7F4D 100%); padding: 40px 30px; text-align: center;">
-              <h1 style="color: #ffffff; font-size: 24px; margin: 0; font-weight: 700; letter-spacing: 2px;">VERITÉ SCALP</h1>
-              <p style="color: rgba(255,255,255,0.8); font-size: 12px; margin: 8px 0 0 0; letter-spacing: 1px;">NEW QUIZ SUBMISSION</p>
+              <h1 style="color: #ffffff; font-size: 24px; margin: 0; font-weight: 700; letter-spacing: 2px;">VERITÉ</h1>
+              <p style="color: rgba(255,255,255,0.8); font-size: 12px; margin: 8px 0 0 0; letter-spacing: 1px;">NEW SKIN QUIZ SUBMISSION</p>
             </td>
           </tr>
           
           <!-- Title -->
           <tr>
             <td style="padding: 30px 30px 0 30px;">
-              <h2 style="color: #2D5A3D; font-size: 22px; margin: 0 0 20px 0; font-weight: 700;">📊 New Quiz Results</h2>
+              <h2 style="color: #2D5A3D; font-size: 22px; margin: 0 0 20px 0; font-weight: 700;">📊 New Skin Quiz Results</h2>
               <div style="height: 3px; width: 60px; background: linear-gradient(90deg, #1B7F4D, #2D5A3D); border-radius: 2px;"></div>
             </td>
           </tr>
@@ -324,7 +324,7 @@ const handler = async (req: Request): Promise<Response> => {
                     <!-- Score -->
                     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 15px;">
                       <tr>
-                        <td style="width: 120px; color: #666; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; vertical-align: top; padding-top: 3px;">Quiz Score</td>
+                        <td style="width: 120px; color: #666; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; vertical-align: top; padding-top: 3px;">Skin Score</td>
                         <td style="font-size: 15px;"><span style="color: ${emailContent.color}; font-weight: 700;">${score}/15</span></td>
                       </tr>
                     </table>
@@ -353,33 +353,36 @@ const handler = async (req: Request): Promise<Response> => {
           <!-- Recommendation Sent -->
           <tr>
             <td style="padding: 0 30px 25px 30px;">
-              <h3 style="color: #2D5A3D; font-size: 16px; margin: 0 0 15px 0; font-weight: 700;">💬 Recommendation Sent to Customer</h3>
-              <div style="background-color: #ffffff; border: 2px solid #E8E4DC; border-radius: 12px; padding: 20px;">
-                <p style="color: #444; font-size: 15px; line-height: 1.7; margin: 0;">${emailContent.recommendation}</p>
-              </div>
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background: linear-gradient(135deg, #F5F1E8 0%, #EDE9E0 100%); border-radius: 12px; border-left: 4px solid #1B7F4D;">
+                <tr>
+                  <td style="padding: 20px 25px;">
+                    <p style="color: #2D5A3D; font-size: 14px; margin: 0 0 8px 0; font-weight: 600;">📧 Recommendation Sent</p>
+                    <p style="color: #555; font-size: 14px; line-height: 1.6; margin: 0;">
+                      ${emailContent.recommendation}
+                    </p>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
           
-          <!-- Timestamp -->
-          <tr>
-            <td style="padding: 0 30px 25px 30px; text-align: center;">
-              <p style="color: #888; font-size: 12px; margin: 0;">
-                Submitted on ${new Date().toLocaleString('en-US', { dateStyle: 'full', timeStyle: 'short' })}
-              </p>
-            </td>
-          </tr>
-          
-          <!-- Quick Reply Button -->
+          <!-- Reply Button -->
           <tr>
             <td style="padding: 0 30px 30px 30px; text-align: center;">
-              <a href="mailto:${email}?subject=Your VERITÉ SCALP Quiz Results" style="display: inline-block; background: linear-gradient(135deg, #1B7F4D 0%, #2D5A3D 100%); color: #ffffff; text-decoration: none; padding: 14px 35px; border-radius: 8px; font-weight: 600; font-size: 14px; letter-spacing: 0.5px;">Reply to Customer</a>
+              <a href="mailto:${email}" style="display: inline-block; background: linear-gradient(135deg, #1B7F4D 0%, #2D5A3D 100%); color: #ffffff; text-decoration: none; padding: 14px 35px; border-radius: 8px; font-weight: 600; font-size: 14px; letter-spacing: 0.5px;">Follow Up</a>
             </td>
           </tr>
           
           <!-- Footer -->
           <tr>
-            <td style="background-color: #2D5A3D; padding: 20px 30px; text-align: center;">
-              <p style="color: rgba(255,255,255,0.6); font-size: 11px; margin: 0;">This is an automated notification from VERITÉ SCALP Quiz System</p>
+            <td style="background-color: #2D5A3D; padding: 20px 30px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td style="text-align: center;">
+                    <p style="color: rgba(255,255,255,0.5); font-size: 11px; margin: 0;">© 2025 VERITÉ. All rights reserved.</p>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
           
@@ -398,37 +401,31 @@ const handler = async (req: Request): Promise<Response> => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "VERITÉ SCALP <hello@veritescalp.com>",
+        from: "VERITÉ Notifications <hello@veritescalp.com>",
         to: ["support@veritescalp.com"],
-        subject: `New Quiz: ${email} - Score ${score}/15 (${resultType.replace('_', ' ')})`,
+        subject: `New Skin Quiz: ${resultType.replace('_', ' ')} (${score}/15) - ${email}`,
         html: adminEmailHtml,
         reply_to: email,
       }),
     });
 
     if (!adminEmailResponse.ok) {
-      const adminError = await adminEmailResponse.json();
-      console.error("Failed to send admin notification:", adminError);
-      // Don't throw - customer email was sent successfully
+      console.error("Failed to send admin notification:", await adminEmailResponse.text());
     } else {
       console.log("Admin notification email sent successfully");
     }
 
     return new Response(
-      JSON.stringify({ success: true }),
+      JSON.stringify({ success: true, message: "Quiz results sent!" }),
       {
         status: 200,
-        headers: {
-          "Content-Type": "application/json",
-          ...corsHeaders,
-        },
+        headers: { "Content-Type": "application/json", ...corsHeaders },
       }
     );
-  } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : "Unknown error";
-    console.error("Error in send-quiz-results-email function:", errorMessage);
+  } catch (error: any) {
+    console.error("Error in send-quiz-results-email function:", error);
     return new Response(
-      JSON.stringify({ error: errorMessage }),
+      JSON.stringify({ error: error.message }),
       {
         status: 500,
         headers: { "Content-Type": "application/json", ...corsHeaders },
