@@ -3,7 +3,7 @@ import sensitiveSkinImage from "@/assets/testimonials/sensitive-skin.png";
 
 export const FeaturedTestimonial = () => {
   return (
-    <section className="py-10 md:py-16">
+    <section className="py-6 md:py-10 lg:scale-[0.8] lg:origin-top-left">
       <div className="max-w-4xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-6 md:mb-8">
