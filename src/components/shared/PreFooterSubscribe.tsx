@@ -26,7 +26,7 @@ export const PreFooterSubscribe = () => {
 
       if (error) throw error;
 
-      toast.success("Welcome to the VERITÉ SCALP family!", {
+      toast.success("Welcome to the VERITÉ family!", {
         description: "Check your inbox for exclusive offers."
       });
       setEmail("");
@@ -60,8 +60,8 @@ export const PreFooterSubscribe = () => {
 
           {/* Description */}
           <p className="text-muted-foreground text-lg mb-8 leading-relaxed">
-            Be the first to know about new products, special discounts, and expert scalp care tips. 
-            Join our community of women committed to scalp health!
+            Be the first to know about new products, special discounts, and expert skin care tips. 
+            Join our community committed to healthy, radiant skin!
           </p>
 
           {/* Form */}

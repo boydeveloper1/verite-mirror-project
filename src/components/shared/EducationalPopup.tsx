@@ -5,79 +5,75 @@ import { motion, AnimatePresence } from "framer-motion";
 const educationalNuggets = [
   {
     title: "Did you know?",
-    message: "Scalp inflammation is the #1 hidden cause of hair loss in women with protective styles. Fix it first!",
-  },
-  {
-    title: "Hair Growth Secret",
-    message: "70% of hair shedding can be reduced in just 3 weeks by addressing scalp inflammation.",
+    message: "Chlorine in tap water damages your skin barrier daily, triggering eczema, psoriasis, and rosacea flare-ups.",
   },
   {
     title: "Hard Water Alert",
-    message: "Chlorine and heavy metals in tap water irritate your scalp daily, blocking hair follicles.",
+    message: "Mineral deposits from hard water clog pores and cause dryness, itching, and chronic irritation.",
   },
   {
     title: "Expert Tip",
-    message: "Dermatologists say: treat your scalp environment BEFORE using any growth products.",
+    message: "Dermatologists recommend filtering shower water to reduce skin inflammation and sensitivity.",
   },
   {
     title: "Root Cause",
-    message: "A healthy scalp is the foundation for thick, strong hair. Most growth products ignore this.",
+    message: "Your expensive skincare can't work if chlorine is damaging your skin barrier every shower.",
   },
   {
-    title: "Why Serums Fail",
-    message: "Your growth serum won't work if inflammation is blocking absorption. Clear the path first.",
+    title: "Why Creams Fail",
+    message: "Moisturizers can't heal skin that's being attacked by chlorine and heavy metals daily.",
   },
   {
     title: "Real Results",
-    message: "98% of VERITÉ customers recommend us. Join 5,000+ women regrowing their edges.",
+    message: "Most customers report reduced redness and calmer skin within the first 2 weeks of use.",
   },
   {
     title: "Urgent Warning",
-    message: "Untreated scalp inflammation can permanently damage hair follicles. Don't wait.",
+    message: "Unfiltered shower water makes eczema, psoriasis, and rosacea progressively worse over time.",
   },
   {
-    title: "Protective Style Tip",
-    message: "Braids, wigs & extensions trap bacteria. Daily scalp care prevents hidden damage.",
-  },
-  {
-    title: "Game Changer",
-    message: "Customers see visible edge regrowth in 4-8 weeks. Your hair is waiting to grow.",
-  },
-  {
-    title: "Scalp Science",
-    message: "Your scalp has 100,000+ hair follicles. Inflammation can block nutrients to ALL of them.",
+    title: "Skin Science",
+    message: "Chlorine strips natural oils from your skin, leaving it dry, irritated, and vulnerable.",
   },
   {
     title: "Water Quality Matters",
-    message: "Hard water leaves mineral deposits on your scalp that suffocate hair follicles.",
+    message: "99% of tap water contains chlorine and heavy metals that irritate sensitive skin.",
   },
   {
     title: "Breaking the Cycle",
-    message: "Itchy scalp → scratching → inflammation → hair loss. Break the cycle at the source.",
+    message: "Dry skin → itching → scratching → inflammation → flare-ups. Break the cycle at the source.",
   },
   {
     title: "Product Absorption",
-    message: "An inflamed scalp absorbs only 20% of hair products. A healthy scalp absorbs 80%+.",
+    message: "Damaged skin barriers absorb only 20% of skincare products. Healthy skin absorbs 80%+.",
   },
   {
     title: "Customer Favorite",
-    message: "Our Scalp Soothing Mist has helped 5,000+ women regrow their edges naturally.",
+    message: "Join 14,000+ customers who transformed their skin by changing their shower water.",
   },
   {
     title: "Quick Relief",
-    message: "Feel instant cooling relief within seconds of application. Your scalp will thank you.",
+    message: "Feel the difference from your very first shower. Softer water, calmer skin, less irritation.",
   },
   {
-    title: "Natural Ingredients",
-    message: "Tea Tree Oil, Aloe Vera & Peppermint work together to calm and heal your scalp.",
+    title: "15-Stage Filtration",
+    message: "Our shower head removes chlorine, heavy metals, and sediments that trigger skin conditions.",
   },
   {
-    title: "No More Buildup",
-    message: "Product buildup clogs follicles and causes inflammation. Start with a clean slate.",
+    title: "Eczema Relief",
+    message: "Customers with eczema report 70% fewer flare-ups after switching to filtered shower water.",
   },
   {
-    title: "Edge Regrowth",
-    message: "Visible edge regrowth starts in as little as 4 weeks with consistent scalp care.",
+    title: "Psoriasis Solution",
+    message: "Hard water worsens psoriasis plaques. Filtered water helps calm and reduce inflammation.",
+  },
+  {
+    title: "Rosacea Recovery",
+    message: "Chlorine triggers rosacea redness. Remove it at the source for visibly calmer skin.",
+  },
+  {
+    title: "Acne Prevention",
+    message: "Chlorine and hard water clog pores and disrupt your skin's natural balance. Filter it out.",
   },
   {
     title: "Money-Back Guarantee",

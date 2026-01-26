@@ -8,7 +8,7 @@ import { HomeContactForm } from "@/components/sections/HomeContactForm";
 import { EducationalPopup } from "@/components/shared/EducationalPopup";
 import { MoneyBackGuarantee } from "@/components/product/MoneyBackGuarantee";
 import { HomeFAQSection } from "@/components/sections/HomeFAQSection";
-import { ScalpHealthQuiz } from "@/components/sections/ScalpHealthQuiz";
+import { SkinHealthQuiz } from "@/components/sections/SkinHealthQuiz";
 import { PreFooterSubscribe } from "@/components/shared/PreFooterSubscribe";
 import { EmailPopup } from "@/components/shared/EmailPopup";
 import { SectionDivider } from "@/components/shared/SectionDivider";
@@ -28,7 +28,7 @@ const Index = () => {
         <SectionDivider variant="gradient" />
         <MoneyBackGuarantee />
         <SectionDivider variant="line" />
-        <ScalpHealthQuiz />
+        <SkinHealthQuiz />
         <SectionDivider variant="gradient" />
         <HomeFAQSection />
         <SectionDivider variant="line" />

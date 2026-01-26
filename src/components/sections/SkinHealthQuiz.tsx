@@ -128,7 +128,7 @@ const getResult = (score: number): ResultData => {
   }
 };
 
-export const ScalpHealthQuiz = () => {
+export const SkinHealthQuiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<number[]>([]);
   const [showResult, setShowResult] = useState(false);
