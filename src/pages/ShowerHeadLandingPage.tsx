@@ -24,7 +24,8 @@ import {
   Heart,
   Flame,
   CircleOff,
-  Quote
+  Quote,
+  Gauge
 } from "lucide-react";
 import showerHeadImage from "@/assets/shower-head-silver.jpg";
 
@@ -356,7 +357,67 @@ const ShowerHeadLandingPage = () => {
         </section>
 
         {/* ============================================ */}
-        {/* SECTION 2: THE HIDDEN ENEMY REVEAL */}
+        {/* SECTION 2: THE HIDDEN TRUTH - EDUCATIONAL */}
+        {/* ============================================ */}
+        <section className="py-24 md:py-32 bg-gradient-to-b from-background via-muted/20 to-background relative">
+          <div className="container mx-auto px-4 md:px-10">
+            <AnimatedSection className="text-center mb-16">
+              <motion.span 
+                className="inline-flex items-center gap-2 text-sm font-bold text-accent uppercase tracking-widest mb-6 bg-accent/10 px-5 py-2 rounded-full"
+              >
+                <Beaker className="w-4 h-4" />
+                The Hidden Truth
+              </motion.span>
+              <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-tight">
+                Your Tap Water Is
+                <span className="text-accent block md:inline"> Attacking Your Skin</span>
+              </h2>
+              <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+                Most people don't realize: the water they shower with every day contains chemicals 
+                and minerals that directly cause and worsen skin conditions.
+              </p>
+            </AnimatedSection>
+
+            {/* Educational Cards */}
+            <div className="grid md:grid-cols-3 gap-6 mb-16">
+              {[
+                {
+                  icon: Droplets,
+                  title: "Chlorine in Your Water",
+                  description: "Water treatment plants add chlorine to kill bacteria—but it doesn't stop working at your tap. When you shower, chlorine bonds to your skin cells within seconds, stripping away protective oils and triggering inflammation.",
+                },
+                {
+                  icon: Beaker,
+                  title: "Hard Water Minerals",
+                  description: "85% of US homes have hard water containing calcium, magnesium, and iron. These minerals don't rinse off—they form an invisible layer on your skin that clogs pores, blocks moisture, and triggers flare-ups.",
+                },
+                {
+                  icon: AlertTriangle,
+                  title: "The Daily Re-Injury",
+                  description: "Every shower is like pouring irritants directly onto your skin. Your treatments try to heal, but the next shower undoes that progress. It's a cycle your dermatologist may not have explained.",
+                },
+              ].map((item, index) => (
+                <AnimatedSection key={item.title} delay={index * 0.1}>
+                  <motion.div 
+                    className="relative bg-card rounded-2xl p-8 shadow-lg border border-border h-full"
+                    whileHover={{ y: -5 }}
+                  >
+                    <div className="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center mb-5 border border-accent/20">
+                      <item.icon className="w-7 h-7 text-accent" />
+                    </div>
+                    <h3 className="font-display text-xl font-bold text-foreground mb-3">{item.title}</h3>
+                    <p className="text-muted-foreground leading-relaxed">{item.description}</p>
+                  </motion.div>
+                </AnimatedSection>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <SectionDivider />
+
+        {/* ============================================ */}
+        {/* SECTION 3: THE DAILY DAMAGE CYCLE */}
         {/* ============================================ */}
         <section className="py-24 md:py-32 bg-background relative">
           <div className="container mx-auto px-4 md:px-10">
@@ -837,6 +898,13 @@ const ShowerHeadLandingPage = () => {
                       description: "Antioxidant protection to help your skin heal and recover.",
                       color: "from-emerald-500/20 to-emerald-500/5",
                       iconColor: "text-emerald-500",
+                    },
+                    {
+                      icon: Gauge,
+                      title: "High-Pressure Output",
+                      description: "Powerful, spa-like water pressure for a satisfying shower experience, even with filtration.",
+                      color: "from-cyan-500/20 to-cyan-500/5",
+                      iconColor: "text-cyan-500",
                     },
                     {
                       icon: Timer,

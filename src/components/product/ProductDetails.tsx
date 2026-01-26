@@ -232,6 +232,10 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
             </li>
             <li className="flex items-center gap-2 text-sm text-foreground">
               <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" />
+              <span>High-pressure output for a powerful, spa-like rinse</span>
+            </li>
+            <li className="flex items-center gap-2 text-sm text-foreground">
+              <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" />
               <span>Helps soothe eczema, psoriasis, rosacea & acne</span>
             </li>
             <li className="flex items-center gap-2 text-sm text-foreground">
