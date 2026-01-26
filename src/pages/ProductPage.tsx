@@ -9,6 +9,7 @@ import { ProductImageGallery } from "@/components/product/ProductImageGallery";
 import { ProductDetails } from "@/components/product/ProductDetails";
 import { ProductTabs } from "@/components/product/ProductTabs";
 import { MoneyBackGuarantee } from "@/components/product/MoneyBackGuarantee";
+import { FeaturedTestimonial } from "@/components/product/FeaturedTestimonial";
 import { WhyChooseUs } from "@/components/product/WhyChooseUs";
 import { PreFooterSubscribe } from "@/components/shared/PreFooterSubscribe";
 import { EmailPopup } from "@/components/shared/EmailPopup";
@@ -112,6 +113,7 @@ const ProductPage = () => {
           <div className="animate-fade-in-up [animation-delay:150ms] opacity-0"><ProductDetails product={product} selectedVariant={selectedVariant} onVariantChange={handleVariantChange} /></div>
         </div>
         <div className="animate-fade-in-up [animation-delay:300ms] opacity-0"><ProductTabs productHandle={product.handle} /></div>
+        {isShowerHead && <FeaturedTestimonial />}
         <MoneyBackGuarantee variant="compact" />
         <WhyChooseUs productType={isShowerHead ? "shower" : "mist"} />
       </main>
