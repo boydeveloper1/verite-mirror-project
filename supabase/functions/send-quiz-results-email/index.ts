@@ -73,7 +73,7 @@ const getEmailContent = (score: number, resultType: string) => {
           <!-- Header -->
           <tr>
             <td style="background: linear-gradient(135deg, #2D5A3D 0%, #1B7F4D 100%); padding: 50px 30px; text-align: center;">
-              <h1 style="color: #ffffff; font-size: 28px; margin: 0; font-weight: 700; letter-spacing: 2px;">VERITÉ</h1>
+              <h1 style="color: #ffffff; font-size: 28px; margin: 0; font-weight: 700; letter-spacing: 2px;">VERITÉ SCALP</h1>
               <p style="color: rgba(255,255,255,0.8); font-size: 12px; margin: 8px 0 0 0; letter-spacing: 1px;">PURE WATER. HEALTHY SKIN.</p>
             </td>
           </tr>
@@ -159,7 +159,7 @@ const getEmailContent = (score: number, resultType: string) => {
                   <td style="padding-top: 25px;">
                     <p style="color: #444; font-size: 15px; line-height: 1.6; margin: 0;">
                       With love,<br>
-                      <strong style="color: #2D5A3D;">The VERITÉ Team</strong>
+                      <strong style="color: #2D5A3D;">The VERITÉ SCALP Team</strong>
                     </p>
                     <p style="color: #888; font-size: 13px; margin: 15px 0 0 0; font-style: italic;">
                       "Transform your shower water. Watch your skin heal naturally."
@@ -196,7 +196,7 @@ const getEmailContent = (score: number, resultType: string) => {
                       <a href="https://veritescalp.com/terms-of-service" style="color: rgba(255,255,255,0.7); text-decoration: none;">Terms of Service</a> &nbsp;|&nbsp;
                       <a href="https://veritescalp.com/refund-policy" style="color: rgba(255,255,255,0.7); text-decoration: none;">Refund Policy</a>
                     </p>
-                    <p style="color: rgba(255,255,255,0.5); font-size: 11px; margin: 0;">© 2025 VERITÉ. All rights reserved.</p>
+                    <p style="color: rgba(255,255,255,0.5); font-size: 11px; margin: 0;">© 2025 VERITÉ SCALP. All rights reserved.</p>
                   </td>
                 </tr>
               </table>
@@ -255,7 +255,7 @@ const handler = async (req: Request): Promise<Response> => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "VERITÉ <hello@veritescalp.com>",
+        from: "VERITÉ SCALP <hello@veritescalp.com>",
         to: [email],
         subject: emailContent.subject,
         html: emailContent.html,
@@ -294,7 +294,7 @@ const handler = async (req: Request): Promise<Response> => {
           <!-- Header -->
           <tr>
             <td style="background: linear-gradient(135deg, #2D5A3D 0%, #1B7F4D 100%); padding: 40px 30px; text-align: center;">
-              <h1 style="color: #ffffff; font-size: 24px; margin: 0; font-weight: 700; letter-spacing: 2px;">VERITÉ</h1>
+              <h1 style="color: #ffffff; font-size: 24px; margin: 0; font-weight: 700; letter-spacing: 2px;">VERITÉ SCALP</h1>
               <p style="color: rgba(255,255,255,0.8); font-size: 12px; margin: 8px 0 0 0; letter-spacing: 1px;">NEW SKIN QUIZ SUBMISSION</p>
             </td>
           </tr>
@@ -401,7 +401,7 @@ const handler = async (req: Request): Promise<Response> => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "VERITÉ Notifications <hello@veritescalp.com>",
+        from: "VERITÉ SCALP Notifications <hello@veritescalp.com>",
         to: ["support@veritescalp.com"],
         subject: `New Skin Quiz: ${resultType.replace('_', ' ')} (${score}/15) - ${email}`,
         html: adminEmailHtml,
