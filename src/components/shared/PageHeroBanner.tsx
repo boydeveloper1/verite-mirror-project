@@ -56,7 +56,7 @@ export const PageHeroBanner = ({
         </nav>
 
         {/* Title */}
-        <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4 tracking-wide animate-fade-in-up">
+        <h1 className="font-display text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4 tracking-wide animate-fade-in-up whitespace-nowrap">
           {title}
         </h1>
         
