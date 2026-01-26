@@ -8,9 +8,10 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchProducts, ShopifyProduct } from "@/lib/shopify";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, Loader2, Star } from "lucide-react";
+import { ShoppingCart, Loader2, Star, Clock, ArrowRight } from "lucide-react";
 import { useCartStore } from "@/stores/cartStore";
-import { toast } from "sonner";
+import { Card, CardContent } from "@/components/ui/card";
+import { blogPosts } from "@/data/blogPosts";
 
 const StorePage = () => {
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
@@ -47,13 +48,15 @@ const StorePage = () => {
     });
   };
 
+  const featuredPosts = blogPosts.slice(0, 2);
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
       
       <PageHeroBanner
-        title="Products"
-        subtitle="Premium scalp care solutions crafted for lasting results"
+        title="Skin Care Solutions"
+        subtitle="Pure water solutions for eczema, psoriasis, rosacea & sensitive skin"
         breadcrumbs={[{ label: "Products" }]}
         backgroundImage={productsBanner}
       />
@@ -99,9 +102,9 @@ const StorePage = () => {
                       )}
                     </div>
                     <div className="p-6">
-                      <span className="text-xs uppercase tracking-wider font-semibold text-accent mb-2 block">SCALP CARE</span>
+                      <span className="text-xs uppercase tracking-wider font-semibold text-accent mb-2 block">SKIN CARE</span>
                       <h3 className="font-display text-sm md:text-base font-bold text-primary mb-2 group-hover:text-accent transition-colors">{node.title}</h3>
-                      <p className="text-sm text-muted-foreground mb-4 line-clamp-1">{node.description || "Instant inflammation relief"}</p>
+                      <p className="text-sm text-muted-foreground mb-4 line-clamp-1">{node.description || "Soothes irritated skin naturally"}</p>
                       <div className="flex items-center gap-2 mb-3">
                         <div className="flex">{[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-brand-gold text-brand-gold" />)}</div>
                         <span className="text-xs text-muted-foreground">({isShowerHead ? "14,520" : "127"} reviews)</span>
@@ -123,6 +126,77 @@ const StorePage = () => {
               })}
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Featured Blog Posts Section */}
+      <section className="py-16 md:py-20 bg-secondary/30">
+        <div className="container mx-auto px-4 md:px-10">
+          <div className="text-center mb-12">
+            <span className="inline-block bg-accent/10 text-accent font-semibold uppercase tracking-wider px-4 py-2 rounded-full text-sm mb-4">
+              Learn More
+            </span>
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-primary mb-4">
+              Skin Health Insights
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Expert tips on managing eczema, psoriasis, and rosacea through water quality
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {featuredPosts.map((post, index) => (
+              <Link 
+                key={post.id} 
+                to={`/blog/${post.slug}`}
+                className="group animate-fade-in-up"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <Card className="h-full overflow-hidden border-border/50 hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:scale-[1.02]">
+                  <div className="aspect-video relative overflow-hidden">
+                    <img 
+                      src={post.image} 
+                      alt={post.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                  </div>
+                  
+                  <CardContent className="p-6">
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
+                      <span>{post.date}</span>
+                      <span className="flex items-center gap-1">
+                        <Clock className="w-4 h-4" />
+                        {post.readTime}
+                      </span>
+                    </div>
+                    
+                    <h3 className="text-lg font-semibold text-foreground mb-3 group-hover:text-primary transition-colors line-clamp-2">
+                      {post.title}
+                    </h3>
+                    
+                    <p className="text-muted-foreground mb-4 line-clamp-2 text-sm">
+                      {post.excerpt}
+                    </p>
+                    
+                    <div className="flex items-center text-primary font-medium group-hover:gap-3 gap-2 transition-all text-sm">
+                      Read Article
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
+
+          <div className="text-center mt-10">
+            <Button asChild variant="outline" className="border-2 border-accent text-accent hover:bg-accent hover:text-accent-foreground">
+              <Link to="/blog">
+                View All Articles
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
       
