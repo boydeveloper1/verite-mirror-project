@@ -44,7 +44,7 @@ const BlogPage = () => {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                     <div className="absolute top-4 left-4">
                       <Badge variant="secondary" className="bg-background/90 backdrop-blur-sm animate-fade-in">
-                        Scalp Care
+                        Skin Health
                       </Badge>
                     </div>
                   </div>

@@ -129,7 +129,7 @@ export const ProductsSection = () => {
 
                     {/* Benefit Copy */}
                     <p className="text-sm text-muted-foreground mb-4 line-clamp-1">
-                      {node.description || "Soothes irritated skin in 2-3 weeks"}
+                      {node.description || "Soothes irritated skin naturally"}
                     </p>
 
                     {/* Star Rating - Dynamic based on product */}
