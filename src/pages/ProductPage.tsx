@@ -112,8 +112,8 @@ const ProductPage = () => {
           <div className="animate-fade-in-up"><ProductImageGallery images={images} productTitle={product.title} productHandle={product.handle} /></div>
           <div className="animate-fade-in-up [animation-delay:150ms] opacity-0"><ProductDetails product={product} selectedVariant={selectedVariant} onVariantChange={handleVariantChange} /></div>
         </div>
-        <div className="animate-fade-in-up [animation-delay:300ms] opacity-0"><ProductTabs productHandle={product.handle} /></div>
         {isShowerHead && <FeaturedTestimonial />}
+        <div className="animate-fade-in-up [animation-delay:300ms] opacity-0"><ProductTabs productHandle={product.handle} /></div>
         <MoneyBackGuarantee variant="compact" />
         <WhyChooseUs productType={isShowerHead ? "shower" : "mist"} />
       </main>
