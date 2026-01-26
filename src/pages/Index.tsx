@@ -13,7 +13,8 @@ import { PreFooterSubscribe } from "@/components/shared/PreFooterSubscribe";
 import { EmailPopup } from "@/components/shared/EmailPopup";
 import { SectionDivider } from "@/components/shared/SectionDivider";
 import { FeaturedInSection } from "@/components/shared/FeaturedInSection";
-
+import { VideoTestimonials } from "@/components/sections/VideoTestimonials";
+import { BeforeAfterGallery } from "@/components/sections/BeforeAfterGallery";
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
@@ -25,6 +26,10 @@ const Index = () => {
         <ProductsSection />
         <SectionDivider variant="line" />
         <TrustSection />
+        <SectionDivider variant="gradient" />
+        <BeforeAfterGallery />
+        <SectionDivider variant="line" />
+        <VideoTestimonials />
         <SectionDivider variant="gradient" />
         <MoneyBackGuarantee />
         <SectionDivider variant="line" />
