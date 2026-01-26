@@ -60,7 +60,7 @@ export const HeroSection = () => {
               variant="outline"
               className="h-[58px] px-12 bg-transparent border-2 border-primary-foreground/80 text-primary-foreground font-semibold text-base hover:bg-primary-foreground hover:text-primary transition-all duration-300 rounded-full"
             >
-              <a href="/shower-head">Learn More</a>
+              <a href="/about">Learn More</a>
             </Button>
           </div>
 
