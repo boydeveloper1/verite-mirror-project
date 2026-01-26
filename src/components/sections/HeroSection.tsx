@@ -53,7 +53,7 @@ export const HeroSection = () => {
               asChild
               className="h-[58px] px-12 bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base transition-all duration-300 hover:scale-105 hover:shadow-glow rounded-full"
             >
-              <a href="/store">Shop Now</a>
+              <a href="/store">Stop Skin Inflammation</a>
             </Button>
             <Button 
               asChild
