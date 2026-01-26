@@ -1,16 +1,15 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { HelpCircle } from "lucide-react";
 
 const faqs = [
   {
-    question: "How do I place an order?",
+    question: "How does the shower filter help with skin conditions?",
     answer:
-      "Simply browse our products, add items to your cart, and proceed to checkout. We accept all major credit cards, PayPal, and Shop Pay for a seamless checkout experience. You'll receive an order confirmation email immediately after purchase.",
+      "Our 15-stage filtration removes chlorine, heavy metals, and hard water minerals that damage your skin barrier and trigger inflammation. By eliminating these irritants at the source, many customers with eczema, psoriasis, and rosacea report significant improvement within 2-4 weeks.",
   },
   {
-    question: "What payment methods do you accept?",
+    question: "Will this work with my shower?",
     answer:
-      "We accept Visa, Mastercard, American Express, Discover, PayPal, Shop Pay, Apple Pay, and Google Pay. All transactions are secured with SSL encryption to protect your information.",
+      "Yes! Our shower head features a universal fit that works with virtually all standard shower pipes. Installation takes just 2-5 minutes with no tools required. Simply unscrew your existing shower head and screw on the Verité filter.",
   },
   {
     question: "How long does shipping take?",
@@ -20,25 +19,25 @@ const faqs = [
   {
     question: "Do you ship internationally?",
     answer:
-      "Yes! We ship to most countries worldwide. International shipping rates and delivery times vary by location. You can see the exact shipping cost at checkout before completing your order.",
+      "Yes! We ship to most countries worldwide with FREE shipping. International delivery times vary by location. You can see the exact delivery estimate at checkout.",
   },
   {
     question: "What is your return policy?",
     answer:
-      "We offer a 30-day money-back guarantee on all products. If you're not completely satisfied, simply contact us for a full refund. No questions asked. See our full refund policy for details.",
+      "We offer a 30-day money-back guarantee on all products. If you're not completely satisfied with your results, simply contact us for a full refund. No questions asked.",
   },
   {
-    question: "How can I track my order?",
+    question: "How often do I need to replace the filter?",
     answer:
-      "Once your order ships, you'll receive an email with a tracking number and link. You can track your package in real-time from our website or directly through the carrier's website.",
+      "For optimal performance, we recommend replacing the filter cartridge every 3-6 months depending on your water quality and usage. Replacement cartridges are available in our store.",
   },
   {
-    question: "Are your products safe for sensitive scalps?",
+    question: "Is the shower head safe for sensitive skin?",
     answer:
-      "Yes! All our products are dermatologist-formulated and clinically tested. We use only natural, clean ingredients without harsh chemicals, parabens, or sulfates. They're specifically designed for sensitive scalps.",
+      "Absolutely! Our shower filter is specifically designed for sensitive skin. By removing chlorine and harsh minerals, it actually helps protect and heal sensitive skin rather than irritate it.",
   },
   {
-    question: "How do I contact customer support?",
+    question: "How can I contact customer support?",
     answer:
       "You can reach us via email at support@veritescalp.com or through our Contact page. Our team typically responds within 24 hours on business days. We're here to help with any questions or concerns!",
   },
@@ -60,7 +59,7 @@ export const HomeFAQSection = () => {
             <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-4">
               Frequently Asked Questions
             </h2>
-            <p className="text-muted-foreground">Quick answers to help you on your hair growth journey</p>
+            <p className="text-muted-foreground">Quick answers to help you on your skin health journey</p>
           </div>
 
           <Accordion type="single" collapsible className="space-y-4">

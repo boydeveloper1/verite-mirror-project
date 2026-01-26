@@ -10,6 +10,7 @@ import { TrustBadges } from "./TrustBadges";
 import { PaymentMethods } from "./PaymentMethods";
 import { ReplicasWarning } from "./ReplicasWarning";
 import { LowStockIndicator } from "./LowStockIndicator";
+import { FeaturedTestimonial } from "./FeaturedTestimonial";
 import { cn } from "@/lib/utils";
 import showerHeadSilver from "@/assets/shower-head-silver.jpg";
 import showerHeadBlack from "@/assets/shower-head-black.jpg";
@@ -392,6 +393,13 @@ export const ProductDetails = ({ product, selectedVariant, onVariantChange }: Pr
       <div className="mb-6 md:mb-8">
         <ReplicasWarning />
       </div>
+
+      {/* Featured Testimonial - Only for shower head */}
+      {isShowerHead && (
+        <div className="mb-6 md:mb-8">
+          <FeaturedTestimonial />
+        </div>
+      )}
 
       {/* Trust Badges */}
       <div className="mb-6 md:mb-8">

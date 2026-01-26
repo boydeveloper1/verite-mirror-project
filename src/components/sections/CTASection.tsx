@@ -25,11 +25,11 @@ export const CTASection = () => {
           </div>
 
           <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6 animate-fade-in-up leading-tight">
-            Ready to Regrow<br />
-            <span className="text-brand-gold">Your Edges?</span>
+            Ready to Transform<br />
+            <span className="text-brand-gold">Your Skin?</span>
           </h2>
           <p className="text-lg md:text-xl text-primary-foreground/90 mb-12 max-w-2xl mx-auto animate-fade-in-up [animation-delay:200ms] opacity-0">
-            Join thousands of women who chose scalp health first and are now seeing real results.
+            Join thousands who stopped the daily damage and finally found relief from skin inflammation.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 animate-fade-in-up [animation-delay:400ms] opacity-0">

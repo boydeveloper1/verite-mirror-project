@@ -16,52 +16,52 @@ interface Question {
 const questions: Question[] = [
   {
     id: 1,
-    question: "How often do you experience scalp itching?",
+    question: "How does your skin feel after showering?",
     options: [
-      { label: "Rarely or never", score: 0 },
-      { label: "Occasionally (1-2 times a week)", score: 1 },
-      { label: "Frequently (almost daily)", score: 2 },
-      { label: "Constantly (all day)", score: 3 },
+      { label: "Normal and comfortable", score: 0 },
+      { label: "Slightly tight or dry", score: 1 },
+      { label: "Itchy or irritated", score: 2 },
+      { label: "Burning, red, or painful", score: 3 },
     ],
   },
   {
     id: 2,
-    question: "Do you wear protective styles (wigs, braids, weaves)?",
+    question: "Do you experience any skin conditions?",
     options: [
-      { label: "Never", score: 0 },
-      { label: "Occasionally", score: 1 },
-      { label: "Most of the time", score: 2 },
-      { label: "Always", score: 3 },
+      { label: "None", score: 0 },
+      { label: "Occasional dryness or sensitivity", score: 1 },
+      { label: "Eczema, psoriasis, or rosacea (mild)", score: 2 },
+      { label: "Severe eczema, psoriasis, or chronic skin issues", score: 3 },
     ],
   },
   {
     id: 3,
-    question: "How would you describe your edges?",
+    question: "How would you describe your water quality?",
     options: [
-      { label: "Full and healthy", score: 0 },
-      { label: "Slightly thinning", score: 1 },
-      { label: "Noticeably receding", score: 2 },
-      { label: "Severely damaged/missing", score: 3 },
+      { label: "Soft, filtered water", score: 0 },
+      { label: "Average city water", score: 1 },
+      { label: "Hard water (mineral deposits visible)", score: 2 },
+      { label: "Very hard water or well water", score: 3 },
     ],
   },
   {
     id: 4,
-    question: "How much hair do you lose when washing/brushing?",
+    question: "How often do you experience skin flare-ups?",
     options: [
-      { label: "Very little (normal shedding)", score: 0 },
-      { label: "A moderate amount", score: 1 },
-      { label: "A lot (clumps)", score: 2 },
-      { label: "Excessive (scary amounts)", score: 3 },
+      { label: "Rarely or never", score: 0 },
+      { label: "Occasionally (once a month)", score: 1 },
+      { label: "Frequently (weekly)", score: 2 },
+      { label: "Constantly (daily)", score: 3 },
     ],
   },
   {
     id: 5,
-    question: "Do you experience scalp tenderness or pain?",
+    question: "Do you notice skin issues worsening in winter or after travel?",
     options: [
-      { label: "Never", score: 0 },
-      { label: "Rarely", score: 1 },
-      { label: "Sometimes", score: 2 },
-      { label: "Often", score: 3 },
+      { label: "No change", score: 0 },
+      { label: "Slightly worse", score: 1 },
+      { label: "Noticeably worse", score: 2 },
+      { label: "Significantly worse", score: 3 },
     ],
   },
 ];
@@ -85,10 +85,10 @@ const getResultType = (score: number): string => {
 const getResult = (score: number): ResultData => {
   if (score <= 3) {
     return {
-      title: "Healthy Scalp",
+      title: "Healthy Skin",
       description:
-        "Great news! Your scalp appears to be in good condition. Maintaining a healthy scalp now helps prevent future issues.",
-      recommendation: "Our products can help you maintain this healthy foundation and protect against environmental stressors.",
+        "Great news! Your skin appears to be in good condition. Maintaining healthy skin now helps prevent future issues.",
+      recommendation: "Our filtered shower head can help you maintain this healthy foundation and protect against hard water damage.",
       icon: ThumbsUp,
       color: "text-green-600",
       urgency: "Prevention",
@@ -97,30 +97,30 @@ const getResult = (score: number): ResultData => {
     return {
       title: "Early Warning Signs",
       description:
-        "Your scalp is showing early signs of stress. Taking action now can prevent these issues from progressing.",
-      recommendation: "Our Scalp Soothing Mist helps calm early-stage inflammation. Pair it with our filtered shower head to reduce irritants from your water.",
+        "Your skin is showing early signs of stress from water quality. Taking action now can prevent these issues from progressing.",
+      recommendation: "Our 15-stage filtered shower head removes chlorine and minerals that may be irritating your skin.",
       icon: AlertTriangle,
       color: "text-yellow-600",
       urgency: "Early Intervention",
     };
   } else if (score <= 11) {
     return {
-      title: "Scalp Needs Attention",
+      title: "Skin Needs Attention",
       description:
-        "Your scalp is experiencing noticeable inflammation, which can affect hair growth and cause increased shedding.",
+        "Your skin is experiencing noticeable irritation, which is often triggered or worsened by unfiltered shower water.",
       recommendation:
-        "We recommend our Scalp Soothing Mist for daily use. For enhanced results, our filtered shower head removes chlorine and minerals that can aggravate sensitive scalps.",
+        "Our shower filter removes 99% of chlorine and hard water minerals that trigger eczema, psoriasis, and rosacea flare-ups.",
       icon: AlertTriangle,
       color: "text-orange-600",
       urgency: "Recommended Action",
     };
   } else {
     return {
-      title: "Scalp Care Priority",
+      title: "Skin Care Priority",
       description:
-        "Your responses indicate significant scalp inflammation. Addressing this now is important to support your hair health.",
+        "Your responses indicate significant skin irritation. The chlorine and minerals in your water may be a major contributor.",
       recommendation:
-        "Our complete scalp care system targets inflammation at multiple points. The Scalp Soothing Mist calms irritation while our filtered shower head protects against water-based irritants.",
+        "Our purifying shower head is specifically designed for sensitive skin. Most customers with similar conditions report relief within 2 weeks.",
       icon: AlertTriangle,
       color: "text-red-600",
       urgency: "Priority Care",
@@ -180,7 +180,7 @@ export const ScalpHealthQuiz = () => {
       if (error) throw error;
 
       toast.success("Check your inbox!", {
-        description: "Your personalized recovery plan is on the way.",
+        description: "Your personalized skin care plan is on the way.",
       });
       setEmailCaptured(true);
     } catch (error) {
@@ -213,9 +213,9 @@ export const ScalpHealthQuiz = () => {
               <Sparkles className="w-4 h-4" />
               Free Assessment
             </span>
-            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-4">Scalp Health Quiz</h2>
+            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-4">Skin Health Quiz</h2>
             <p className="text-muted-foreground text-lg">
-              Take our quick 5-question quiz to discover your scalp's health status
+              Take our quick 5-question quiz to discover if your water is affecting your skin
             </p>
           </div>
 
@@ -309,7 +309,7 @@ export const ScalpHealthQuiz = () => {
                     </div>
                     
                     <h4 className="text-lg font-bold text-foreground mb-2">
-                      Get Your Personalized Recovery Plan
+                      Get Your Personalized Skin Care Plan
                     </h4>
                     
                     <p className="text-sm text-muted-foreground mb-4">
@@ -342,7 +342,7 @@ export const ScalpHealthQuiz = () => {
                           </>
                         ) : (
                           <>
-                            Send My Recovery Plan
+                            Send My Skin Care Plan
                             <ArrowRight className="w-4 h-4 ml-2" />
                           </>
                         )}

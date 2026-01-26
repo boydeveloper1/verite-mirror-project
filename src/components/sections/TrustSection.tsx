@@ -1,26 +1,26 @@
-import { Leaf, FlaskConical, Network, Shield } from "lucide-react";
+import { Droplets, FlaskConical, ShieldCheck, Zap } from "lucide-react";
 
 const trustCards = [
   {
-    icon: Leaf,
-    headline: "We Fix the Root Cause",
-    body: "We don't mask problems with more products. We stop scalp inflammation, the real blocker to hair growth.",
+    icon: Droplets,
+    headline: "We Filter the Problem",
+    body: "We don't mask symptoms. We remove chlorine and hard water minerals that trigger skin inflammation in the first place.",
     color: "bg-accent/15 text-accent",
   },
   {
     icon: FlaskConical,
-    headline: "Dermatologist-Formulated",
-    body: "Developed with expert guidance and clinically tested. 70% shedding reduction verified. Real results.",
+    headline: "15-Stage Purification",
+    body: "Lab-tested to remove 99% of chlorine, heavy metals, and minerals that damage your skin barrier daily.",
     color: "bg-primary/15 text-primary",
   },
   {
-    icon: Network,
-    headline: "Complete Scalp System",
-    body: "Each product targets a different scalp issue. Together, they restore full scalp health and unlock growth.",
+    icon: Zap,
+    headline: "Results in 2 Weeks",
+    body: "Most customers report reduced redness, less dryness, and calmer skin within the first 14 days of use.",
     color: "bg-brand-gold/20 text-brand-gold",
   },
   {
-    icon: Shield,
+    icon: ShieldCheck,
     headline: "30-Day Money-Back",
     body: "We're confident our products work. If you're not satisfied within 30 days, get a full refund. No questions asked.",
     color: "bg-accent/15 text-accent",
@@ -38,7 +38,7 @@ export const TrustSection = () => {
         <div className="text-center mb-16 md:mb-20 animate-fade-in-up">
           <span className="inline-block bg-accent/10 text-accent font-semibold uppercase tracking-wider px-4 py-2 rounded-full text-sm mb-6">Why Choose Us</span>
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-primary">
-            Why VERITÉ SCALP Stands Apart
+            Why VERITÉ Stands Apart
           </h2>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
