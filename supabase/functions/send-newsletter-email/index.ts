@@ -69,7 +69,7 @@ const getSubscriberEmailHtml = () => `
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to VERITÉ SCALP</title>
+  <title>Welcome to VERITÉ</title>
 </head>
 <body style="margin: 0; padding: 0; background-color: #f8f6f3; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
   <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f8f6f3; padding: 40px 20px;">
@@ -79,8 +79,8 @@ const getSubscriberEmailHtml = () => `
           <!-- Header -->
           <tr>
             <td style="background: linear-gradient(135deg, #1B7F4D 0%, #156B3F 100%); padding: 40px 30px; text-align: center;">
-              <h1 style="color: #ffffff; font-size: 28px; margin: 0; font-weight: 700;">VERITÉ SCALP</h1>
-              <p style="color: rgba(255,255,255,0.9); font-size: 14px; margin: 8px 0 0 0; letter-spacing: 1px;">SCALP CARE BEFORE HAIR CARE</p>
+              <h1 style="color: #ffffff; font-size: 28px; margin: 0; font-weight: 700;">VERITÉ</h1>
+              <p style="color: rgba(255,255,255,0.9); font-size: 14px; margin: 8px 0 0 0; letter-spacing: 1px;">PURE WATER. HEALTHY SKIN.</p>
             </td>
           </tr>
           
@@ -90,7 +90,7 @@ const getSubscriberEmailHtml = () => `
               <h2 style="color: #1a1a1a; font-size: 24px; text-align: center; margin: 0 0 20px 0;">Welcome to Our Community!</h2>
               
               <p style="color: #666666; font-size: 16px; line-height: 1.6; text-align: center; margin: 0 0 25px 0;">
-                Thank you for joining VERITÉ SCALP. You're now part of a community of women committed to scalp health and natural hair growth.
+                Thank you for joining VERITÉ. You're now part of a community committed to healthier, calmer skin through purified water.
               </p>
               
               <p style="color: #666666; font-size: 16px; line-height: 1.6; text-align: left; margin: 0 0 15px 0;">
@@ -105,7 +105,7 @@ const getSubscriberEmailHtml = () => `
                 </tr>
                 <tr>
                   <td style="padding: 10px 0;">
-                    <span style="color: #333; font-size: 15px;">• Expert scalp care tips and tutorials</span>
+                    <span style="color: #333; font-size: 15px;">• Expert skin care tips and tutorials</span>
                   </td>
                 </tr>
                 <tr>
@@ -121,7 +121,7 @@ const getSubscriberEmailHtml = () => `
               </table>
               
               <p style="color: #666666; font-size: 16px; line-height: 1.6; text-align: center; margin: 25px 0;">
-                Ready to start your scalp health journey?
+                Ready to start your skin health journey?
               </p>
               
               <div style="text-align: center; margin-top: 25px;">
@@ -134,10 +134,10 @@ const getSubscriberEmailHtml = () => `
           <tr>
             <td style="background-color: #f5f5f5; padding: 25px; text-align: center;">
               <p style="color: #666666; font-size: 14px; margin: 0 0 10px 0;">
-                VERITÉ SCALP - Scalp Care Before Hair Care
+                VERITÉ - Pure Water. Healthy Skin.
               </p>
               <p style="color: #888888; font-size: 12px; margin: 0 0 10px 0;">
-                © ${new Date().getFullYear()} VERITÉ SCALP. All rights reserved.
+                © ${new Date().getFullYear()} VERITÉ. All rights reserved.
               </p>
               <p style="color: #999999; font-size: 11px; margin: 0;">
                 You received this email because you subscribed at veritescalp.com.<br>
@@ -261,9 +261,9 @@ const handler = async (req: Request): Promise<Response> => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "VERITÉ SCALP <hello@veritescalp.com>",
+        from: "VERITÉ <hello@veritescalp.com>",
         to: [email],
-        subject: "Welcome to VERITÉ SCALP",
+        subject: "Welcome to VERITÉ",
         html: getSubscriberEmailHtml(),
         reply_to: "hello@veritescalp.com",
         headers: {
@@ -289,7 +289,7 @@ const handler = async (req: Request): Promise<Response> => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "VERITÉ SCALP Notifications <hello@veritescalp.com>",
+        from: "VERITÉ Notifications <hello@veritescalp.com>",
         to: ["veritescalp@gmail.com"],
         subject: `New Subscriber: ${email}`,
         html: getAdminEmailHtml(email),

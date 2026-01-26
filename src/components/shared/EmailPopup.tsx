@@ -48,7 +48,7 @@ export const EmailPopup = () => {
 
       if (error) throw error;
 
-      toast.success("Welcome to the VERITÉ SCALP family!", {
+      toast.success("Welcome to the VERITÉ family!", {
         description: "Check your inbox for exclusive offers."
       });
       setIsVisible(false);
@@ -113,7 +113,7 @@ export const EmailPopup = () => {
 
               {/* Heading */}
               <h2 className="font-display text-2xl md:text-3xl font-bold text-primary mb-3">
-                Join the VERITÉ SCALP Family
+                Join the VERITÉ Family
               </h2>
 
               {/* Description */}
