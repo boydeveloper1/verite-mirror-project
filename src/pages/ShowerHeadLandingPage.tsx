@@ -89,7 +89,7 @@ const CTAButton = ({ className = "", variant = "primary" }: { className?: string
       <Link to={`/product/${PRODUCT_HANDLE}`}>
         <span className="relative z-10 flex items-center whitespace-nowrap">
           <span className="hidden sm:inline">Stop Skin Inflammation — </span>
-          <span className="sm:hidden">Get Relief — </span>
+          <span className="sm:hidden">Filter My Water — </span>
           {PRODUCT_PRICE}
           <ArrowRight className="ml-2 md:ml-3 w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1.5 transition-transform duration-300" />
         </span>
@@ -138,7 +138,9 @@ const FloatingCTA = () => {
             className="flex-1 sm:flex-none h-14 px-10 bg-gradient-to-r from-accent to-accent/90 hover:from-accent/90 hover:to-accent text-accent-foreground font-bold text-base rounded-full shadow-[0_8px_30px_-8px_hsl(var(--accent)/0.6)]"
           >
             <Link to={`/product/${PRODUCT_HANDLE}`}>
-              Get Relief — {PRODUCT_PRICE}
+              <span className="hidden sm:inline">Get Relief — </span>
+              <span className="sm:hidden">Filter My Water — </span>
+              {PRODUCT_PRICE}
               <ArrowRight className="ml-2 w-5 h-5" />
             </Link>
           </Button>
