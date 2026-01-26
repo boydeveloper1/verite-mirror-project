@@ -1,17 +1,76 @@
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Check, Sparkles, Shield, Droplets } from "lucide-react";
+import { Check, Sparkles, Shield, Droplets, Quote } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import heroBanner from "@/assets/hero-banner.jpg";
+import { useCountUp } from "@/hooks/useCountUp";
+
+const customerQuotes = [
+  { text: "My eczema cleared up in 2 weeks!", name: "Sarah M.", location: "Austin, TX" },
+  { text: "No more dry, itchy skin after showers.", name: "Michael R.", location: "Denver, CO" },
+  { text: "My dermatologist was amazed at my progress.", name: "Jennifer L.", location: "Miami, FL" },
+  { text: "Finally found the root cause of my rosacea.", name: "David K.", location: "Seattle, WA" },
+  { text: "Best investment for my sensitive skin.", name: "Amanda T.", location: "San Diego, CA" },
+];
+
+const recentActivity = [
+  { name: "Jessica", location: "Texas", action: "just ordered" },
+  { name: "Marcus", location: "California", action: "just ordered" },
+  { name: "Emily", location: "Florida", action: "left a 5-star review" },
+  { name: "David", location: "New York", action: "just ordered" },
+  { name: "Sarah", location: "Arizona", action: "reordered filters" },
+];
 
 export const HeroSection = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const [currentQuote, setCurrentQuote] = useState(0);
+  const [currentActivity, setCurrentActivity] = useState(0);
+
+  // Parallax effect
+  const { scrollY } = useScroll();
+  const backgroundY = useTransform(scrollY, [0, 500], [0, 150]);
+
+  // Count-up animations
+  const customersCount = useCountUp({ end: 14000, duration: 2000, suffix: '+' });
+  const recommendCount = useCountUp({ end: 100, duration: 2000, delay: 200, suffix: '%' });
+  const chlorineCount = useCountUp({ end: 99, duration: 2000, delay: 400, suffix: '%' });
+
+  // Rotate customer quotes
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentQuote((prev) => (prev + 1) % customerQuotes.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Rotate activity notifications
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentActivity((prev) => (prev + 1) % recentActivity.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section 
+      ref={sectionRef}
       className="relative min-h-[700px] md:min-h-[800px] flex items-center overflow-hidden"
-      style={{
-        backgroundImage: `url(${heroBanner})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
     >
+      {/* Parallax Background */}
+      <motion.div 
+        className="absolute inset-0"
+        style={{ y: backgroundY }}
+      >
+        <div 
+          className="absolute inset-0 scale-110"
+          style={{
+            backgroundImage: `url(${heroBanner})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+      </motion.div>
+
       {/* Dark Gradient Overlay with richer depth */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/95 via-primary/90 to-accent/70" />
       
@@ -64,27 +123,46 @@ export const HeroSection = () => {
             </Button>
           </div>
 
-          {/* Trust Stats */}
+          {/* Animated Count-Up Stats */}
           <div className="flex flex-wrap gap-8 mt-12 animate-fade-in-up [animation-delay:600ms] opacity-0">
-            <div className="text-center">
-              <p className="text-3xl md:text-4xl font-bold text-primary-foreground">14,000+</p>
+            <div className="text-center" ref={customersCount.ref}>
+              <p className="text-3xl md:text-4xl font-bold text-primary-foreground">{customersCount.value}</p>
               <p className="text-xs text-primary-foreground/70 uppercase tracking-wider mt-1">Happy Customers</p>
             </div>
             <div className="w-px h-14 bg-primary-foreground/30 hidden sm:block" />
-            <div className="text-center">
-              <p className="text-3xl md:text-4xl font-bold text-primary-foreground">100%</p>
+            <div className="text-center" ref={recommendCount.ref}>
+              <p className="text-3xl md:text-4xl font-bold text-primary-foreground">{recommendCount.value}</p>
               <p className="text-xs text-primary-foreground/70 uppercase tracking-wider mt-1">Recommend Us</p>
             </div>
             <div className="w-px h-14 bg-primary-foreground/30 hidden sm:block" />
-            <div className="text-center">
-              <p className="text-3xl md:text-4xl font-bold text-primary-foreground">99%</p>
+            <div className="text-center" ref={chlorineCount.ref}>
+              <p className="text-3xl md:text-4xl font-bold text-primary-foreground">{chlorineCount.value}</p>
               <p className="text-xs text-primary-foreground/70 uppercase tracking-wider mt-1">Chlorine Removed</p>
             </div>
           </div>
         </div>
 
-        {/* Trust Badges - Right Side */}
-        <div className="absolute top-6 right-6 md:top-10 md:right-10 hidden lg:flex flex-col gap-3 animate-fade-in [animation-delay:800ms] opacity-0">
+        {/* Floating Quote Carousel - Right Side */}
+        <div className="absolute top-6 right-6 md:top-10 md:right-10 hidden lg:flex flex-col gap-3 animate-fade-in [animation-delay:800ms] opacity-0 max-w-xs">
+          {/* Customer Quote Card */}
+          <motion.div 
+            key={currentQuote}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.5 }}
+            className="bg-card/95 backdrop-blur-md border border-accent/30 rounded-xl px-5 py-4 shadow-lg"
+          >
+            <Quote className="w-5 h-5 text-accent mb-2" />
+            <p className="text-sm text-foreground font-medium mb-2">
+              "{customerQuotes[currentQuote].text}"
+            </p>
+            <p className="text-xs text-muted-foreground">
+              — {customerQuotes[currentQuote].name}, {customerQuotes[currentQuote].location}
+            </p>
+          </motion.div>
+
+          {/* Trust Badges */}
           <div className="bg-card/95 backdrop-blur-md border-2 border-accent rounded-xl px-5 py-3 shadow-lg flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center">
               <Check className="h-5 w-5 text-accent" />
@@ -104,6 +182,24 @@ export const HeroSection = () => {
             <span className="text-sm font-semibold text-foreground">30-Day Guarantee</span>
           </div>
         </div>
+
+        {/* Live Activity Indicator */}
+        <motion.div 
+          key={currentActivity}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.4 }}
+          className="absolute bottom-6 left-6 md:bottom-10 md:left-10 bg-card/95 backdrop-blur-md border border-accent/30 rounded-full px-4 py-2 shadow-lg hidden md:flex items-center gap-2"
+        >
+          <span className="relative flex h-2.5 w-2.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-accent"></span>
+          </span>
+          <span className="text-sm text-foreground">
+            🎉 <strong>{recentActivity[currentActivity].name}</strong> from {recentActivity[currentActivity].location} {recentActivity[currentActivity].action}
+          </span>
+        </motion.div>
       </div>
     </section>
   );
