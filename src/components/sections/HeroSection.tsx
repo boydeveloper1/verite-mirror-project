@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Check, Sparkles, Shield, Leaf } from "lucide-react";
+import { Check, Sparkles, Shield, Droplets } from "lucide-react";
 import heroBanner from "@/assets/hero-banner.jpg";
 
 export const HeroSection = () => {
@@ -33,18 +33,18 @@ export const HeroSection = () => {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-accent/25 backdrop-blur-md border border-accent/40 rounded-full px-5 py-2.5 mb-6 animate-fade-in shadow-lg">
             <Sparkles className="w-4 h-4 text-brand-gold" />
-            <span className="text-sm font-semibold text-primary-foreground tracking-wide">Clinically Proven Formula</span>
+            <span className="text-sm font-semibold text-primary-foreground tracking-wide">Dermatologist Recommended</span>
           </div>
 
           {/* Headline */}
           <h1 className="font-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-primary-foreground leading-[1.1] mb-6 tracking-wide animate-fade-in-up">
-            Scalp Care<br />
-            <span className="text-brand-gold">Before</span> Hair Care
+            Your Water Is<br />
+            <span className="text-brand-gold">Damaging</span> Your Skin
           </h1>
 
           {/* Subheadline */}
           <p className="text-lg md:text-xl text-primary-foreground/90 leading-relaxed mb-10 max-w-xl animate-fade-in-up [animation-delay:200ms] opacity-0">
-            Stop inflammation. Restore scalp health. Unlock natural hair growth with our dermatologist-recommended formulas.
+            Chlorine & hard water minerals trigger eczema, psoriasis, rosacea & acne flare-ups. Our 15-stage filtration stops the damage at the source.
           </p>
 
           {/* CTA Buttons */}
@@ -60,25 +60,25 @@ export const HeroSection = () => {
               variant="outline"
               className="h-[58px] px-12 bg-transparent border-2 border-primary-foreground/80 text-primary-foreground font-semibold text-base hover:bg-primary-foreground hover:text-primary transition-all duration-300 rounded-full"
             >
-              <a href="/about">Learn More</a>
+              <a href="/shower-head">Learn More</a>
             </Button>
           </div>
 
           {/* Trust Stats */}
           <div className="flex flex-wrap gap-8 mt-12 animate-fade-in-up [animation-delay:600ms] opacity-0">
             <div className="text-center">
-              <p className="text-3xl md:text-4xl font-bold text-primary-foreground">5,000+</p>
+              <p className="text-3xl md:text-4xl font-bold text-primary-foreground">14,000+</p>
               <p className="text-xs text-primary-foreground/70 uppercase tracking-wider mt-1">Happy Customers</p>
             </div>
             <div className="w-px h-14 bg-primary-foreground/30 hidden sm:block" />
             <div className="text-center">
-              <p className="text-3xl md:text-4xl font-bold text-primary-foreground">98%</p>
+              <p className="text-3xl md:text-4xl font-bold text-primary-foreground">100%</p>
               <p className="text-xs text-primary-foreground/70 uppercase tracking-wider mt-1">Recommend Us</p>
             </div>
             <div className="w-px h-14 bg-primary-foreground/30 hidden sm:block" />
             <div className="text-center">
-              <p className="text-3xl md:text-4xl font-bold text-primary-foreground">70%</p>
-              <p className="text-xs text-primary-foreground/70 uppercase tracking-wider mt-1">Less Shedding</p>
+              <p className="text-3xl md:text-4xl font-bold text-primary-foreground">99%</p>
+              <p className="text-xs text-primary-foreground/70 uppercase tracking-wider mt-1">Chlorine Removed</p>
             </div>
           </div>
         </div>
@@ -89,13 +89,13 @@ export const HeroSection = () => {
             <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center">
               <Check className="h-5 w-5 text-accent" />
             </div>
-            <span className="text-sm font-semibold text-foreground">Dermatologist Recommended</span>
+            <span className="text-sm font-semibold text-foreground">Soothes Eczema & Psoriasis</span>
           </div>
           <div className="bg-card/95 backdrop-blur-md border border-border rounded-xl px-5 py-3 shadow-lg flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-              <Leaf className="h-5 w-5 text-primary" />
+              <Droplets className="h-5 w-5 text-primary" />
             </div>
-            <span className="text-sm font-semibold text-foreground">Natural Ingredients</span>
+            <span className="text-sm font-semibold text-foreground">15-Stage Filtration</span>
           </div>
           <div className="bg-card/95 backdrop-blur-md border border-border rounded-xl px-5 py-3 shadow-lg flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-brand-gold/20 flex items-center justify-center">
