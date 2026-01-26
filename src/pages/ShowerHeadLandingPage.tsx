@@ -59,7 +59,7 @@ const AnimatedSection = ({ children, className = "", delay = 0 }: { children: Re
 
 // Premium decorative divider with gradient
 const SectionDivider = () => (
-  <div className="relative h-32 overflow-hidden">
+  <div className="relative h-16 md:h-32 overflow-hidden">
     <div className="absolute inset-0 flex items-center justify-center">
       <div className="w-64 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent" />
     </div>
@@ -368,7 +368,7 @@ const ShowerHeadLandingPage = () => {
         {/* ============================================ */}
         {/* SECTION 2: THE HIDDEN TRUTH - EDUCATIONAL */}
         {/* ============================================ */}
-        <section className="py-24 md:py-32 bg-gradient-to-b from-background via-muted/20 to-background relative">
+        <section className="py-16 md:py-24 lg:py-32 bg-gradient-to-b from-background via-muted/20 to-background relative">
           <div className="container mx-auto px-4 md:px-10">
             <AnimatedSection className="text-center mb-16">
               <motion.span 
@@ -423,12 +423,12 @@ const ShowerHeadLandingPage = () => {
           </div>
         </section>
 
-        <SectionDivider />
+        <div className="hidden md:block"><SectionDivider /></div>
 
         {/* ============================================ */}
         {/* SECTION 3: THE DAILY DAMAGE CYCLE */}
         {/* ============================================ */}
-        <section className="py-24 md:py-32 bg-background relative">
+        <section className="py-16 md:py-24 lg:py-32 bg-background relative">
           <div className="container mx-auto px-4 md:px-10">
             <AnimatedSection className="text-center mb-20">
               <motion.span 
@@ -531,127 +531,15 @@ const ShowerHeadLandingPage = () => {
               </div>
             </AnimatedSection>
 
-            {/* Condition-Specific Cards - Enhanced */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
-              {[
-                {
-                  condition: "Eczema",
-                  icon: Heart,
-                  description: "Hard water weakens skin barrier, increases water loss, makes skin drier and more prone to flare-ups",
-                  gradient: "from-rose-500/20 to-rose-500/5",
-                  iconColor: "text-rose-500",
-                  borderColor: "hover:border-rose-500/30",
-                },
-                {
-                  condition: "Psoriasis",
-                  icon: Flame,
-                  description: "Chlorine triggers inflammatory response that accelerates skin cell turnover and worsens plaques",
-                  gradient: "from-orange-500/20 to-orange-500/5",
-                  iconColor: "text-orange-500",
-                  borderColor: "hover:border-orange-500/30",
-                },
-                {
-                  condition: "Rosacea",
-                  icon: Zap,
-                  description: "Hard minerals strip natural oils, chlorine bonds to skin cells causing persistent redness",
-                  gradient: "from-red-500/20 to-red-500/5",
-                  iconColor: "text-red-500",
-                  borderColor: "hover:border-red-500/30",
-                },
-                {
-                  condition: "Acne",
-                  icon: CircleOff,
-                  description: "Mineral residue clogs pores, disrupts oil balance, chlorine causes chloracne and breakouts",
-                  gradient: "from-purple-500/20 to-purple-500/5",
-                  iconColor: "text-purple-500",
-                  borderColor: "hover:border-purple-500/30",
-                },
-              ].map((item, index) => (
-                <AnimatedSection key={item.condition} delay={index * 0.1}>
-                  <motion.div 
-                    className={`relative bg-card rounded-2xl p-8 shadow-lg border border-border ${item.borderColor} transition-all duration-300 h-full group`}
-                    whileHover={{ y: -5, boxShadow: "0 25px 50px -12px rgba(0,0,0,0.15)" }}
-                  >
-                    <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient} rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-                    <div className="relative">
-                      <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${item.gradient} flex items-center justify-center mb-5 border border-border`}>
-                        <item.icon className={`w-7 h-7 ${item.iconColor}`} />
-                      </div>
-                      <h3 className="font-display text-xl font-bold text-foreground mb-3">{item.condition}</h3>
-                      <p className="text-muted-foreground leading-relaxed">{item.description}</p>
-                    </div>
-                  </motion.div>
-                </AnimatedSection>
-              ))}
-            </div>
-
-            {/* Stats Cards - Enhanced */}
-            <div className="grid md:grid-cols-3 gap-8">
-              {[
-                {
-                  icon: Droplets,
-                  title: "85% of US Homes Have Hard Water",
-                  description: "That's why so many people with skin conditions struggle despite expensive treatments.",
-                  stat: "85%",
-                  gradient: "from-blue-500/10 to-blue-500/5",
-                },
-                {
-                  icon: Zap,
-                  title: "Chlorine Bonds in Seconds",
-                  description: "Every shower exposes your skin to chlorine that bonds within seconds.",
-                  stat: "99%",
-                  statLabel: "removal",
-                  gradient: "from-amber-500/10 to-amber-500/5",
-                },
-                {
-                  icon: TrendingUp,
-                  title: "$200-500/Month Wasted",
-                  description: "That's what most people spend on treatments that can't work.",
-                  stat: "$500",
-                  statLabel: "saved",
-                  gradient: "from-green-500/10 to-green-500/5",
-                },
-              ].map((item, index) => (
-                <AnimatedSection key={item.title} delay={index * 0.1}>
-                  <motion.div 
-                    className="relative bg-card rounded-2xl p-8 shadow-lg border border-border overflow-hidden h-full"
-                    whileHover={{ y: -5 }}
-                  >
-                    <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient}`} />
-                    <div className="relative">
-                      <div className="flex items-center justify-between mb-6">
-                        <div className="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center border border-accent/20">
-                          <item.icon className="w-7 h-7 text-accent" />
-                        </div>
-                        <div className="text-right">
-                          <p className="text-4xl font-bold text-accent">{item.stat}</p>
-                          {item.statLabel && <p className="text-sm text-muted-foreground">{item.statLabel}</p>}
-                        </div>
-                      </div>
-                      <h3 className="font-display text-xl font-bold text-foreground mb-3">{item.title}</h3>
-                      <p className="text-muted-foreground leading-relaxed">{item.description}</p>
-                    </div>
-                  </motion.div>
-                </AnimatedSection>
-              ))}
-            </div>
-
-            {/* Mid-page CTA */}
-            <AnimatedSection className="text-center mt-20">
-              <p className="text-xl md:text-2xl text-foreground font-medium mb-8">
-                Ready to stop re-inflaming your skin with every shower?
-              </p>
-              <CTAButton />
-            </AnimatedSection>
           </div>
         </section>
 
-        <SectionDivider />
+        <div className="hidden md:block"><SectionDivider /></div>
 
         {/* ============================================ */}
         {/* SECTION 3: SOCIAL PROOF & CREDIBILITY */}
         {/* ============================================ */}
-        <section className="py-24 md:py-32 bg-gradient-to-b from-muted/30 via-muted/50 to-muted/30 relative overflow-hidden">
+        <section className="py-16 md:py-24 lg:py-32 bg-gradient-to-b from-muted/30 via-muted/50 to-muted/30 relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_hsl(var(--accent)/0.05)_0%,transparent_70%)]" />
           
           <div className="container mx-auto px-4 md:px-10 relative z-10">
@@ -698,24 +586,6 @@ const ShowerHeadLandingPage = () => {
                     </div>
                   </motion.div>
                 ))}
-              </div>
-            </AnimatedSection>
-
-            {/* Visual Proof - Before/After Testimonials */}
-            <AnimatedSection className="mb-20">
-              <div className="text-center mb-12">
-                <motion.span 
-                  className="inline-flex items-center gap-2 text-sm font-bold text-accent uppercase tracking-widest mb-4 bg-accent/10 px-5 py-2 rounded-full"
-                >
-                  <BadgeCheck className="w-4 h-4" />
-                  Real Results
-                </motion.span>
-                <h3 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-3">
-                  See What Clean Water Can Do
-                </h3>
-                <p className="text-muted-foreground max-w-xl mx-auto">
-                  Before and after photos from verified customers
-                </p>
               </div>
             </AnimatedSection>
 
@@ -770,7 +640,7 @@ const ShowerHeadLandingPage = () => {
                     transition={{ duration: 0.3 }}
                   >
                     {/* Before/After Image */}
-                    <div className="relative aspect-[16/10] overflow-hidden">
+                    <div className="relative aspect-[4/3] md:aspect-[16/10] overflow-hidden">
                       <img 
                         src={testimonial.image} 
                         alt={`${testimonial.condition} - Before and After`}
@@ -832,7 +702,7 @@ const ShowerHeadLandingPage = () => {
               >
                 <div className="grid md:grid-cols-2 gap-0">
                   {/* Image Side */}
-                  <div className="relative aspect-square md:aspect-auto overflow-hidden">
+                  <div className="relative aspect-[4/3] md:aspect-auto overflow-hidden">
                     <img 
                       src={sensitiveSkinImage} 
                       alt="Sensitive Skin Relief - Before and After"
@@ -914,7 +784,7 @@ const ShowerHeadLandingPage = () => {
         {/* ============================================ */}
         {/* SECTION 4: THE SOLUTION */}
         {/* ============================================ */}
-        <section className="py-24 md:py-32 bg-background relative overflow-hidden">
+        <section className="py-16 md:py-24 lg:py-32 bg-background relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-brand-gold/5" />
           <div className="absolute top-0 right-0 w-1/2 h-full bg-[radial-gradient(ellipse_at_top_right,_hsl(var(--accent)/0.1)_0%,transparent_60%)]" />
           
@@ -1069,7 +939,7 @@ const ShowerHeadLandingPage = () => {
         {/* ============================================ */}
         {/* SECTION 5: TIMELINE */}
         {/* ============================================ */}
-        <section className="py-24 md:py-32 bg-primary text-primary-foreground relative overflow-hidden">
+        <section className="py-16 md:py-24 lg:py-32 bg-primary text-primary-foreground relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_hsl(var(--brand-gold)/0.15)_0%,transparent_50%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_hsl(var(--accent)/0.1)_0%,transparent_50%)]" />
           
@@ -1132,7 +1002,7 @@ const ShowerHeadLandingPage = () => {
         {/* ============================================ */}
         {/* SECTION 6: FAQ */}
         {/* ============================================ */}
-        <section className="py-24 md:py-32 bg-background">
+        <section className="py-16 md:py-24 lg:py-32 bg-background">
           <div className="container mx-auto px-4 md:px-10">
             <AnimatedSection className="text-center mb-16">
               <motion.span 
@@ -1185,7 +1055,7 @@ const ShowerHeadLandingPage = () => {
         {/* ============================================ */}
         {/* SECTION 7: FINAL CTA */}
         {/* ============================================ */}
-        <section className="py-24 md:py-36 bg-primary text-primary-foreground relative overflow-hidden">
+        <section className="py-16 md:py-24 lg:py-36 bg-primary text-primary-foreground relative overflow-hidden">
           <div className="absolute inset-0">
             <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-accent/20 rounded-full blur-[100px]" />
             <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-brand-gold/20 rounded-full blur-[100px]" />
